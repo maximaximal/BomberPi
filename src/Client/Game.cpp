@@ -1,8 +1,11 @@
 #include <Client/Game.hpp>
 #include <iostream>
+#include <easylogging++.h>
 
 using std::cout;
 using std::endl;
+
+_INITIALIZE_EASYLOGGINGPP
 
 namespace Client
 {
@@ -17,7 +20,9 @@ namespace Client
     
     void Game::init()
     {
-	cout << "Initializing Game!" << endl;
+	LOG(INFO) << "Initializing Game!";
+	m_window = std::make_shared<Window>();
+	m_window->init(glm::ivec2(800, 600));
     }
     void Game::update()
     {
@@ -29,15 +34,15 @@ namespace Client
     }
 }
 
-int main()
+int main(int argv, const char** argc)
 {
-    cout << "Starting BomberPi." << endl;
+    LOG(INFO) << "Starting BomberPi.";
     Client::Game *game = new Client::Game();
     
     game->init();
     
     delete game;
     
-    cout << "Exiting BomberPi." << endl;
+    LOG(INFO) << "Exiting BomberPi.";
     return 0;
 }
