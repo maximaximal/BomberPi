@@ -30,6 +30,7 @@ namespace Client
         m_textureManager = std::make_shared<TextureManager>(m_window);
 
         m_stateManager = std::make_shared<StateManager>();
+        m_stateManager->setTextureManager(m_textureManager);
 
         //Start the game loop!
 
@@ -39,8 +40,8 @@ namespace Client
         float frametime = 0;
 
         std::shared_ptr<StateBomberman> stateBomberman = std::make_shared<StateBomberman>();
-        stateBomberman->init();
         m_stateManager->push(stateBomberman);
+        stateBomberman->init();
 
         while(!end)
         {

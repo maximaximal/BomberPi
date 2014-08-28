@@ -8,6 +8,7 @@
 namespace Client
 {
     class Window;
+    class TextureManager;
 }
 
 class StateManager : public SDLEventHandler
@@ -18,10 +19,12 @@ class StateManager : public SDLEventHandler
         std::shared_ptr<State> top();
 
         void render(std::shared_ptr<Client::Window> window);
+        void setTextureManager(std::shared_ptr<Client::TextureManager> textureManager);
     protected:
         virtual void onSDLEvent(const SDL_Event &e, float frametime);
     private:
         std::vector<std::shared_ptr<State>> m_states;
+        std::shared_ptr<Client::TextureManager> m_textureManager;
 };
 
 #endif

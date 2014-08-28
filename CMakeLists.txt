@@ -41,6 +41,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/TextureManager.hpp
     ${CLIENT_INCLUDE}/StateBomberman.hpp
     ${CLIENT_INCLUDE}/BombermanMap.hpp
+    ${CLIENT_INCLUDE}/BombermanMapTile.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 

@@ -16,6 +16,7 @@ namespace Client
     int Texture::load(const std::string &path)
     {
 		destroy();
+		m_path = path;
 
 		m_texture = IMG_LoadTexture(m_window->getSDLRenderer(), path.c_str());
         if(m_texture == nullptr)
@@ -32,6 +33,12 @@ namespace Client
             SDL_DestroyTexture(m_texture);
             m_texture = nullptr;
         }
+        m_path = "";
+    }
+
+    const std::string &Texture::getPath()
+    {
+        return m_path;
     }
     SDL_Texture *Texture::getSDLTexture()
     {

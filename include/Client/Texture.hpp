@@ -23,10 +23,13 @@ namespace Client
             int load(const std::string &path);
             void destroy();
 
+           	const std::string& getPath();
+
             SDL_Texture* getSDLTexture();
         private:
             SDL_Texture *m_texture = nullptr;
             std::shared_ptr<Window> m_window;
+            std::string m_path;
     };
 }
 

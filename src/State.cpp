@@ -8,6 +8,11 @@ std::shared_ptr<SDLEventHandler> State::getSDLEventHandler()
     return m_sdlEventHandler;
 }
 
+std::shared_ptr<Client::TextureManager> State::getTextureManager()
+{
+    return m_textureManager;
+}
+
 StateManager* State::getStateManager()
 {
     return m_stateManager;
@@ -16,6 +21,11 @@ StateManager* State::getStateManager()
 void State::setHandlers(StateManager *stateManager)
 {
     m_stateManager = stateManager;
+}
+
+void State::setTextureManager(std::shared_ptr<Client::TextureManager> textureManager)
+{
+    m_textureManager = textureManager;
 }
 
 void State::render(std::shared_ptr<Client::Window> window)

@@ -3,6 +3,7 @@
 
 #include <State.hpp>
 #include <Client/Window.hpp>
+#include <Client/BombermanMap.hpp>
 
 namespace Client
 {
@@ -14,8 +15,9 @@ namespace Client
 
             void init();
 
-            void render(std::shared_ptr<Window> window);
+            virtual void render(std::shared_ptr<Window> window);
         private:
+            std::shared_ptr<BombermanMap> m_map;
     };
 }
 
