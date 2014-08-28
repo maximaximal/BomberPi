@@ -26,6 +26,9 @@ namespace Client
             return 1;
         }
 
+        m_textureManager = std::make_shared<TextureManager>(m_window);
+
+        m_stateManager = std::make_shared<StateManager>();
 
         //Start the game loop!
 
@@ -46,6 +49,15 @@ namespace Client
                 }
 				onEvent(e);
             }
+
+            update(frametime);
+
+            render();
+
+            int delay = (1000 / 60) - timer.getMilliseconds();
+			if(delay > 0)
+				SDL_Delay(delay);
+			frametime = timer.getMilliseconds() / 1000.0;
         }
 
         return 0;
@@ -61,7 +73,9 @@ namespace Client
     }
     void Game::render()
     {
+        SDL_RenderClear(m_window->getSDLRenderer());
 		m_stateManager->render(m_window);
+        SDL_RenderPresent(m_window->getSDLRenderer());
     }
 }
 

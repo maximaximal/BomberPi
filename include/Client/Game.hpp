@@ -4,6 +4,7 @@
 #include <memory>
 #include <Client/Window.hpp>
 #include <StateManager.hpp>
+#include <Client/TextureManager.hpp>
 
 namespace Client 
 {
@@ -23,6 +24,7 @@ namespace Client
 		private:
 			std::shared_ptr<Window> m_window;
             std::shared_ptr<StateManager> m_stateManager;
+            std::shared_ptr<TextureManager> m_textureManager;
     };
 }
 

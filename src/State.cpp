@@ -16,12 +16,12 @@ std::shared_ptr<GameEventHandler> State::getGameEventHandler()
     return m_gameEventHandler;
 }
 
-std::shared_ptr<StateManager> State::getStateManager()
+StateManager* State::getStateManager()
 {
     return m_stateManager;
 }
 
-void State::setHandlers(std::shared_ptr<StateManager> stateManager)
+void State::setHandlers(StateManager *stateManager)
 {
     m_stateManager = stateManager;
 }

@@ -2,6 +2,7 @@
 
 void StateManager::push(std::shared_ptr<State> state)
 {
+    state->setHandlers(this);
     m_states.push_back(state);
 }
 
