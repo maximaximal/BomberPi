@@ -31,11 +31,3 @@ void StateManager::onSDLEvent(const SDL_Event &e, float frametime)
         top()->getSDLEventHandler()->sendEvent(e, frametime);
     }
 }
-
-void StateManager::onGameEvent(GameEventHandler::Type e, float frametime)
-{
-    if(m_states.size() > 0)
-    {
-		top()->getGameEventHandler()->sendEvent(e, frametime);
-    }
-}

@@ -16,14 +16,12 @@ SET(SHARED_SRCS
     ${SRC}/Timer.cpp
     ${SRC}/State.cpp
     ${SRC}/StateManager.cpp
-    ${SRC}/GameEventHandler.cpp
     ${SRC}/SDLEventHandler.cpp
 )
 SET(SHARED_HDRS
     ${INCLUDE}/Timer.hpp
     ${INCLUDE}/State.hpp
     ${INCLUDE}/StateManager.hpp
-    ${INCLUDE}/GameEventHandler.hpp
     ${INCLUDE}/SDLEventHandler.hpp
 )
 
@@ -33,6 +31,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/Texture.cpp
     ${CLIENT_SRC}/TextureManager.cpp
     ${CLIENT_SRC}/StateBomberman.cpp
+    ${CLIENT_SRC}/BombermanMap.cpp
 )
 
 SET(CLIENT_HDRS
@@ -41,6 +40,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/Texture.hpp
     ${CLIENT_INCLUDE}/TextureManager.hpp
     ${CLIENT_INCLUDE}/StateBomberman.hpp
+    ${CLIENT_INCLUDE}/BombermanMap.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 
