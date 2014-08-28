@@ -8,25 +8,29 @@ namespace Client
 {
     class Window 
     {
-	public:
-	    Window();
-	    virtual ~Window();
-	    
-	    /**
-	     * @brief Initialize the window.
-	     * 
-	     * Creates the SDL_Window and all required SDL structs. 
-	     * 
-	     * @param windowSize The size the SDL Window should have. 
-	     */
-	    int init(const glm::ivec2 &windowSize);
-	    
-	    SDL_Renderer* getSDLRenderer();
-	private:
-	    SDL_Window *m_window = nullptr;
-	    SDL_Renderer *m_renderer = nullptr;
-	    
-	    bool m_SDLInitialized = false;
+		public:
+			Window();
+			virtual ~Window();
+
+			/**
+			 * @brief Initialize the window.
+			 *
+			 * Creates the SDL_Window and all required SDL structs.
+			 *
+			 * @param windowSize The size the SDL Window should have.
+			 */
+			int init(const glm::ivec2 &windowSize);
+
+            void onEvent(const SDL_Event &e);
+
+			SDL_Renderer* getSDLRenderer();
+            SDL_Window* getSDLWindow();
+		private:
+			SDL_Window *m_window = nullptr;
+			SDL_Renderer *m_renderer = nullptr;
+
+			bool m_SDLInitialized = false;
+            bool m_SDLImageInitialized = false;
     };
 }
 
