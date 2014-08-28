@@ -32,6 +32,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/Window.cpp
     ${CLIENT_SRC}/Texture.cpp
     ${CLIENT_SRC}/TextureManager.cpp
+    ${CLIENT_SRC}/StateBomberman.cpp
 )
 
 SET(CLIENT_HDRS
@@ -39,6 +40,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/Window.hpp
     ${CLIENT_INCLUDE}/Texture.hpp
     ${CLIENT_INCLUDE}/TextureManager.hpp
+    ${CLIENT_INCLUDE}/StateBomberman.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 

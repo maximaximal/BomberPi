@@ -2,6 +2,7 @@
 #include <iostream>
 #include <easylogging++.h>
 #include <Timer.hpp>
+#include <Client/StateBomberman.hpp>
 
 _INITIALIZE_EASYLOGGINGPP
 
@@ -36,6 +37,10 @@ namespace Client
         Timer timer;
         SDL_Event e;
         float frametime = 0;
+
+        std::shared_ptr<StateBomberman> stateBomberman = std::make_shared<StateBomberman>();
+        stateBomberman->init();
+        m_stateManager->push(stateBomberman);
 
         while(!end)
         {
