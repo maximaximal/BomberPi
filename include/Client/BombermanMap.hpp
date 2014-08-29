@@ -24,6 +24,7 @@ namespace Client
             void render(std::shared_ptr<Window> window);
 
             void createOuterWall();
+            void createInnerStamps();
         private:
             std::vector<std::vector<std::unique_ptr<BombermanMapTile>>> m_tiles;
             glm::ivec2 m_mapSize;

@@ -23,7 +23,7 @@ namespace Client
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
-        m_map->init(glm::ivec2(18, 16));
+        m_map->init(glm::ivec2(17, 15));
 
         LOG(INFO) << "StateBomberman initialized.";
     }

@@ -26,13 +26,14 @@ namespace Client
             {
                 std::unique_ptr<BombermanMapTile> tilePtr;
                 tilePtr.reset(new BombermanMapTile());
-                tilePtr->id = 4;
+                tilePtr->id = 2;
                 tilePtr->physics = BombermanMapTile::PASSABLE;
                 tile = std::move(tilePtr);
             }
         }
 
         createOuterWall();
+        createInnerStamps();
     }
 
     void BombermanMap::clear()
@@ -55,8 +56,8 @@ namespace Client
             {
                 srcRect.h = 32;
                 srcRect.w = 32;
-                srcRect.x = m_tiles[x][y]->id / (512 / 32) * 32;
-				srcRect.y = m_tiles[x][y]->id % (512 / 32) * 32;
+				srcRect.x = m_tiles[x][y]->id % (512 / 32) * 32;
+                srcRect.y = m_tiles[x][y]->id / (512 / 32) * 32;
 
                 dsRect.w = 32;
                 dsRect.h = 32;
@@ -78,6 +79,20 @@ namespace Client
         {
             m_tiles[0][y]->id = 0;
             m_tiles[m_mapSize.x - 1][y]->id = 0;
+        }
+    }
+
+    void BombermanMap::createInnerStamps()
+    {
+        for(unsigned int x = 2; x < m_mapSize.x - 1; ++x)
+        {
+			for(unsigned int y = 2; y < m_mapSize.y - 1; ++y)
+			{
+				if(x % 2 == 0 && y % 2 == 0)
+                {
+                    m_tiles[x][y]->id = 1;
+                }
+			}
         }
     }
 }
