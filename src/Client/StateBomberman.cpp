@@ -19,8 +19,9 @@ namespace Client
     {
         LOG(INFO) << "Initializing StateBomberman.";
         m_map = std::make_shared<BombermanMap>();
+        m_world = std::make_shared<anax::World>();
 
-        m_map->setTexture(getTextureManager()->get("tileset.png"));
+        m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
         m_map->init(glm::ivec2(18, 16));
 

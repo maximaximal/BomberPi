@@ -4,6 +4,7 @@
 #include <State.hpp>
 #include <Client/Window.hpp>
 #include <Client/BombermanMap.hpp>
+#include <anax/World.hpp>
 
 namespace Client
 {
@@ -18,6 +19,8 @@ namespace Client
             virtual void render(std::shared_ptr<Window> window);
         private:
             std::shared_ptr<BombermanMap> m_map;
+
+			std::shared_ptr<anax::World> m_world;
     };
 }
 
