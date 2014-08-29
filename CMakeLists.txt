@@ -80,5 +80,27 @@ elseif()
     message(STATUS "Did not find Sigc++2! Please install it before you try to compile again.")
 endif()
 
+# Add anax
+ExternalProject_Add(anax_project
+    PREFIX anax
+    GIT_REPOSITORY https://github.com/miguelmartin75/anax.git 
+    GIT_TAG  v1.1
+    UPDATE_COMMAND ""
+    INSTALL_COMMAND ""
+)
+
+add_dependencies(Client anax_project)
+
+find_library(anax_library
+    NAMES anax libanax libanax_d libanax_d.so
+    HINTS ${CMAKE_CURRENT_BINARY_DIR}/anax/src/anax_project-build/lib
+    NO_DEFAULT_PATH
+)
+
+target_link_libraries(Client ${anax_library})
+include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/anax/src/anax_project/include/)
+
+message(STATUS "Anax Library: " ${anax_library})
+
 # Activate C++11
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
