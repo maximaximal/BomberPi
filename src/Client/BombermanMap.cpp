@@ -55,8 +55,8 @@ namespace Client
             {
                 srcRect.h = 32;
                 srcRect.w = 32;
-                srcRect.x = m_tiles[x][y]->id / (512 / 32);
-				srcRect.y = m_tiles[x][y]->id % (512 / 32);
+                srcRect.x = m_tiles[x][y]->id / (512 / 32) * 32;
+				srcRect.y = m_tiles[x][y]->id % (512 / 32) * 32;
 
                 dsRect.w = 32;
                 dsRect.h = 32;
