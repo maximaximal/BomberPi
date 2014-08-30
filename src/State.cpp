@@ -32,3 +32,8 @@ void State::render(std::shared_ptr<Client::Window> window)
 {
 
 }
+
+void State::update(float frameTime)
+{
+
+}

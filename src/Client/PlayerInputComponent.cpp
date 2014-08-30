@@ -13,4 +13,14 @@ namespace Client
         }
     }
 
+    PlayerInputComponent::~PlayerInputComponent()
+    {
+
+    }
+
+    bool PlayerInputComponent::isActive(PlayerInputEnum input)
+    {
+        return inputs[input];
+    }
+
 }

@@ -13,7 +13,16 @@ namespace Client
 
     void TextureManager::clear()
     {
-		m_textures.clear();
+        m_textures.clear();
+    }
+
+    void TextureManager::destroy()
+    {
+        for(auto &texture : m_textures)
+        {
+            auto shared_texture = texture.second.lock();
+            shared_texture->destroy();
+        }
     }
 
     bool TextureManager::has(const std::string &path)

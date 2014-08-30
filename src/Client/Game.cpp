@@ -14,7 +14,11 @@ namespace Client
     }
     Game::~Game()
     {
-	
+		m_textureManager->destroy();
+        m_textureManager->clear();
+
+        m_textureManager.reset();
+        m_window.reset();
     }
     
     int Game::init()
@@ -53,7 +57,7 @@ namespace Client
                 {
                     end = true;
                 }
-				onEvent(e);
+				onEvent(e, frametime);
             }
 
             update(frametime);
@@ -70,12 +74,13 @@ namespace Client
     }
     void Game::update(float frametime)
     {
-
+		m_stateManager->update(frametime);
     }
 
-    void Game::onEvent(const SDL_Event &e)
+    void Game::onEvent(const SDL_Event &e, float frametime)
     {
         m_window->onEvent(e);
+        m_stateManager->sendEvent(e, frametime);
     }
     void Game::render()
     {

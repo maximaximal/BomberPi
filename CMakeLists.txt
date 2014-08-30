@@ -17,6 +17,7 @@ SET(SHARED_SRCS
     ${SRC}/State.cpp
     ${SRC}/StateManager.cpp
     ${SRC}/SDLEventHandler.cpp
+    ${SRC}/InputMap.cpp
 )
 SET(SHARED_HDRS
     ${INCLUDE}/Timer.hpp
@@ -24,6 +25,7 @@ SET(SHARED_HDRS
     ${INCLUDE}/StateManager.hpp
     ${INCLUDE}/SDLEventHandler.hpp
     ${INCLUDE}/PlayerInput.hpp
+    ${INCLUDE}/InputMap.hpp
 )
 
 SET(CLIENT_SRCS
@@ -35,6 +37,13 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/BombermanMap.cpp
     ${CLIENT_SRC}/PlayerInputComponent.cpp
     ${CLIENT_SRC}/SpriteComponent.cpp
+    ${CLIENT_SRC}/PositionComponent.cpp
+    ${CLIENT_SRC}/VelocityComponent.cpp
+    ${CLIENT_SRC}/BodyComponent.cpp
+    ${CLIENT_SRC}/PlayerComponent.cpp
+    ${CLIENT_SRC}/SpriteRenderingSystem.cpp
+    ${CLIENT_SRC}/PlayerInputSystem.cpp
+    ${CLIENT_SRC}/PlayerMovementSystem.cpp
 )
 
 SET(CLIENT_HDRS
@@ -47,6 +56,13 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/BombermanMapTile.hpp
     ${CLIENT_INCLUDE}/PlayerInputComponent.hpp
     ${CLIENT_INCLUDE}/SpriteComponent.hpp
+    ${CLIENT_INCLUDE}/PositionComponent.hpp
+    ${CLIENT_INCLUDE}/VelocityComponent.hpp
+    ${CLIENT_INCLUDE}/BodyComponent.hpp
+    ${CLIENT_INCLUDE}/PlayerComponent.hpp
+    ${CLIENT_INCLUDE}/SpriteRenderingSystem.hpp
+    ${CLIENT_INCLUDE}/PlayerInputSystem.hpp
+    ${CLIENT_INCLUDE}/PlayerMovementSystem.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 
@@ -104,7 +120,6 @@ find_library(anax_library
 
 target_link_libraries(Client ${anax_library})
 include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/anax/src/anax_project/include/)
-
 message(STATUS "Anax Library: " ${anax_library})
 
 # Activate C++11

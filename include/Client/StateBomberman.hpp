@@ -8,6 +8,10 @@
 
 namespace Client
 {
+    class SpriteRenderingSystem;
+    class PlayerInputSystem;
+    class PlayerMovementSystem;
+
    	class StateBomberman : public State
     {
          public:
@@ -16,11 +20,17 @@ namespace Client
 
             void init();
 
+            virtual void update(float frameTime);
+
             virtual void render(std::shared_ptr<Window> window);
         private:
             std::shared_ptr<BombermanMap> m_map;
-
 			std::shared_ptr<anax::World> m_world;
+
+            //Systems
+				std::shared_ptr<SpriteRenderingSystem> m_spriteRenderingSystem;
+				std::shared_ptr<PlayerInputSystem> m_playerInputSystem;
+				std::shared_ptr<PlayerMovementSystem> m_playerMovementSystem;
     };
 }
 

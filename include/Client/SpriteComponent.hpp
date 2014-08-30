@@ -3,19 +3,25 @@
 
 #include <anax/Component.hpp>
 #include <Client/Texture.hpp>
+#include <SDL2/SDL.h>
 
 namespace Client
 {
-    struct SpriteComponent : anax::Component<SpriteComponent>
+    class SpriteComponent : public anax::Component<SpriteComponent>
     {
-		SpriteComponent();
-		SpriteComponent(std::shared_ptr<Texture> texture);
-		SpriteComponent(std::shared_ptr<Texture> texture, const SDL_Rect &srcRect);
+        public:
+			SpriteComponent();
+			SpriteComponent(std::shared_ptr<Texture> texture);
+			SpriteComponent(std::shared_ptr<Texture> texture, const SDL_Rect &srcRect);
 
-        void clear();
+            virtual ~SpriteComponent();
 
-        std::shared_ptr<Texture> texture;
-        SDL_Rect srcRect;
+			void clear();
+
+			std::shared_ptr<Texture> texture;
+			SDL_Rect srcRect;
+			double rotation;
+			SDL_RendererFlip rendererFlip;
     };
 }
 

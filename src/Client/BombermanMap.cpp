@@ -31,9 +31,6 @@ namespace Client
                 tile = std::move(tilePtr);
             }
         }
-
-        createOuterWall();
-        createInnerStamps();
     }
 
     void BombermanMap::clear()

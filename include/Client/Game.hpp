@@ -18,7 +18,7 @@ namespace Client
 
 			void update(float frametime);
 
-            void onEvent(const SDL_Event &e);
+            void onEvent(const SDL_Event &e, float frametime);
 
 			void render();
 		private:

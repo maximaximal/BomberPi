@@ -4,14 +4,20 @@
 #include <map>
 #include <anax/Component.hpp>
 #include <PlayerInput.hpp>
+#include <InputMap.hpp>
 
 namespace Client
 {
-    struct PlayerInputComponent : anax::Component<PlayerInputComponent>
+    class PlayerInputComponent : public anax::Component<PlayerInputComponent>
     {
-		PlayerInputComponent();
+        public:
+			PlayerInputComponent();
+            virtual ~PlayerInputComponent();
 
-        std::map<PlayerInputEnum, bool> inputs;
+			std::map<PlayerInputEnum, bool> inputs;
+			InputMap inputMap;
+
+            bool isActive(PlayerInputEnum input);
     };
 }
 

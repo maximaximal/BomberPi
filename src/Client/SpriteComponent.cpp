@@ -17,13 +17,18 @@ namespace Client
         this->texture = texture;
         this->srcRect = srcRect;
     }
+
+    SpriteComponent::~SpriteComponent()
+    {
+
+    }
     void SpriteComponent::clear()
     {
         srcRect.x = 0;
         srcRect.y = 0;
         srcRect.w = 0;
         srcRect.h = 0;
-
+        rotation = 0;
         texture.reset();
     }
 }

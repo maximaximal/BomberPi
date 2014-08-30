@@ -15,6 +15,7 @@ namespace Client
             virtual ~TextureManager();
 
             void clear();
+            void destroy();
 
             bool has(const std::string &path);
 

@@ -23,7 +23,8 @@ class State
         void setTextureManager(std::shared_ptr<Client::TextureManager> textureManager);
 
         virtual void render(std::shared_ptr<Client::Window> window);
-    private:
+        virtual void update(float frameTime);
+    	private:
 		std::shared_ptr<SDLEventHandler> m_sdlEventHandler;
         std::shared_ptr<Client::TextureManager> m_textureManager;
         StateManager* m_stateManager;
