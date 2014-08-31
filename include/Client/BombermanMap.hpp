@@ -25,6 +25,8 @@ namespace Client
 
             void createOuterWall();
             void createInnerStamps();
+
+            const BombermanMapTile& getTileAtPixel(glm::ivec2 pos);
         private:
             std::vector<std::vector<std::unique_ptr<BombermanMapTile>>> m_tiles;
             glm::ivec2 m_mapSize;

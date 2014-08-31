@@ -70,12 +70,16 @@ namespace Client
         for(unsigned int x = 0; x < m_mapSize.x; ++x)
         {
             m_tiles[x][0]->id = 0;
+            m_tiles[x][0]->physics = BombermanMapTile::SOLID;
             m_tiles[x][m_mapSize.y - 1]->id = 0;
+            m_tiles[x][m_mapSize.y - 1]->physics = BombermanMapTile::SOLID;
         }
         for(unsigned int y = 0; y < m_mapSize.y; ++y)
         {
             m_tiles[0][y]->id = 0;
+            m_tiles[0][y]->physics = BombermanMapTile::SOLID;
             m_tiles[m_mapSize.x - 1][y]->id = 0;
+            m_tiles[m_mapSize.x - 1][y]->physics = BombermanMapTile::SOLID;
         }
     }
 
@@ -88,8 +92,21 @@ namespace Client
 				if(x % 2 == 0 && y % 2 == 0)
                 {
                     m_tiles[x][y]->id = 1;
+                    m_tiles[x][y]->physics = BombermanMapTile::SOLID;
                 }
 			}
+        }
+    }
+
+    const BombermanMapTile& BombermanMap::getTileAtPixel(glm::ivec2 pos)
+    {
+       	glm::ivec2 tilePos = pos / 32;
+        if(m_tiles.size() >= tilePos.x)
+        {
+            if((m_tiles[tilePos.x]).size() >= tilePos.y)
+            {
+                return *(m_tiles[tilePos.x][tilePos.y].get());
+            }
         }
     }
 }

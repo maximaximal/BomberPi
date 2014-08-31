@@ -11,6 +11,7 @@
 #include <Client/PlayerMovementSystem.hpp>
 #include <Client/PlayerComponent.hpp>
 #include <Client/VelocityComponent.hpp>
+#include <Client/BodyComponent.hpp>
 
 namespace Client
 {
@@ -37,7 +38,7 @@ namespace Client
         m_playerInputSystem->setSDLEventHandler(getSDLEventHandler());
         m_world->addSystem(*m_playerInputSystem);
 
-        m_playerMovementSystem = std::make_shared<PlayerMovementSystem>();
+        m_playerMovementSystem = std::make_shared<PlayerMovementSystem>(m_map);
         m_world->addSystem(*m_playerMovementSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
@@ -48,7 +49,7 @@ namespace Client
         m_map->createInnerStamps();
 
         auto entity = m_world->createEntity();
-        entity.addComponent(new PositionComponent(20, 10));
+        entity.addComponent(new PositionComponent(32, 32));
         SpriteComponent *spriteComponent = new SpriteComponent();
         spriteComponent->texture = getTextureManager()->get("player_proto.png");
 		spriteComponent->srcRect.w = 32;
@@ -61,6 +62,7 @@ namespace Client
         inputComponent->inputMap.set(SDL_SCANCODE_D, PlayerInputEnum::RIGHT);
         inputComponent->inputMap.set(SDL_SCANCODE_SPACE, PlayerInputEnum::ACTION);
         entity.addComponent(inputComponent);
+        entity.addComponent(new BodyComponent(10, 10, 10, 10));
         entity.addComponent(new PlayerComponent());
         entity.activate();
 
