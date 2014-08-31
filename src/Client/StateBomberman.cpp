@@ -66,6 +66,24 @@ namespace Client
         entity.addComponent(new PlayerComponent());
         entity.activate();
 
+        entity = m_world->createEntity();
+        entity.addComponent(new PositionComponent(128, 32));
+        spriteComponent = new SpriteComponent();
+        spriteComponent->texture = getTextureManager()->get("player_proto.png");
+		spriteComponent->srcRect.w = 32;
+		spriteComponent->srcRect.h = 32;
+        entity.addComponent(spriteComponent);
+        inputComponent = new PlayerInputComponent();
+        inputComponent->inputMap.set(SDL_SCANCODE_U, PlayerInputEnum::UP);
+        inputComponent->inputMap.set(SDL_SCANCODE_H, PlayerInputEnum::LEFT);
+        inputComponent->inputMap.set(SDL_SCANCODE_J, PlayerInputEnum::DOWN);
+        inputComponent->inputMap.set(SDL_SCANCODE_K, PlayerInputEnum::RIGHT);
+        inputComponent->inputMap.set(SDL_SCANCODE_Z, PlayerInputEnum::ACTION);
+        entity.addComponent(inputComponent);
+        entity.addComponent(new BodyComponent(10, 10, 10, 10));
+        entity.addComponent(new PlayerComponent());
+        entity.activate();
+
         m_world->refresh();
         LOG(INFO) << "StateBomberman initialized.";
     }
@@ -73,6 +91,7 @@ namespace Client
     void StateBomberman::update(float frameTime)
     {
         m_world->refresh();
+        m_playerInputSystem->update();
         m_playerMovementSystem->update(frameTime);
     }
 

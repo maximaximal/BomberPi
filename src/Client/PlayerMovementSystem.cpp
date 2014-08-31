@@ -36,6 +36,8 @@ namespace Client
         glm::dvec2 dir(0, 0);
 		for(auto &entity : getEntities())
         {
+            dir.x = 0;
+            dir.y = 0;
             auto &pos = entity.getComponent<PositionComponent>();
             auto &player = entity.getComponent<PlayerComponent>();
             auto &input = entity.getComponent<PlayerInputComponent>();

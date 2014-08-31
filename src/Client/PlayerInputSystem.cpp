@@ -2,6 +2,8 @@
 
 #include <Client/PlayerInputComponent.hpp>
 
+#include <easylogging++.h>
+
 namespace Client
 {
     PlayerInputSystem::PlayerInputSystem()
