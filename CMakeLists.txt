@@ -34,6 +34,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/Texture.cpp
     ${CLIENT_SRC}/TextureManager.cpp
     ${CLIENT_SRC}/StateBomberman.cpp
+    ${CLIENT_SRC}/EntityDropGenerator.cpp
     ${CLIENT_SRC}/BombermanMap.cpp
     ${CLIENT_SRC}/PlayerInputComponent.cpp
     ${CLIENT_SRC}/SpriteComponent.cpp
@@ -54,6 +55,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/Texture.hpp
     ${CLIENT_INCLUDE}/TextureManager.hpp
     ${CLIENT_INCLUDE}/StateBomberman.hpp
+    ${CLIENT_INCLUDE}/EntityDropGenerator.hpp
     ${CLIENT_INCLUDE}/BombermanMap.hpp
     ${CLIENT_INCLUDE}/BombermanMapTile.hpp
     ${CLIENT_INCLUDE}/PlayerInputComponent.hpp
@@ -125,7 +127,7 @@ if(NOT ${anax_library} MATCHES "anax_library-NOTFOUND")
     target_link_libraries(Client ${anax_library})
     include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/anax/src/anax_project/include/)
     message(STATUS "Anax Library: " ${anax_library})
-elseif()
+else()
     message(STATUS "Please re-run cmake!")
 endif()
 

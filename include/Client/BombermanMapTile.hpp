@@ -1,6 +1,8 @@
 #ifndef CLIENT_BOMBERMANMAPTILE_HPP_INCLUDED
 #define CLIENT_BOMBERMANMAPTILE_HPP_INCLUDED
 
+#include <Client/EntityDropGenerator.hpp>
+
 namespace Client
 {
     class BombermanMapTile
@@ -19,8 +21,9 @@ namespace Client
                 physics = TilePhysics::SOLID;
             }
 
-			int id;
-			TilePhysics physics;
+			int id = 0;
+			TilePhysics physics = PASSABLE;
+            EntityDropGenerator *dropGenerator = nullptr;
     };
 }
 
