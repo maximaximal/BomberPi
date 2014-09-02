@@ -4,6 +4,7 @@
 #include <State.hpp>
 #include <Client/Window.hpp>
 #include <Client/BombermanMap.hpp>
+#include <Client/EntityFactory.hpp>
 #include <anax/World.hpp>
 
 namespace Client
@@ -26,6 +27,7 @@ namespace Client
         private:
             std::shared_ptr<BombermanMap> m_map;
 			std::shared_ptr<anax::World> m_world;
+			std::shared_ptr<EntityFactory> m_entityFactory;
 
             //Systems
 				std::shared_ptr<SpriteRenderingSystem> m_spriteRenderingSystem;

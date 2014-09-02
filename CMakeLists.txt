@@ -41,9 +41,11 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/VelocityComponent.cpp
     ${CLIENT_SRC}/BodyComponent.cpp
     ${CLIENT_SRC}/PlayerComponent.cpp
+    ${CLIENT_SRC}/DestructableComponent.cpp
     ${CLIENT_SRC}/SpriteRenderingSystem.cpp
     ${CLIENT_SRC}/PlayerInputSystem.cpp
     ${CLIENT_SRC}/PlayerMovementSystem.cpp
+    ${CLIENT_SRC}/EntityFactory.cpp
 )
 
 SET(CLIENT_HDRS
@@ -60,9 +62,11 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/VelocityComponent.hpp
     ${CLIENT_INCLUDE}/BodyComponent.hpp
     ${CLIENT_INCLUDE}/PlayerComponent.hpp
+    ${CLIENT_INCLUDE}/DestructableComponent.hpp
     ${CLIENT_INCLUDE}/SpriteRenderingSystem.hpp
     ${CLIENT_INCLUDE}/PlayerInputSystem.hpp
     ${CLIENT_INCLUDE}/PlayerMovementSystem.hpp
+    ${CLIENT_INCLUDE}/EntityFactory.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 
@@ -118,9 +122,13 @@ find_library(anax_library
     NO_DEFAULT_PATH
 )
 
-target_link_libraries(Client ${anax_library})
-include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/anax/src/anax_project/include/)
-message(STATUS "Anax Library: " ${anax_library})
+if(NOT ${anax_library} MATCHES "anax_library-NOTFOUND")
+    target_link_libraries(Client ${anax_library})
+    include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/anax/src/anax_project/include/)
+    message(STATUS "Anax Library: " ${anax_library})
+elseif()
+    message(STATUS "Please re-run cmake!")
+endif()
 
 # Activate C++11
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")

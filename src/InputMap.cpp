@@ -21,6 +21,11 @@ InputMap::~InputMap()
 
 }
 
+void InputMap::clear()
+{
+    m_maps.clear();
+}
+
 void InputMap::set(const SDL_Scancode &key, const PlayerInputEnum &input)
 {
     m_maps[key] = input;

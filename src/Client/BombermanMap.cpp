@@ -18,18 +18,23 @@ namespace Client
 
 		m_mapSize = mapSize;
 
-		m_tiles.resize(mapSize.x);
-        for(auto &yTiles : m_tiles)
+		m_tiles[0].resize(mapSize.x);
+		m_tiles[1].resize(mapSize.x);
+
+        for(auto &layer : m_tiles)
         {
-            yTiles.resize(mapSize.y);
-            for(auto &tile : yTiles)
-            {
-                std::unique_ptr<BombermanMapTile> tilePtr;
-                tilePtr.reset(new BombermanMapTile());
-                tilePtr->id = 2;
-                tilePtr->physics = BombermanMapTile::PASSABLE;
-                tile = std::move(tilePtr);
-            }
+			for(auto &yTiles : layer.second)
+			{
+				yTiles.resize(mapSize.y);
+				for(auto &tile : yTiles)
+				{
+					std::unique_ptr<BombermanMapTile> tilePtr;
+					tilePtr.reset(new BombermanMapTile());
+					tilePtr->id = 255;
+					tilePtr->physics = BombermanMapTile::PASSABLE;
+					tile = std::move(tilePtr);
+				}
+			}
         }
     }
 
@@ -47,66 +52,79 @@ namespace Client
     {
         SDL_Rect srcRect;
         SDL_Rect dsRect;
-        for(unsigned int x = 0; x < m_mapSize.x; ++x)
+        for(auto &layer : m_tiles)
         {
-            for(unsigned int y = 0; y < m_mapSize.y; ++y)
-            {
-                srcRect.h = 32;
-                srcRect.w = 32;
-				srcRect.x = m_tiles[x][y]->id % (512 / 32) * 32;
-                srcRect.y = m_tiles[x][y]->id / (512 / 32) * 32;
+			for(unsigned int x = 0; x < m_mapSize.x; ++x)
+			{
+				for(unsigned int y = 0; y < m_mapSize.y; ++y)
+				{
+					srcRect.h = 32;
+					srcRect.w = 32;
+					srcRect.x = layer.second[x][y]->id % (512 / 32) * 32;
+					srcRect.y = layer.second[x][y]->id / (512 / 32) * 32;
 
-                dsRect.w = 32;
-                dsRect.h = 32;
-                dsRect.x = x * 32;
-                dsRect.y = y * 32;
-				SDL_RenderCopy(window->getSDLRenderer(), m_texture->getSDLTexture(), &srcRect, &dsRect);
-            }
+					dsRect.w = 32;
+					dsRect.h = 32;
+					dsRect.x = x * 32;
+					dsRect.y = y * 32;
+					SDL_RenderCopy(window->getSDLRenderer(), m_texture->getSDLTexture(), &srcRect, &dsRect);
+				}
+			}
         }
     }
 
     void BombermanMap::createOuterWall()
     {
+        const short layer = 1;
         for(unsigned int x = 0; x < m_mapSize.x; ++x)
         {
-            m_tiles[x][0]->id = 0;
-            m_tiles[x][0]->physics = BombermanMapTile::SOLID;
-            m_tiles[x][m_mapSize.y - 1]->id = 0;
-            m_tiles[x][m_mapSize.y - 1]->physics = BombermanMapTile::SOLID;
+            m_tiles[layer][x][0]->id = 0;
+            m_tiles[layer][x][0]->physics = BombermanMapTile::SOLID;
+            m_tiles[layer][x][m_mapSize.y - 1]->id = 0;
+            m_tiles[layer][x][m_mapSize.y - 1]->physics = BombermanMapTile::SOLID;
         }
         for(unsigned int y = 0; y < m_mapSize.y; ++y)
         {
-            m_tiles[0][y]->id = 0;
-            m_tiles[0][y]->physics = BombermanMapTile::SOLID;
-            m_tiles[m_mapSize.x - 1][y]->id = 0;
-            m_tiles[m_mapSize.x - 1][y]->physics = BombermanMapTile::SOLID;
+            m_tiles[layer][0][y]->id = 0;
+            m_tiles[layer][0][y]->physics = BombermanMapTile::SOLID;
+            m_tiles[layer][m_mapSize.x - 1][y]->id = 0;
+            m_tiles[layer][m_mapSize.x - 1][y]->physics = BombermanMapTile::SOLID;
         }
     }
 
     void BombermanMap::createInnerStamps()
     {
-        for(unsigned int x = 2; x < m_mapSize.x - 1; ++x)
+        const short layer = 1;
+        for(unsigned int x = 1; x < m_mapSize.x - 1; ++x)
         {
-			for(unsigned int y = 2; y < m_mapSize.y - 1; ++y)
+			for(unsigned int y = 1; y < m_mapSize.y - 1; ++y)
 			{
 				if(x % 2 == 0 && y % 2 == 0)
                 {
-                    m_tiles[x][y]->id = 1;
-                    m_tiles[x][y]->physics = BombermanMapTile::SOLID;
+                    m_tiles[layer][x][y]->id = 1;
+                    m_tiles[layer][x][y]->physics = BombermanMapTile::SOLID;
+                }
+                else
+                {
+                    m_tiles[0][x][y]->id = 2;
+                    m_tiles[0][x][y]->physics = BombermanMapTile::PASSABLE;
                 }
 			}
         }
     }
 
-    const BombermanMapTile& BombermanMap::getTileAtPixel(glm::ivec2 pos)
+    const BombermanMapTile& BombermanMap::getTileAtPixel(glm::ivec3 pos)
     {
-       	glm::ivec2 tilePos = pos / 32;
-        if(m_tiles.size() >= tilePos.x)
+       	glm::ivec3 tilePos = pos / 32;
+        if(m_tiles.count(pos.z) != 0)
         {
-            if((m_tiles[tilePos.x]).size() >= tilePos.y)
-            {
-                return *(m_tiles[tilePos.x][tilePos.y].get());
-            }
+			if(m_tiles[pos.z].size() >= tilePos.x)
+			{
+				if((m_tiles[pos.z][tilePos.x]).size() >= tilePos.y)
+				{
+					return *(m_tiles[pos.z][tilePos.x][tilePos.y].get());
+				}
+			}
         }
     }
 }

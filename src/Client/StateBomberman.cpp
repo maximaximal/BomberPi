@@ -41,6 +41,8 @@ namespace Client
         m_playerMovementSystem = std::make_shared<PlayerMovementSystem>(m_map);
         m_world->addSystem(*m_playerMovementSystem);
 
+        m_entityFactory = std::make_shared<EntityFactory>(m_world, getTextureManager());
+
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
         m_map->init(glm::ivec2(17, 15));
@@ -48,41 +50,31 @@ namespace Client
         m_map->createOuterWall();
         m_map->createInnerStamps();
 
-        auto entity = m_world->createEntity();
-        entity.addComponent(new PositionComponent(32, 32));
-        SpriteComponent *spriteComponent = new SpriteComponent();
-        spriteComponent->texture = getTextureManager()->get("player_proto.png");
-		spriteComponent->srcRect.w = 32;
-		spriteComponent->srcRect.h = 32;
-        entity.addComponent(spriteComponent);
-        PlayerInputComponent *inputComponent = new PlayerInputComponent();
-        inputComponent->inputMap.set(SDL_SCANCODE_W, PlayerInputEnum::UP);
-        inputComponent->inputMap.set(SDL_SCANCODE_A, PlayerInputEnum::LEFT);
-        inputComponent->inputMap.set(SDL_SCANCODE_S, PlayerInputEnum::DOWN);
-        inputComponent->inputMap.set(SDL_SCANCODE_D, PlayerInputEnum::RIGHT);
-        inputComponent->inputMap.set(SDL_SCANCODE_SPACE, PlayerInputEnum::ACTION);
-        entity.addComponent(inputComponent);
-        entity.addComponent(new BodyComponent(10, 10, 10, 10));
-        entity.addComponent(new PlayerComponent());
-        entity.activate();
+       	InputMap inputMap;
+        inputMap.set(SDL_SCANCODE_W, PlayerInputEnum::UP);
+       	inputMap.set(SDL_SCANCODE_A, PlayerInputEnum::LEFT);
+        inputMap.set(SDL_SCANCODE_S, PlayerInputEnum::DOWN);
+        inputMap.set(SDL_SCANCODE_D, PlayerInputEnum::RIGHT);
+        inputMap.set(SDL_SCANCODE_SPACE, PlayerInputEnum::ACTION);
+		m_entityFactory->createPlayer(glm::ivec2(32, 32), inputMap);
 
-        entity = m_world->createEntity();
-        entity.addComponent(new PositionComponent(128, 32));
-        spriteComponent = new SpriteComponent();
-        spriteComponent->texture = getTextureManager()->get("player_proto.png");
-		spriteComponent->srcRect.w = 32;
-		spriteComponent->srcRect.h = 32;
-        entity.addComponent(spriteComponent);
-        inputComponent = new PlayerInputComponent();
-        inputComponent->inputMap.set(SDL_SCANCODE_U, PlayerInputEnum::UP);
-        inputComponent->inputMap.set(SDL_SCANCODE_H, PlayerInputEnum::LEFT);
-        inputComponent->inputMap.set(SDL_SCANCODE_J, PlayerInputEnum::DOWN);
-        inputComponent->inputMap.set(SDL_SCANCODE_K, PlayerInputEnum::RIGHT);
-        inputComponent->inputMap.set(SDL_SCANCODE_Z, PlayerInputEnum::ACTION);
-        entity.addComponent(inputComponent);
-        entity.addComponent(new BodyComponent(10, 10, 10, 10));
-        entity.addComponent(new PlayerComponent());
-        entity.activate();
+        inputMap.clear();
+
+        inputMap.set(SDL_SCANCODE_UP, PlayerInputEnum::UP);
+       	inputMap.set(SDL_SCANCODE_LEFT, PlayerInputEnum::LEFT);
+        inputMap.set(SDL_SCANCODE_DOWN, PlayerInputEnum::DOWN);
+        inputMap.set(SDL_SCANCODE_RIGHT, PlayerInputEnum::RIGHT);
+        inputMap.set(SDL_SCANCODE_MINUS, PlayerInputEnum::ACTION);
+		m_entityFactory->createPlayer(glm::ivec2(288, 288), inputMap);
+
+        inputMap.clear();
+
+        inputMap.set(SDL_SCANCODE_U, PlayerInputEnum::UP);
+       	inputMap.set(SDL_SCANCODE_H, PlayerInputEnum::LEFT);
+        inputMap.set(SDL_SCANCODE_J, PlayerInputEnum::DOWN);
+        inputMap.set(SDL_SCANCODE_K, PlayerInputEnum::RIGHT);
+        inputMap.set(SDL_SCANCODE_Z, PlayerInputEnum::ACTION);
+		m_entityFactory->createPlayer(glm::ivec2(32, 288), inputMap);
 
         m_world->refresh();
         LOG(INFO) << "StateBomberman initialized.";

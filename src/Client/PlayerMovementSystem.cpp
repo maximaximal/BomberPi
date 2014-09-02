@@ -69,11 +69,11 @@ namespace Client
 
             if(wasValidInput)
             {
-                glm::ivec2 nextXBodyPos(pos.pos.x + dir.x + body.x, pos.pos.y + body.y);
-                glm::ivec2 nextYBodyPos(pos.pos.x + body.x, pos.pos.y + dir.y + body.y);
+                glm::ivec3 nextXBodyPos(pos.pos.x + dir.x + body.x, pos.pos.y + body.y, 1);
+                glm::ivec3 nextYBodyPos(pos.pos.x + body.x, pos.pos.y + dir.y + body.y, 1);
 
-                glm::ivec2 nextXBodyWidthPos(pos.pos.x + body.x + dir.x + body.w, pos.pos.y + body.y);
-                glm::ivec2 nextYBodyWidthPos(pos.pos.x + body.x, pos.pos.y + dir.y + body.y + body.h);
+                glm::ivec3 nextXBodyWidthPos(pos.pos.x + body.x + dir.x + body.w, pos.pos.y + body.y, 1);
+                glm::ivec3 nextYBodyWidthPos(pos.pos.x + body.x, pos.pos.y + dir.y + body.y + body.h, 1);
 
                 if(m_bombermanMap->getTileAtPixel(nextXBodyPos).physics == BombermanMapTile::SOLID)
                 {

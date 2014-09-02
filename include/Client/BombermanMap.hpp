@@ -3,8 +3,10 @@
 
 #include <vector>
 #include <memory>
+#include <map>
 #include <Client/BombermanMapTile.hpp>
 #include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 #include <Client/Window.hpp>
 #include <Client/Texture.hpp>
 
@@ -26,9 +28,9 @@ namespace Client
             void createOuterWall();
             void createInnerStamps();
 
-            const BombermanMapTile& getTileAtPixel(glm::ivec2 pos);
+            const BombermanMapTile& getTileAtPixel(glm::ivec3 pos);
         private:
-            std::vector<std::vector<std::unique_ptr<BombermanMapTile>>> m_tiles;
+            std::map<short, std::vector<std::vector<std::unique_ptr<BombermanMapTile>>>> m_tiles;
             glm::ivec2 m_mapSize;
 
             std::shared_ptr<Texture> m_texture;

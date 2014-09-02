@@ -14,6 +14,9 @@ class InputMap
         InputMap();
         InputMap(const InputMap &inputMap);
         virtual ~InputMap();
+
+        void clear();
+
         void set(const SDL_Scancode &key, const PlayerInputEnum &input);
         const PlayerInputEnum& get(SDL_Scancode key);
 

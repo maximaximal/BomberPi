@@ -11,7 +11,7 @@ namespace Client
             PlayerComponent();
             virtual ~PlayerComponent();
 
-            float speed = 100;
+            float speed = 150;
     };
 }
 
