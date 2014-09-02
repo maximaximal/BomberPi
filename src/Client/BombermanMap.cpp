@@ -9,7 +9,7 @@ namespace Client
     }
     BombermanMap::~BombermanMap()
     {
-
+		clear();
     }
 
     void BombermanMap::init(glm::ivec2 mapSize)
@@ -28,11 +28,9 @@ namespace Client
 				yTiles.resize(mapSize.y);
 				for(auto &tile : yTiles)
 				{
-					std::unique_ptr<BombermanMapTile> tilePtr;
-					tilePtr.reset(new BombermanMapTile());
-					tilePtr->id = 255;
-					tilePtr->physics = BombermanMapTile::PASSABLE;
-					tile = std::move(tilePtr);
+					tile = new BombermanMapTile();
+					tile->id = 255;
+					tile->physics = BombermanMapTile::PASSABLE;
 				}
 			}
         }
@@ -40,6 +38,16 @@ namespace Client
 
     void BombermanMap::clear()
     {
+        for(auto &layer : m_tiles)
+        {
+            for(auto &yTiles : layer.second)
+            {
+                for(auto &tile : yTiles)
+                {
+                    delete tile;
+                }
+            }
+        }
         m_tiles.clear();
     }
 
@@ -122,7 +130,7 @@ namespace Client
 			{
 				if((m_tiles[pos.z][tilePos.x]).size() >= tilePos.y)
 				{
-					return *(m_tiles[pos.z][tilePos.x][tilePos.y].get());
+					return *(m_tiles[pos.z][tilePos.x][tilePos.y]);
 				}
 			}
         }

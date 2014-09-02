@@ -109,8 +109,7 @@ endif()
 ExternalProject_Add(anax_project
     PREFIX anax
     GIT_REPOSITORY https://github.com/miguelmartin75/anax.git 
-    GIT_TAG  v1.1
-    UPDATE_COMMAND ""
+    UPDATE_COMMAND git pull origin master
     INSTALL_COMMAND ""
 )
 

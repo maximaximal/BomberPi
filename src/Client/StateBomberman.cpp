@@ -22,6 +22,13 @@ namespace Client
     }
     StateBomberman::~StateBomberman()
     {
+        m_spriteRenderingSystem.reset();
+        m_playerInputSystem.reset();
+        m_playerMovementSystem.reset();
+
+        m_entityFactory.reset();
+        m_map.reset();
+        m_world.reset();
 		LOG(INFO) << "StateBomberman deleted.";
     }
 
@@ -66,15 +73,6 @@ namespace Client
         inputMap.set(SDL_SCANCODE_RIGHT, PlayerInputEnum::RIGHT);
         inputMap.set(SDL_SCANCODE_MINUS, PlayerInputEnum::ACTION);
 		m_entityFactory->createPlayer(glm::ivec2(288, 288), inputMap);
-
-        inputMap.clear();
-
-        inputMap.set(SDL_SCANCODE_U, PlayerInputEnum::UP);
-       	inputMap.set(SDL_SCANCODE_H, PlayerInputEnum::LEFT);
-        inputMap.set(SDL_SCANCODE_J, PlayerInputEnum::DOWN);
-        inputMap.set(SDL_SCANCODE_K, PlayerInputEnum::RIGHT);
-        inputMap.set(SDL_SCANCODE_Z, PlayerInputEnum::ACTION);
-		m_entityFactory->createPlayer(glm::ivec2(32, 288), inputMap);
 
         m_world->refresh();
         LOG(INFO) << "StateBomberman initialized.";

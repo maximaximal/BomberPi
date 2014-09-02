@@ -14,6 +14,7 @@ namespace Client
     }
     Game::~Game()
     {
+        m_stateManager.reset();
 		m_textureManager->destroy();
         m_textureManager->clear();
 
@@ -46,6 +47,7 @@ namespace Client
         std::shared_ptr<StateBomberman> stateBomberman = std::make_shared<StateBomberman>();
         m_stateManager->push(stateBomberman);
         stateBomberman->init();
+		stateBomberman.reset();
 
         while(!end)
         {

@@ -21,7 +21,8 @@ namespace Client
         for(auto &texture : m_textures)
         {
             auto shared_texture = texture.second.lock();
-            shared_texture->destroy();
+            if(shared_texture)
+                shared_texture->destroy();
         }
     }
 

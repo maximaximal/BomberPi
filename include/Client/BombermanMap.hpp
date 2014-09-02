@@ -30,7 +30,7 @@ namespace Client
 
             const BombermanMapTile& getTileAtPixel(glm::ivec3 pos);
         private:
-            std::map<short, std::vector<std::vector<std::unique_ptr<BombermanMapTile>>>> m_tiles;
+            std::map<short, std::vector<std::vector<BombermanMapTile*>>> m_tiles;
             glm::ivec2 m_mapSize;
 
             std::shared_ptr<Texture> m_texture;
