@@ -3,21 +3,24 @@
 
 #include <map>
 #include <functional>
+#include <memory>
+#include <Client/EntityFactory.hpp>
+#include <glm/vec3.hpp>
 
 namespace Client
 {
     class EntityDropGenerator
     {
         public:
-            EntityDropGenerator();
+            EntityDropGenerator(std::shared_ptr<EntityFactory> factory);
          	virtual ~EntityDropGenerator();
 
-           	void run();
+           	void run(glm::ivec3 tilePos);
 
-            void setChance(float chance);
+            void setChance(unsigned int chance);
         protected:
-            float m_chance = 90;
-            std::map<unsigned int, std::function<void()>> m_entities;
+            unsigned int m_chance = 900;
+            std::shared_ptr<EntityFactory> m_entityFactory;
     };
 }
 

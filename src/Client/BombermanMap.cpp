@@ -100,6 +100,23 @@ namespace Client
         }
     }
 
+    void BombermanMap::createFillerWalls()
+    {
+        const short layer = 1;
+        for(unsigned int x = 1; x < m_mapSize.x - 1; ++x)
+        {
+			for(unsigned int y = 1; y < m_mapSize.y - 1; ++y)
+			{
+                if(m_tiles[layer][x][y]->physics != BombermanMapTile::SOLID)
+                {
+                    m_tiles[layer][x][y]->id = 16 + (rand() % 3);
+                    m_tiles[layer][x][y]->physics = BombermanMapTile::SOLID;
+                    m_tiles[layer][x][y]->bombable = true;
+                }
+			}
+        }
+    }
+
     void BombermanMap::createInnerStamps()
     {
         const short layer = 1;
@@ -107,16 +124,43 @@ namespace Client
         {
 			for(unsigned int y = 1; y < m_mapSize.y - 1; ++y)
 			{
+				m_tiles[0][x][y]->id = 2;
+				m_tiles[0][x][y]->physics = BombermanMapTile::PASSABLE;
 				if(x % 2 == 0 && y % 2 == 0)
                 {
                     m_tiles[layer][x][y]->id = 1;
                     m_tiles[layer][x][y]->physics = BombermanMapTile::SOLID;
                 }
-                else
-                {
-                    m_tiles[0][x][y]->id = 2;
-                    m_tiles[0][x][y]->physics = BombermanMapTile::PASSABLE;
-                }
+			}
+        }
+    }
+
+    void BombermanMap::createPlayerSpace(std::vector<glm::ivec2> playerPositions)
+    {
+        const int layer = 1;
+        for(auto &pos : playerPositions)
+        {
+			clearSpaceForPlayer(glm::ivec2(pos.x, pos.y), layer);
+			clearSpaceForPlayer(glm::ivec2(pos.x - 1, pos.y), layer);
+			clearSpaceForPlayer(glm::ivec2(pos.x, pos.y - 1), layer);
+			clearSpaceForPlayer(glm::ivec2(pos.x + 1, pos.y), layer);
+			clearSpaceForPlayer(glm::ivec2(pos.x, pos.y + 1), layer);
+        }
+    }
+
+    void BombermanMap::clearSpaceForPlayer(glm::ivec2 pos, int layer)
+    {
+        if((pos.x >= 0 && pos.x < m_mapSize.x)
+                && pos.y >= 0 && pos.y < m_mapSize.y)
+        {
+			if((pos.x != 0 && pos.x != m_mapSize.x - 1)
+					&& (pos.y != 0 && pos.y != m_mapSize.y - 1))
+			{
+				auto *tile = m_tiles[layer][pos.x][pos.y];
+				tile->physics = BombermanMapTile::PASSABLE;
+				tile->id = 255;
+				tile->bombable = false;
+                LOG(INFO) << "POS:" << pos.x << "x" << pos.y;
 			}
         }
     }

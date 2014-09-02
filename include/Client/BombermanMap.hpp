@@ -26,7 +26,11 @@ namespace Client
             void render(std::shared_ptr<Window> window);
 
             void createOuterWall();
+            void createFillerWalls();
             void createInnerStamps();
+
+            void createPlayerSpace(std::vector<glm::ivec2> playerPositions);
+            void clearSpaceForPlayer(glm::ivec2 pos, int layer);
 
             const BombermanMapTile& getTileAtPixel(glm::ivec3 pos);
         private:

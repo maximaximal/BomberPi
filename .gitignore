@@ -2,3 +2,5 @@
 build/
 .kateproject 
 *.user*
+
+*.autosave

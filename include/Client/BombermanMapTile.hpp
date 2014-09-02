@@ -22,6 +22,7 @@ namespace Client
             }
 
 			int id = 0;
+            bool bombable = false;
 			TilePhysics physics = PASSABLE;
             EntityDropGenerator *dropGenerator = nullptr;
     };

@@ -56,6 +56,10 @@ namespace Client
 
         m_map->createOuterWall();
         m_map->createInnerStamps();
+        m_map->createFillerWalls();
+
+        std::vector<glm::ivec2> playerPositions;
+        glm::ivec2 playerPos(0, 0);
 
        	InputMap inputMap;
         inputMap.set(SDL_SCANCODE_W, PlayerInputEnum::UP);
@@ -63,7 +67,9 @@ namespace Client
         inputMap.set(SDL_SCANCODE_S, PlayerInputEnum::DOWN);
         inputMap.set(SDL_SCANCODE_D, PlayerInputEnum::RIGHT);
         inputMap.set(SDL_SCANCODE_SPACE, PlayerInputEnum::ACTION);
-		m_entityFactory->createPlayer(glm::ivec2(32, 32), inputMap);
+        playerPos.x = 32; playerPos.y = 32;
+		m_entityFactory->createPlayer(playerPos, inputMap);
+        playerPositions.push_back(playerPos / 32);
 
         inputMap.clear();
 
@@ -72,7 +78,11 @@ namespace Client
         inputMap.set(SDL_SCANCODE_DOWN, PlayerInputEnum::DOWN);
         inputMap.set(SDL_SCANCODE_RIGHT, PlayerInputEnum::RIGHT);
         inputMap.set(SDL_SCANCODE_MINUS, PlayerInputEnum::ACTION);
-		m_entityFactory->createPlayer(glm::ivec2(288, 288), inputMap);
+        playerPos.x = 15 * 32; playerPos.y = 13 * 32;
+		m_entityFactory->createPlayer(playerPos, inputMap);
+        playerPositions.push_back(playerPos / 32);
+
+        m_map->createPlayerSpace(playerPositions);
 
         m_world->refresh();
         LOG(INFO) << "StateBomberman initialized.";
