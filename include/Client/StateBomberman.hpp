@@ -12,6 +12,8 @@ namespace Client
     class SpriteRenderingSystem;
     class PlayerInputSystem;
     class PlayerMovementSystem;
+    class TimerSystem;
+    class BombPlaceSystem;
 
    	class StateBomberman : public State
     {
@@ -33,6 +35,9 @@ namespace Client
 				std::shared_ptr<SpriteRenderingSystem> m_spriteRenderingSystem;
 				std::shared_ptr<PlayerInputSystem> m_playerInputSystem;
 				std::shared_ptr<PlayerMovementSystem> m_playerMovementSystem;
+				std::shared_ptr<TimerSystem> m_timerSystem;
+                std::shared_ptr<BombPlaceSystem> m_bombPlaceSystem;
+
     };
 }
 

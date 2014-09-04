@@ -18,6 +18,8 @@ namespace Client
             virtual ~EntityFactory();
 
             anax::Entity createPlayer(const glm::ivec2 &pos, const InputMap &inputMap);
+
+            anax::Entity createBomb(const glm::ivec2 &pos, anax::Entity &thrower);
         private:
             std::shared_ptr<TextureManager> m_textureManager;
             std::shared_ptr<anax::World> m_world;

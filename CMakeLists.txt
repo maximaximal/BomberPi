@@ -43,9 +43,15 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/BodyComponent.cpp
     ${CLIENT_SRC}/PlayerComponent.cpp
     ${CLIENT_SRC}/DestructableComponent.cpp
+    ${CLIENT_SRC}/TimerComponent.cpp
+    ${CLIENT_SRC}/AnimationComponent.cpp
+    ${CLIENT_SRC}/BombComponent.cpp
+    ${CLIENT_SRC}/BombPlaceSystem.cpp
     ${CLIENT_SRC}/SpriteRenderingSystem.cpp
     ${CLIENT_SRC}/PlayerInputSystem.cpp
     ${CLIENT_SRC}/PlayerMovementSystem.cpp
+    ${CLIENT_SRC}/TimerSystem.cpp
+    ${CLIENT_SRC}/Animation.cpp
     ${CLIENT_SRC}/EntityFactory.cpp
 )
 
@@ -65,9 +71,15 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/BodyComponent.hpp
     ${CLIENT_INCLUDE}/PlayerComponent.hpp
     ${CLIENT_INCLUDE}/DestructableComponent.hpp
+    ${CLIENT_INCLUDE}/TimerComponent.hpp
+    ${CLIENT_INCLUDE}/AnimationComponent.hpp
+    ${CLIENT_INCLUDE}/BombComponent.hpp
     ${CLIENT_INCLUDE}/SpriteRenderingSystem.hpp
     ${CLIENT_INCLUDE}/PlayerInputSystem.hpp
     ${CLIENT_INCLUDE}/PlayerMovementSystem.hpp
+    ${CLIENT_INCLUDE}/BombPlaceSystem.hpp
+    ${CLIENT_INCLUDE}/TimerSystem.hpp
+    ${CLIENT_INCLUDE}/Animation.hpp
     ${CLIENT_INCLUDE}/EntityFactory.hpp
 )
 

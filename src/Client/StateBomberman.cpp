@@ -8,7 +8,9 @@
 #include <Client/PositionComponent.hpp>
 #include <Client/SpriteComponent.hpp>
 #include <Client/PlayerInputSystem.hpp>
+#include <Client/TimerSystem.hpp>
 #include <Client/PlayerMovementSystem.hpp>
+#include <Client/BombPlaceSystem.hpp>
 #include <Client/PlayerComponent.hpp>
 #include <Client/VelocityComponent.hpp>
 #include <Client/BodyComponent.hpp>
@@ -39,7 +41,10 @@ namespace Client
         m_world = std::make_shared<anax::World>();
 
         m_spriteRenderingSystem = std::make_shared<SpriteRenderingSystem>();
-		m_world->addSystem(*m_spriteRenderingSystem.get());
+		m_world->addSystem(*m_spriteRenderingSystem);
+
+        m_timerSystem = std::make_shared<TimerSystem>();
+        m_world->addSystem(*m_timerSystem);
 
         m_playerInputSystem = std::make_shared<PlayerInputSystem>();
         m_playerInputSystem->setSDLEventHandler(getSDLEventHandler());
@@ -49,6 +54,9 @@ namespace Client
         m_world->addSystem(*m_playerMovementSystem);
 
         m_entityFactory = std::make_shared<EntityFactory>(m_world, getTextureManager());
+
+        m_bombPlaceSystem = std::make_shared<BombPlaceSystem>(m_entityFactory);
+        m_world->addSystem(*m_bombPlaceSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
@@ -77,7 +85,7 @@ namespace Client
        	inputMap.set(SDL_SCANCODE_LEFT, PlayerInputEnum::LEFT);
         inputMap.set(SDL_SCANCODE_DOWN, PlayerInputEnum::DOWN);
         inputMap.set(SDL_SCANCODE_RIGHT, PlayerInputEnum::RIGHT);
-        inputMap.set(SDL_SCANCODE_MINUS, PlayerInputEnum::ACTION);
+        inputMap.set(SDL_SCANCODE_L, PlayerInputEnum::ACTION);
         playerPos.x = 15 * 32; playerPos.y = 13 * 32;
 		m_entityFactory->createPlayer(playerPos, inputMap);
         playerPositions.push_back(playerPos / 32);
@@ -91,8 +99,11 @@ namespace Client
     void StateBomberman::update(float frameTime)
     {
         m_world->refresh();
+        m_timerSystem->update(frameTime);
         m_playerInputSystem->update();
         m_playerMovementSystem->update(frameTime);
+
+        m_bombPlaceSystem->update();
     }
 
     void StateBomberman::render(std::shared_ptr<Window> window)
