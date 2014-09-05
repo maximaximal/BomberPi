@@ -28,8 +28,11 @@ namespace Client
             {
                 if(bombLayer.bombsRemaining > 0)
                 {
-                    bombLayer.bombsRemaining -= 1;
-					m_entityFactory->createBomb(bombLayer.placePos, entity);
+                    if(bombLayer.canPlace)
+                    {
+						bombLayer.bombsRemaining -= 1;
+						m_entityFactory->createBomb(bombLayer.placePos, entity);
+                    }
                 }
             }
         }

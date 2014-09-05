@@ -38,7 +38,6 @@ namespace Client
         m_stateManager->setTextureManager(m_textureManager);
 
         //Start the game loop!
-
         bool end = false;
         Timer timer;
         SDL_Event e;

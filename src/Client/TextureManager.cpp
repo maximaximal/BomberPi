@@ -8,6 +8,7 @@ namespace Client
     }
     TextureManager::~TextureManager()
     {
+        m_window.reset();
         clear();
     }
 

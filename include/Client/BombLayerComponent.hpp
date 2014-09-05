@@ -16,6 +16,8 @@ namespace Client
 
             glm::ivec2 placePos;
 
+            bool canPlace = false;
+
             //TODO Bomb modifiers.
     };
 }

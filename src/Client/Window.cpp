@@ -8,14 +8,21 @@ namespace Client
     Window::Window()
     {
 		LOG(INFO) << "Creating Window.";
+        m_renderer = nullptr;
     }
     Window::~Window()
     {
 		// Clean the SDL objects.
 		if(m_renderer != nullptr)
+        {
 			SDL_DestroyRenderer(m_renderer);
+            m_renderer = nullptr;
+        }
 		if(m_window != nullptr)
+        {
 			SDL_DestroyWindow(m_window);
+            m_window = nullptr;
+        }
 		if(m_SDLInitialized)
 			SDL_Quit();
         if(m_SDLImageInitialized)
@@ -32,9 +39,9 @@ namespace Client
 			LOG(FATAL) << "SDL_Init fauled! Error: " << SDL_GetError();
 			return 1;
 		}
+		m_SDLInitialized = true;
 
 		m_window = SDL_CreateWindow("BomberPi", 100, 100, windowSize.x, windowSize.y, SDL_WINDOW_SHOWN);
-		m_SDLInitialized = true;
 		if(m_window == nullptr)
 		{
 			LOG(FATAL) << "SDL_CreateWindow failed! Error: " << SDL_GetError();
@@ -48,12 +55,12 @@ namespace Client
             return 1;
         }
 
-        m_SDLImageInitialized = true;
        	if((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
         {
             LOG(FATAL) << "IMG_Init failed! Error: " << IMG_GetError();
             return 1;
         }
+        m_SDLImageInitialized = true;
 
         return 0;
     }

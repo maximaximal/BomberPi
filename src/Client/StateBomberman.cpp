@@ -25,13 +25,16 @@ namespace Client
     }
     StateBomberman::~StateBomberman()
     {
+        m_world.reset();
         m_spriteRenderingSystem.reset();
         m_playerInputSystem.reset();
         m_playerMovementSystem.reset();
+        m_timerSystem.reset();
+        m_bombPlaceSystem.reset();
+        m_bombPlacePositionSystem.reset();
 
         m_entityFactory.reset();
         m_map.reset();
-        m_world.reset();
 		LOG(INFO) << "StateBomberman deleted.";
     }
 
@@ -59,14 +62,15 @@ namespace Client
         m_bombPlaceSystem = std::make_shared<BombPlaceSystem>(m_entityFactory);
         m_world->addSystem(*m_bombPlaceSystem);
 
-        m_bombPlacePositionSystem = std::make_shared<BombPlacePositionSystem>();
+        m_bombPlacePositionSystem = std::make_shared<BombPlacePositionSystem>(m_map);
         m_world->addSystem(*m_bombPlacePositionSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
         m_map->init(glm::ivec2(17, 15));
 
-        m_map->createOuterWall();
+        m_map->createOuterWall(0);
+        m_map->createOuterWall(1);
         m_map->createInnerStamps();
         m_map->createFillerWalls();
 

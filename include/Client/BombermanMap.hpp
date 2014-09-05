@@ -25,7 +25,7 @@ namespace Client
 
             void render(std::shared_ptr<Window> window);
 
-            void createOuterWall();
+            void createOuterWall(short layer);
             void createFillerWalls();
             void createInnerStamps();
 

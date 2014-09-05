@@ -7,11 +7,11 @@
 
 namespace Client
 {
-    BombPlacePositionSystem::BombPlacePositionSystem()
+    BombPlacePositionSystem::BombPlacePositionSystem(std::shared_ptr<BombermanMap> bombermanMap)
     	: Base(anax::ComponentFilter().requires<BombLayerComponent,
                PositionComponent>())
     {
-
+		m_bombermanMap = bombermanMap;
     }
     BombPlacePositionSystem::~BombPlacePositionSystem()
     {
@@ -53,6 +53,16 @@ namespace Client
             else if(pos.orientation.y < 0)
             {
                 layer.placePos.y -= 1 * 32;
+            }
+
+            if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x, layer.placePos.y, 1)).physics
+                    == BombermanMapTile::PASSABLE)
+            {
+                layer.canPlace = true;
+            }
+            else
+            {
+                layer.canPlace = false;
             }
 
             /**

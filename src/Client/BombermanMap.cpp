@@ -81,9 +81,8 @@ namespace Client
         }
     }
 
-    void BombermanMap::createOuterWall()
+    void BombermanMap::createOuterWall(short layer)
     {
-        const short layer = 1;
         for(unsigned int x = 0; x < m_mapSize.x; ++x)
         {
             m_tiles[layer][x][0]->id = 0;
