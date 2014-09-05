@@ -159,7 +159,6 @@ namespace Client
 				tile->physics = BombermanMapTile::PASSABLE;
 				tile->id = 255;
 				tile->bombable = false;
-                LOG(INFO) << "POS:" << pos.x << "x" << pos.y;
 			}
         }
     }
