@@ -12,6 +12,7 @@
 #include <Client/PlayerMovementSystem.hpp>
 #include <Client/BombPlaceSystem.hpp>
 #include <Client/BombPlacePositionSystem.hpp>
+#include <Client/AnimationSystem.hpp>
 #include <Client/PlayerComponent.hpp>
 #include <Client/VelocityComponent.hpp>
 #include <Client/BodyComponent.hpp>
@@ -32,6 +33,7 @@ namespace Client
         m_timerSystem.reset();
         m_bombPlaceSystem.reset();
         m_bombPlacePositionSystem.reset();
+        m_animationSystem.reset();
 
         m_entityFactory.reset();
         m_map.reset();
@@ -56,6 +58,9 @@ namespace Client
 
         m_playerMovementSystem = std::make_shared<PlayerMovementSystem>(m_map);
         m_world->addSystem(*m_playerMovementSystem);
+
+        m_animationSystem = std::make_shared<AnimationSystem>();
+        m_world->addSystem(*m_animationSystem);
 
         m_entityFactory = std::make_shared<EntityFactory>(m_world, getTextureManager());
 
@@ -108,6 +113,8 @@ namespace Client
     {
         m_world->refresh();
         m_timerSystem->update(frameTime);
+        m_animationSystem->update(frameTime);
+
         m_playerInputSystem->update();
         m_playerMovementSystem->update(frameTime);
 

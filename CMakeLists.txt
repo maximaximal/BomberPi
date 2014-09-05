@@ -53,6 +53,8 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/PlayerInputSystem.cpp
     ${CLIENT_SRC}/PlayerMovementSystem.cpp
     ${CLIENT_SRC}/TimerSystem.cpp
+    ${CLIENT_SRC}/BombExplodeSystem.cpp
+    ${CLIENT_SRC}/AnimationSystem.cpp
     ${CLIENT_SRC}/Animation.cpp
     ${CLIENT_SRC}/EntityFactory.cpp
 )
@@ -83,6 +85,8 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/BombPlaceSystem.hpp
     ${CLIENT_INCLUDE}/BombPlacePositionSystem.hpp
     ${CLIENT_INCLUDE}/TimerSystem.hpp
+    ${CLIENT_INCLUDE}/BombExplodeSystem.hpp
+    ${CLIENT_INCLUDE}/AnimationSystem.hpp
     ${CLIENT_INCLUDE}/Animation.hpp
     ${CLIENT_INCLUDE}/EntityFactory.hpp
 )

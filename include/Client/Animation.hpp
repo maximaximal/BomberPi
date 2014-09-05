@@ -16,10 +16,13 @@ namespace Client
             void addStep(const SDL_Rect &step);
             const SDL_Rect& getStep(unsigned int step);
             unsigned int getStepCount();
+            void setStepDuration(float duration);
+            float getStepDuration();
 
             StepsVector& getSteps();
         private:
             StepsVector m_steps;
+            float m_stepDuration;
     };
 }
 

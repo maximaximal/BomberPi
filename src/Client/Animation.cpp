@@ -29,6 +29,16 @@ namespace Client
     {
         return m_steps.size();
     }
+
+    void Animation::setStepDuration(float duration)
+    {
+        m_stepDuration = duration;
+    }
+
+    float Animation::getStepDuration()
+    {
+        return m_stepDuration;
+    }
     Animation::StepsVector &Animation::getSteps()
     {
 		return m_steps;

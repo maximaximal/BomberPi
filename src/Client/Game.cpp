@@ -19,7 +19,6 @@ namespace Client
         m_textureManager->clear();
 
         m_textureManager.reset();
-        m_window.reset();
     }
     
     int Game::init()

@@ -41,6 +41,13 @@ namespace Client
 		}
 		m_SDLInitialized = true;
 
+        if((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
+        {
+            LOG(FATAL) << "IMG_Init failed! Error: " << IMG_GetError();
+            return 1;
+        }
+        m_SDLImageInitialized = true;
+
 		m_window = SDL_CreateWindow("BomberPi", 100, 100, windowSize.x, windowSize.y, SDL_WINDOW_SHOWN);
 		if(m_window == nullptr)
 		{
@@ -48,19 +55,12 @@ namespace Client
 			return 1;
 		}
 
-        m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
         if(m_renderer == nullptr)
         {
             LOG(FATAL) << "SDL_CreateRenderer failed! Error: " << SDL_GetError();
             return 1;
         }
-
-       	if((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
-        {
-            LOG(FATAL) << "IMG_Init failed! Error: " << IMG_GetError();
-            return 1;
-        }
-        m_SDLImageInitialized = true;
 
         return 0;
     }

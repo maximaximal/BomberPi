@@ -15,6 +15,7 @@ namespace Client
     class TimerSystem;
     class BombPlaceSystem;
     class BombPlacePositionSystem;
+    class AnimationSystem;
 
    	class StateBomberman : public State
     {
@@ -39,6 +40,7 @@ namespace Client
 				std::shared_ptr<TimerSystem> m_timerSystem;
                 std::shared_ptr<BombPlaceSystem> m_bombPlaceSystem;
                 std::shared_ptr<BombPlacePositionSystem> m_bombPlacePositionSystem;
+                std::shared_ptr<AnimationSystem> m_animationSystem;
 
     };
 }
