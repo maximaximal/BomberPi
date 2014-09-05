@@ -109,6 +109,8 @@ namespace Client
 
 				sprite.rotation = alpha * (180 / M_PI);
 
+				pos.orientation = glm::normalize(dir);
+
 				pos.pos += dir;
             }
         }

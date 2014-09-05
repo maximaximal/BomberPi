@@ -20,7 +20,7 @@ namespace Client
 
 			std::shared_ptr<Texture> texture;
 			SDL_Rect srcRect;
-			double rotation = 0;
+            double rotation = 0;
 			SDL_RendererFlip rendererFlip;
     };
 }

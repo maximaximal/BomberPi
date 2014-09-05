@@ -4,26 +4,10 @@ namespace Client
 {
     BombLayerComponent::BombLayerComponent()
     {
-
+		bombsRemaining = 1;
     }
     BombLayerComponent::~BombLayerComponent()
     {
 
-    }
-
-    bool BombLayerComponent::canBomb()
-    {
-        if(bombsRemaining > 0)
-            return true;
-        return false;
-    }
-    void BombLayerComponent::triggerBomb()
-    {
-        if(bombsRemaining > 0)
-			bombsRemaining--;
-    }
-    void BombLayerComponent::bombRemoved()
-    {
-        bombsRemaining++;
     }
 }

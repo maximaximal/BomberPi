@@ -6,6 +6,7 @@
 #include <Client/BodyComponent.hpp>
 #include <Client/PlayerComponent.hpp>
 #include <Client/TimerComponent.hpp>
+#include <Client/BombLayerComponent.hpp>
 
 namespace Client
 {
@@ -33,6 +34,7 @@ namespace Client
         PlayerInputComponent *inputComponent = new PlayerInputComponent();
         inputComponent->inputMap = inputMap;
         entity.addComponent(inputComponent);
+        entity.addComponent(new BombLayerComponent());
         entity.addComponent(new BodyComponent(10, 10, 10, 10));
         entity.addComponent(new PlayerComponent());
         entity.activate();

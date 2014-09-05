@@ -1,12 +1,15 @@
 #include <Client/BombPlaceSystem.hpp>
 
+#include <easylogging++.h>
+
 #include <Client/PlayerInputComponent.hpp>
-#include <Client/PositionComponent.hpp>
+#include <Client/BombLayerComponent.hpp>
 
 namespace Client
 {
     BombPlaceSystem::BombPlaceSystem(std::shared_ptr<EntityFactory> entityFactory)
-    	: Base(anax::ComponentFilter().requires<PlayerInputComponent, PositionComponent>())
+    	: Base(anax::ComponentFilter().requires<PlayerInputComponent,
+               BombLayerComponent>())
     {
         m_entityFactory = entityFactory;
     }
@@ -18,12 +21,16 @@ namespace Client
     {
 		for(auto &entity : getEntities())
         {
-            auto input = entity.getComponent<PlayerInputComponent>();
-            auto pos = entity.getComponent<PositionComponent>();
+            auto &input = entity.getComponent<PlayerInputComponent>();
+            auto &bombLayer = entity.getComponent<BombLayerComponent>();
 
             if(input.isActive(PlayerInputEnum::ACTION))
             {
-                m_entityFactory->createBomb(pos.pos, entity);
+                if(bombLayer.bombsRemaining > 0)
+                {
+                    bombLayer.bombsRemaining -= 1;
+					m_entityFactory->createBomb(bombLayer.placePos, entity);
+                }
             }
         }
     }

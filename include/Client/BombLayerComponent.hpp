@@ -1,6 +1,7 @@
 #ifndef CLIENT_BOMBLAYERCOMPONENT_HPP_INCLUDED
 #define CLIENT_BOMBLAYERCOMPONENT_HPP_INCLUDED
 
+#include <glm/vec2.hpp>
 #include <anax/Component.hpp>
 
 namespace Client
@@ -11,11 +12,9 @@ namespace Client
             BombLayerComponent();
             virtual ~BombLayerComponent();
 
-            bool canBomb();
-           	void triggerBomb();
-            void bombRemoved();
+            short bombsRemaining;
 
-            short bombsRemaining = 1;
+            glm::ivec2 placePos;
 
             //TODO Bomb modifiers.
     };

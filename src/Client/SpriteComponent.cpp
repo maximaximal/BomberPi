@@ -28,7 +28,7 @@ namespace Client
         srcRect.y = 0;
         srcRect.w = 0;
         srcRect.h = 0;
-        rotation = 0;
         texture.reset();
+        rendererFlip = SDL_FLIP_NONE;
     }
 }

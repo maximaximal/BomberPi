@@ -14,6 +14,7 @@ namespace Client
     class PlayerMovementSystem;
     class TimerSystem;
     class BombPlaceSystem;
+    class BombPlacePositionSystem;
 
    	class StateBomberman : public State
     {
@@ -37,6 +38,7 @@ namespace Client
 				std::shared_ptr<PlayerMovementSystem> m_playerMovementSystem;
 				std::shared_ptr<TimerSystem> m_timerSystem;
                 std::shared_ptr<BombPlaceSystem> m_bombPlaceSystem;
+                std::shared_ptr<BombPlacePositionSystem> m_bombPlacePositionSystem;
 
     };
 }

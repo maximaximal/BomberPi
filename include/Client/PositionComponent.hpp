@@ -17,6 +17,7 @@ namespace Client
             virtual ~PositionComponent();
 
 			glm::dvec2 pos;
+            glm::dvec2 orientation;
 
 			float getXF();
 			float getYF();
