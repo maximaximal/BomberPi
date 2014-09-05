@@ -46,6 +46,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/TimerComponent.cpp
     ${CLIENT_SRC}/AnimationComponent.cpp
     ${CLIENT_SRC}/BombComponent.cpp
+    ${CLIENT_SRC}/BombLayerComponent.cpp
     ${CLIENT_SRC}/BombPlaceSystem.cpp
     ${CLIENT_SRC}/SpriteRenderingSystem.cpp
     ${CLIENT_SRC}/PlayerInputSystem.cpp
@@ -74,6 +75,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/TimerComponent.hpp
     ${CLIENT_INCLUDE}/AnimationComponent.hpp
     ${CLIENT_INCLUDE}/BombComponent.hpp
+    ${CLIENT_INCLUDE}/BombLayerComponent.hpp
     ${CLIENT_INCLUDE}/SpriteRenderingSystem.hpp
     ${CLIENT_INCLUDE}/PlayerInputSystem.hpp
     ${CLIENT_INCLUDE}/PlayerMovementSystem.hpp
