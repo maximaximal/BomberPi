@@ -71,7 +71,7 @@ namespace Client
         m_bombPlacePositionSystem = std::make_shared<BombPlacePositionSystem>(m_map);
         m_world->addSystem(*m_bombPlacePositionSystem);
 
-        m_bombExplodeSystem = std::make_shared<BombExplodeSystem>(m_map);
+        m_bombExplodeSystem = std::make_shared<BombExplodeSystem>(m_entityFactory);
         m_world->addSystem(*m_bombExplodeSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));

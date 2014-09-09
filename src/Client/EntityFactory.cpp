@@ -51,6 +51,7 @@ namespace Client
         entity.addComponent(new PositionComponent(pos.x, pos.y));
         SpriteComponent *spriteComponent = new SpriteComponent();
         spriteComponent->texture = m_textureManager->get("bomb_proto.png");
+        spriteComponent->srcRect.y = 160;
 		spriteComponent->srcRect.w = 32;
 		spriteComponent->srcRect.h = 32;
         entity.addComponent(spriteComponent);
@@ -59,6 +60,22 @@ namespace Client
         timer->timeToPass = 1.3;
         entity.addComponent(timer);
         entity.addComponent(new BombComponent(thrower));
+        entity.activate();
+
+        return entity;
+    }
+
+    anax::Entity EntityFactory::createExplosion(const glm::ivec2 &pos, anax::Entity thrower)
+    {
+        auto entity = m_world->createEntity();
+        entity.addComponent(new PositionComponent(pos.x, pos.y));
+        SpriteComponent *spriteComponent = new SpriteComponent();
+        spriteComponent->texture = m_textureManager->get("bomb_proto.png");
+        spriteComponent->srcRect.y = 0;
+		spriteComponent->srcRect.w = 32;
+		spriteComponent->srcRect.h = 32;
+        entity.addComponent(spriteComponent);
+        entity.addComponent(new BodyComponent(0, 0, 32, 32));
         entity.activate();
 
         return entity;

@@ -1,5 +1,5 @@
 #include <Client/BombExplodeSystem.hpp>
-
+#include <glm/vec3.hpp>
 #include <Client/BombComponent.hpp>
 #include <Client/PositionComponent.hpp>
 #include <Client/BombLayerComponent.hpp>
@@ -9,12 +9,12 @@
 
 namespace Client
 {
-    BombExplodeSystem::BombExplodeSystem(std::shared_ptr<BombermanMap> bombermanMap)
+    BombExplodeSystem::BombExplodeSystem(std::shared_ptr<EntityFactory> entityFactory)
     	: Base(anax::ComponentFilter().requires<PositionComponent,
                BombComponent,
                TimerComponent>())
     {
-		m_bombermanMap = bombermanMap;
+        m_entityFactory = entityFactory;
     }
     BombExplodeSystem::~BombExplodeSystem()
     {
@@ -36,6 +36,7 @@ namespace Client
 					auto &layer = bomb.thrower.getComponent<BombLayerComponent>();
                     layer.bombsRemaining += 1;
 				}
+                m_entityFactory->createExplosion(pos.pos, bomb.thrower);
 				entity.kill();
             }
         }
