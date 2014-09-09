@@ -19,7 +19,7 @@ namespace Client
     }
     void BombPlaceSystem::update()
     {
-		for(auto &entity : getEntities())
+		for(auto entity : getEntities())
         {
             auto &input = entity.getComponent<PlayerInputComponent>();
             auto &bombLayer = entity.getComponent<BombLayerComponent>();

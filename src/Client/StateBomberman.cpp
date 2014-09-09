@@ -13,6 +13,7 @@
 #include <Client/BombPlaceSystem.hpp>
 #include <Client/BombPlacePositionSystem.hpp>
 #include <Client/AnimationSystem.hpp>
+#include <Client/BombExplodeSystem.hpp>
 #include <Client/PlayerComponent.hpp>
 #include <Client/VelocityComponent.hpp>
 #include <Client/BodyComponent.hpp>
@@ -70,6 +71,9 @@ namespace Client
         m_bombPlacePositionSystem = std::make_shared<BombPlacePositionSystem>(m_map);
         m_world->addSystem(*m_bombPlacePositionSystem);
 
+        m_bombExplodeSystem = std::make_shared<BombExplodeSystem>(m_map);
+        m_world->addSystem(*m_bombExplodeSystem);
+
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
         m_map->init(glm::ivec2(17, 15));
@@ -117,6 +121,7 @@ namespace Client
 
         m_playerInputSystem->update();
         m_playerMovementSystem->update(frameTime);
+        m_bombExplodeSystem->update();
 
         m_bombPlacePositionSystem->update();
         m_bombPlaceSystem->update();

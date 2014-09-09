@@ -7,6 +7,9 @@
 #include <Client/PlayerComponent.hpp>
 #include <Client/TimerComponent.hpp>
 #include <Client/BombLayerComponent.hpp>
+#include <Client/BombComponent.hpp>
+
+#include <easylogging++.h>
 
 namespace Client
 {
@@ -42,7 +45,7 @@ namespace Client
         return entity;
     }
 
-    anax::Entity EntityFactory::createBomb(const glm::ivec2 &pos, anax::Entity &thrower)
+    anax::Entity EntityFactory::createBomb(const glm::ivec2 &pos, anax::Entity thrower)
     {
         auto entity = m_world->createEntity();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
@@ -54,6 +57,8 @@ namespace Client
         entity.addComponent(new BodyComponent(0, 0, 32, 32));
         TimerComponent *timer = new TimerComponent();
         timer->timeToPass = 1.3;
+        entity.addComponent(timer);
+        entity.addComponent(new BombComponent(thrower));
         entity.activate();
 
         return entity;

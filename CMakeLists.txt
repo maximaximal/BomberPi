@@ -153,3 +153,7 @@ endif()
 
 # Activate C++11
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+
+if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+	list(APPEND ${CMAKE_CXX_FLAGS} "-Wall -std=x++11 ${CMAKE_CXX_FLAGS}")
+endif()

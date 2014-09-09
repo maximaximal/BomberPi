@@ -31,7 +31,14 @@ namespace Client
     {
         if(m_textures.count(path) > 0)
         {
-            return true;
+            if(!m_textures[path].expired())
+            {
+                return true;
+            }
+            else
+            {
+                m_textures.erase(path);
+            }
         }
         return false;
     }
