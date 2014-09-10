@@ -11,7 +11,7 @@ namespace Client
         public:
             SpriteRenderingSystem();
 
-            void render(std::shared_ptr<Window> window);
+            void render(Window *window);
     };
 }
 

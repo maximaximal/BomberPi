@@ -7,7 +7,7 @@
 
 namespace Client
 {
-    BombPlacePositionSystem::BombPlacePositionSystem(std::shared_ptr<BombermanMap> bombermanMap)
+    BombPlacePositionSystem::BombPlacePositionSystem(BombermanMap *bombermanMap)
     	: Base(anax::ComponentFilter().requires<BombLayerComponent,
                PositionComponent>())
     {

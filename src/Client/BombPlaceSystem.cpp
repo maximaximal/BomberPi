@@ -7,7 +7,7 @@
 
 namespace Client
 {
-    BombPlaceSystem::BombPlaceSystem(std::shared_ptr<EntityFactory> entityFactory)
+    BombPlaceSystem::BombPlaceSystem(EntityFactory *entityFactory)
     	: Base(anax::ComponentFilter().requires<PlayerInputComponent,
                BombLayerComponent>())
     {

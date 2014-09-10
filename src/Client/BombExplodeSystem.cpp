@@ -9,7 +9,7 @@
 
 namespace Client
 {
-    BombExplodeSystem::BombExplodeSystem(std::shared_ptr<EntityFactory> entityFactory)
+    BombExplodeSystem::BombExplodeSystem(EntityFactory *entityFactory)
     	: Base(anax::ComponentFilter().requires<PositionComponent,
                BombComponent,
                TimerComponent>())

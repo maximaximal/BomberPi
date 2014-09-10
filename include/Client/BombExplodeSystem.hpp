@@ -10,12 +10,12 @@ namespace Client
     class BombExplodeSystem : public anax::System<BombExplodeSystem>
     {
         public:
-            BombExplodeSystem(std::shared_ptr<EntityFactory> entityFactory);
+            BombExplodeSystem(EntityFactory *entityFactory);
             virtual ~BombExplodeSystem();
 
             void update();
         private:
-			std::shared_ptr<EntityFactory> m_entityFactory;
+			EntityFactory *m_entityFactory;
     };
 }
 

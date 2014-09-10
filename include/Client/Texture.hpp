@@ -17,7 +17,7 @@ namespace Client
     class Texture
     {
         public:
-            Texture(std::shared_ptr<Window> window);
+            Texture(Window *window);
             virtual ~Texture();
 
             int load(const std::string &path);
@@ -28,7 +28,7 @@ namespace Client
             SDL_Texture* getSDLTexture();
         private:
             SDL_Texture *m_texture = nullptr;
-            std::shared_ptr<Window> m_window;
+            Window *m_window;
             std::string m_path;
     };
 }

@@ -18,14 +18,14 @@ class StateManager : public SDLEventHandler
         void pop();
         std::shared_ptr<State> top();
 
-        void render(std::shared_ptr<Client::Window> window);
+        void render(Client::Window *window);
         void update(float frameTime);
-        void setTextureManager(std::shared_ptr<Client::TextureManager> textureManager);
+        void setTextureManager(Client::TextureManager *textureManager);
     protected:
         virtual void onSDLEvent(const SDL_Event &e, float frametime);
     private:
         std::vector<std::shared_ptr<State>> m_states;
-        std::shared_ptr<Client::TextureManager> m_textureManager;
+        Client::TextureManager *m_textureManager;
 };
 
 #endif

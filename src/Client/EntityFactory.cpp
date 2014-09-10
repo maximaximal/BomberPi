@@ -14,8 +14,8 @@
 namespace Client
 {
 
-    EntityFactory::EntityFactory(std::shared_ptr<anax::World> world,
-                                 std::shared_ptr<TextureManager> textureManager)
+    EntityFactory::EntityFactory(anax::World *world,
+                                 TextureManager *textureManager)
     {
         m_world = world;
         m_textureManager = textureManager;

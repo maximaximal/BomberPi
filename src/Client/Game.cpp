@@ -14,26 +14,27 @@ namespace Client
     }
     Game::~Game()
     {
-        m_stateManager.reset();
-		m_textureManager->destroy();
-        m_textureManager->clear();
-
-        m_textureManager.reset();
+        if(m_stateManager != nullptr)
+            delete m_stateManager;
+        if(m_textureManager != nullptr)
+            delete m_textureManager;
+        if(m_window != nullptr)
+            delete m_window;
     }
     
     int Game::init()
     {
 		LOG(INFO) << "Initializing Game!";
-		m_window = std::make_shared<Window>();
+		m_window = new Window();
 		if(m_window->init(glm::ivec2(800, 600)) != 0)
         {
             LOG(FATAL) << "Window did not initialize correctly. Exiting.";
             return 1;
         }
 
-        m_textureManager = std::make_shared<TextureManager>(m_window);
+        m_textureManager = new TextureManager(m_window);
 
-        m_stateManager = std::make_shared<StateManager>();
+        m_stateManager = new StateManager();
         m_stateManager->setTextureManager(m_textureManager);
 
         //Start the game loop!

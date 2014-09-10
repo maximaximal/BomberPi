@@ -10,14 +10,14 @@ namespace Client
     class PlayerMovementSystem : public anax::System<PlayerMovementSystem>
     {
         public:
-            PlayerMovementSystem(std::shared_ptr<BombermanMap> bombermanMap);
+            PlayerMovementSystem(BombermanMap *bombermanMap);
             virtual ~PlayerMovementSystem();
 
-            void setMap(std::shared_ptr<BombermanMap> map);
+            void setMap(BombermanMap *map);
 
             void update(float frameTime);
         private:
-            std::shared_ptr<BombermanMap> m_bombermanMap;
+            BombermanMap *m_bombermanMap;
     };
 }
 

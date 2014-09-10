@@ -27,51 +27,61 @@ namespace Client
     }
     StateBomberman::~StateBomberman()
     {
-        m_world.reset();
-        m_spriteRenderingSystem.reset();
-        m_playerInputSystem.reset();
-        m_playerMovementSystem.reset();
-        m_timerSystem.reset();
-        m_bombPlaceSystem.reset();
-        m_bombPlacePositionSystem.reset();
-        m_animationSystem.reset();
+        if(m_spriteRenderingSystem != nullptr)
+        	delete m_spriteRenderingSystem;
+        if(m_animationSystem != nullptr)
+            delete m_animationSystem;
+        if(m_bombExplodeSystem != nullptr)
+            delete m_bombExplodeSystem;
+        if(m_bombPlaceSystem != nullptr)
+            delete m_bombPlaceSystem;
+        if(m_entityFactory != nullptr)
+            delete m_entityFactory;
+        if(m_map != nullptr)
+            delete m_map;
+        if(m_playerInputSystem != nullptr)
+            delete m_playerInputSystem;
+        if(m_playerMovementSystem != nullptr)
+            delete m_playerMovementSystem;
+        if(m_timerSystem != nullptr)
+            delete m_timerSystem;
+        if(m_world != nullptr)
+            delete m_world;
 
-        m_entityFactory.reset();
-        m_map.reset();
 		LOG(INFO) << "StateBomberman deleted.";
     }
 
     void StateBomberman::init()
     {
         LOG(INFO) << "Initializing StateBomberman.";
-        m_map = std::make_shared<BombermanMap>();
-        m_world = std::make_shared<anax::World>();
+        m_map = new BombermanMap();
+        m_world = new anax::World();
 
-        m_spriteRenderingSystem = std::make_shared<SpriteRenderingSystem>();
+        m_spriteRenderingSystem = new SpriteRenderingSystem();
 		m_world->addSystem(*m_spriteRenderingSystem);
 
-        m_timerSystem = std::make_shared<TimerSystem>();
+        m_timerSystem = new TimerSystem();
         m_world->addSystem(*m_timerSystem);
 
-        m_playerInputSystem = std::make_shared<PlayerInputSystem>();
+        m_playerInputSystem = new PlayerInputSystem();
         m_playerInputSystem->setSDLEventHandler(getSDLEventHandler());
         m_world->addSystem(*m_playerInputSystem);
 
-        m_playerMovementSystem = std::make_shared<PlayerMovementSystem>(m_map);
+        m_playerMovementSystem = new PlayerMovementSystem(m_map);
         m_world->addSystem(*m_playerMovementSystem);
 
-        m_animationSystem = std::make_shared<AnimationSystem>();
+        m_animationSystem = new AnimationSystem();
         m_world->addSystem(*m_animationSystem);
 
-        m_entityFactory = std::make_shared<EntityFactory>(m_world, getTextureManager());
+        m_entityFactory = new EntityFactory(m_world, getTextureManager());
 
-        m_bombPlaceSystem = std::make_shared<BombPlaceSystem>(m_entityFactory);
+        m_bombPlaceSystem = new BombPlaceSystem(m_entityFactory);
         m_world->addSystem(*m_bombPlaceSystem);
 
-        m_bombPlacePositionSystem = std::make_shared<BombPlacePositionSystem>(m_map);
+        m_bombPlacePositionSystem = new BombPlacePositionSystem(m_map);
         m_world->addSystem(*m_bombPlacePositionSystem);
 
-        m_bombExplodeSystem = std::make_shared<BombExplodeSystem>(m_entityFactory);
+        m_bombExplodeSystem = new BombExplodeSystem(m_entityFactory);
         m_world->addSystem(*m_bombExplodeSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
@@ -127,7 +137,7 @@ namespace Client
         m_bombPlaceSystem->update();
     }
 
-    void StateBomberman::render(std::shared_ptr<Window> window)
+    void StateBomberman::render(Window *window)
     {
 		m_map->render(window);
         m_spriteRenderingSystem->render(window);

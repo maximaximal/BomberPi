@@ -18,7 +18,7 @@ std::shared_ptr<State> StateManager::top()
     return m_states.back();
 }
 
-void StateManager::render(std::shared_ptr<Client::Window> window)
+void StateManager::render(Client::Window *window)
 {
     if(m_states.size() > 0)
     {
@@ -34,7 +34,7 @@ void StateManager::update(float frameTime)
     }
 }
 
-void StateManager::setTextureManager(std::shared_ptr<Client::TextureManager> textureManager)
+void StateManager::setTextureManager(Client::TextureManager *textureManager)
 {
     m_textureManager = textureManager;
     for(auto &state : m_states)

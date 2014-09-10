@@ -23,7 +23,7 @@ namespace Client
 
             void setTexture(std::shared_ptr<Texture> texture);
 
-            void render(std::shared_ptr<Window> window);
+            void render(Window *window);
 
             void createOuterWall(short layer);
             void createFillerWalls();

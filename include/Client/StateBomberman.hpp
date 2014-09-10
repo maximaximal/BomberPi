@@ -28,21 +28,21 @@ namespace Client
 
             virtual void update(float frameTime);
 
-            virtual void render(std::shared_ptr<Window> window);
+            virtual void render(Window *window);
         private:
-            std::shared_ptr<BombermanMap> m_map;
-			std::shared_ptr<anax::World> m_world;
-			std::shared_ptr<EntityFactory> m_entityFactory;
+            BombermanMap *m_map = nullptr;
+			anax::World *m_world = nullptr;
+			EntityFactory *m_entityFactory = nullptr;
 
             //Systems
-				std::shared_ptr<SpriteRenderingSystem> m_spriteRenderingSystem;
-				std::shared_ptr<PlayerInputSystem> m_playerInputSystem;
-				std::shared_ptr<PlayerMovementSystem> m_playerMovementSystem;
-				std::shared_ptr<TimerSystem> m_timerSystem;
-                std::shared_ptr<BombPlaceSystem> m_bombPlaceSystem;
-                std::shared_ptr<BombPlacePositionSystem> m_bombPlacePositionSystem;
-                std::shared_ptr<AnimationSystem> m_animationSystem;
-                std::shared_ptr<BombExplodeSystem> m_bombExplodeSystem;
+				SpriteRenderingSystem *m_spriteRenderingSystem = nullptr;
+				PlayerInputSystem *m_playerInputSystem = nullptr;
+				PlayerMovementSystem *m_playerMovementSystem = nullptr;
+				TimerSystem *m_timerSystem = nullptr;
+                BombPlaceSystem *m_bombPlaceSystem = nullptr;
+                BombPlacePositionSystem *m_bombPlacePositionSystem = nullptr;
+                AnimationSystem *m_animationSystem = nullptr;
+                BombExplodeSystem *m_bombExplodeSystem = nullptr;
 
     };
 }

@@ -13,8 +13,8 @@ namespace Client
     class EntityFactory
     {
         public:
-            EntityFactory(std::shared_ptr<anax::World> world,
-                          std::shared_ptr<TextureManager> textureManager);
+            EntityFactory(anax::World *world,
+                          TextureManager *textureManager);
             virtual ~EntityFactory();
 
             anax::Entity createPlayer(const glm::ivec2 &pos, const InputMap &inputMap);
@@ -23,8 +23,8 @@ namespace Client
 
             anax::Entity createExplosion(const glm::ivec2 &pos, anax::Entity thrower);
         private:
-            std::shared_ptr<TextureManager> m_textureManager;
-            std::shared_ptr<anax::World> m_world;
+            TextureManager *m_textureManager;
+            anax::World *m_world;
     };
 }
 

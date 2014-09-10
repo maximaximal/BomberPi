@@ -9,12 +9,12 @@ namespace Client
     class BombPlacePositionSystem : public anax::System<BombPlacePositionSystem>
     {
         public:
-            BombPlacePositionSystem(std::shared_ptr<BombermanMap> bombermanMap);
+            BombPlacePositionSystem(BombermanMap *bombermanMap);
             virtual ~BombPlacePositionSystem();
 
             void update();
         private:
-            std::shared_ptr<BombermanMap> m_bombermanMap;
+            BombermanMap *m_bombermanMap;
     };
 }
 

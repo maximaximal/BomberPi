@@ -11,7 +11,7 @@
 namespace Client
 {
 
-    PlayerMovementSystem::PlayerMovementSystem(std::shared_ptr<BombermanMap> bombermanMap)
+    PlayerMovementSystem::PlayerMovementSystem(BombermanMap *bombermanMap)
     	: Base(anax::ComponentFilter().requires<PlayerComponent,
                PositionComponent,
                PlayerInputComponent,
@@ -26,7 +26,7 @@ namespace Client
 
     }
 
-    void PlayerMovementSystem::setMap(std::shared_ptr<BombermanMap> map)
+    void PlayerMovementSystem::setMap(BombermanMap *map)
     {
         m_bombermanMap = map;
     }

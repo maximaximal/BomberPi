@@ -4,7 +4,7 @@
 
 namespace Client
 {
-    Texture::Texture(std::shared_ptr<Window> window)
+    Texture::Texture(Window *window)
     {
 		m_window = window;
     }

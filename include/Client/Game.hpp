@@ -22,9 +22,9 @@ namespace Client
 
 			void render();
 		private:
-			std::shared_ptr<Window> m_window;
-            std::shared_ptr<StateManager> m_stateManager;
-            std::shared_ptr<TextureManager> m_textureManager;
+			Window *m_window = nullptr;
+            StateManager *m_stateManager = nullptr;
+            TextureManager *m_textureManager = nullptr;
     };
 }
 

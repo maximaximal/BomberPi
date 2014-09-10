@@ -2,13 +2,12 @@
 
 namespace Client
 {
-    TextureManager::TextureManager(std::shared_ptr<Window> window)
+    TextureManager::TextureManager(Window *window)
     {
 		m_window = window;
     }
     TextureManager::~TextureManager()
     {
-        m_window.reset();
         clear();
     }
 

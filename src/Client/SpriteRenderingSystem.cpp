@@ -12,7 +12,7 @@ namespace Client
     {
 
     }
-    void SpriteRenderingSystem::render(std::shared_ptr<Window> window)
+    void SpriteRenderingSystem::render(Window *window)
     {
         SDL_Rect dstRect;
         dstRect.x = 0;

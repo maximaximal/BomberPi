@@ -56,7 +56,7 @@ namespace Client
         m_texture = texture;
     }
 
-    void BombermanMap::render(std::shared_ptr<Window> window)
+    void BombermanMap::render(Window *window)
     {
         SDL_Rect srcRect;
         SDL_Rect dsRect;

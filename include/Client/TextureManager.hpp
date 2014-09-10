@@ -11,7 +11,7 @@ namespace Client
     class TextureManager
     {
         public:
-            TextureManager(std::shared_ptr<Window> window);
+            TextureManager(Window *window);
             virtual ~TextureManager();
 
             void clear();
@@ -24,7 +24,7 @@ namespace Client
         private:
             std::map<std::string, std::weak_ptr<Texture>> m_textures;
 
-            std::shared_ptr<Window> m_window;
+            Window *m_window;
     };
 
 }
