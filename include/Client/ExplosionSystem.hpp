@@ -4,6 +4,7 @@
 #include <anax/System.hpp>
 #include <Client/BombermanMap.hpp>
 #include <Client/EntityFactory.hpp>
+#include <Client/SpreadingComponent.hpp>
 
 namespace Client
 {
@@ -15,6 +16,10 @@ namespace Client
 
             void update(float frametime);
         private:
+            bool spreadTo(glm::ivec2 pos, int power, int turns, Client::SpreadingComponent::SpreadingFrom from);
+            bool spreadFrom(glm::ivec2 pos, int power, int turns);
+            bool makeTurnFrom(glm::ivec2 pos, int power, int turns, SpreadingComponent::SpreadingFrom from);
+            bool spreadFurther(glm::ivec2 pos, int power, int turns, SpreadingComponent::SpreadingFrom from);
             BombermanMap *m_map;
             EntityFactory *m_entityFactory;
     };

@@ -14,6 +14,7 @@
 #include <Client/BombPlacePositionSystem.hpp>
 #include <Client/AnimationSystem.hpp>
 #include <Client/BombExplodeSystem.hpp>
+#include <Client/ExplosionSystem.hpp>
 #include <Client/PlayerComponent.hpp>
 #include <Client/VelocityComponent.hpp>
 #include <Client/BodyComponent.hpp>
@@ -43,6 +44,8 @@ namespace Client
             delete m_playerInputSystem;
         if(m_playerMovementSystem != nullptr)
             delete m_playerMovementSystem;
+        if(m_explosionSystem != nullptr)
+        	delete m_explosionSystem;
         if(m_timerSystem != nullptr)
             delete m_timerSystem;
         if(m_world != nullptr)
@@ -83,6 +86,9 @@ namespace Client
 
         m_bombExplodeSystem = new BombExplodeSystem(m_entityFactory);
         m_world->addSystem(*m_bombExplodeSystem);
+
+        m_explosionSystem = new ExplosionSystem(m_map, m_entityFactory);
+        m_world->addSystem(*m_explosionSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
@@ -128,6 +134,7 @@ namespace Client
         m_world->refresh();
         m_timerSystem->update(frameTime);
         m_animationSystem->update(frameTime);
+		m_explosionSystem->update(frameTime);
 
         m_playerInputSystem->update();
         m_playerMovementSystem->update(frameTime);

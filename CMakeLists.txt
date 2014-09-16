@@ -47,6 +47,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/AnimationComponent.cpp
     ${CLIENT_SRC}/BombComponent.cpp
     ${CLIENT_SRC}/BombLayerComponent.cpp
+    ${CLIENT_SRC}/SpreadingComponent.cpp
     ${CLIENT_SRC}/BombPlaceSystem.cpp
     ${CLIENT_SRC}/BombPlacePositionSystem.cpp
     ${CLIENT_SRC}/SpriteRenderingSystem.cpp
@@ -80,6 +81,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/AnimationComponent.hpp
     ${CLIENT_INCLUDE}/BombComponent.hpp
     ${CLIENT_INCLUDE}/BombLayerComponent.hpp
+    ${CLIENT_INCLUDE}/SpreadingComponent.hpp
     ${CLIENT_INCLUDE}/SpriteRenderingSystem.hpp
     ${CLIENT_INCLUDE}/PlayerInputSystem.hpp
     ${CLIENT_INCLUDE}/PlayerMovementSystem.hpp

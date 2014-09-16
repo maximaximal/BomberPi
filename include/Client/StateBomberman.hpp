@@ -17,6 +17,7 @@ namespace Client
     class BombPlacePositionSystem;
     class AnimationSystem;
     class BombExplodeSystem;
+    class ExplosionSystem;
 
    	class StateBomberman : public State
     {
@@ -43,6 +44,7 @@ namespace Client
                 BombPlacePositionSystem *m_bombPlacePositionSystem = nullptr;
                 AnimationSystem *m_animationSystem = nullptr;
                 BombExplodeSystem *m_bombExplodeSystem = nullptr;
+                ExplosionSystem *m_explosionSystem = nullptr;
 
     };
 }

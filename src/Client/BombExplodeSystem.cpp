@@ -36,7 +36,7 @@ namespace Client
 					auto &layer = bomb.thrower.getComponent<BombLayerComponent>();
                     layer.bombsRemaining += 1;
 				}
-                m_entityFactory->createExplosion(pos.pos, bomb.thrower);
+                m_entityFactory->createExplosion(pos.pos, 1, 0, SpreadingComponent::NOWHERE);
 				entity.kill();
             }
         }

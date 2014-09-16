@@ -7,6 +7,7 @@
 #include <glm/vec2.hpp>
 #include <InputMap.hpp>
 #include <Client/TextureManager.hpp>
+#include <Client/SpreadingComponent.hpp>
 
 namespace Client
 {
@@ -21,7 +22,7 @@ namespace Client
 
             anax::Entity createBomb(const glm::ivec2 &pos, anax::Entity thrower);
 
-            anax::Entity createExplosion(const glm::ivec2 &pos, anax::Entity thrower);
+            anax::Entity createExplosion(const glm::ivec2 &pos, int powerLeft, int turnsLeft, Client::SpreadingComponent::SpreadingFrom from);
         private:
             TextureManager *m_textureManager;
             anax::World *m_world;

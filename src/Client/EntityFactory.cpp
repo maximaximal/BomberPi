@@ -8,6 +8,7 @@
 #include <Client/TimerComponent.hpp>
 #include <Client/BombLayerComponent.hpp>
 #include <Client/BombComponent.hpp>
+#include <Client/SpreadingComponent.hpp>
 
 #include <easylogging++.h>
 
@@ -65,7 +66,8 @@ namespace Client
         return entity;
     }
 
-    anax::Entity EntityFactory::createExplosion(const glm::ivec2 &pos, anax::Entity thrower)
+    anax::Entity EntityFactory::createExplosion(const glm::ivec2 &pos, int powerLeft, int turnsLeft,
+                                                SpreadingComponent::SpreadingFrom from)
     {
         auto entity = m_world->createEntity();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
@@ -76,6 +78,7 @@ namespace Client
 		spriteComponent->srcRect.h = 32;
         entity.addComponent(spriteComponent);
         entity.addComponent(new BodyComponent(0, 0, 32, 32));
+        entity.addComponent(new SpreadingComponent(powerLeft, turnsLeft, from));
         entity.activate();
 
         return entity;

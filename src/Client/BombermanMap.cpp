@@ -155,10 +155,26 @@ namespace Client
 			if((pos.x != 0 && pos.x != m_mapSize.x - 1)
 					&& (pos.y != 0 && pos.y != m_mapSize.y - 1))
 			{
-				auto *tile = m_tiles[layer][pos.x][pos.y];
-				tile->physics = BombermanMapTile::PASSABLE;
-				tile->id = 255;
-				tile->bombable = false;
+                clearTile(glm::ivec3(pos.x, pos.y, layer));
+			}
+        }
+    }
+
+    void BombermanMap::clearTile(glm::ivec3 pos)
+    {
+        if(pos.z < m_tiles.size())
+        {
+			if((pos.x >= 0 && pos.x < m_mapSize.x)
+					&& pos.y >= 0 && pos.y < m_mapSize.y)
+			{
+				if((pos.x != 0 && pos.x != m_mapSize.x - 1)
+						&& (pos.y != 0 && pos.y != m_mapSize.y - 1))
+				{
+					auto *tile = m_tiles[pos.z][pos.x][pos.y];
+					tile->physics = BombermanMapTile::PASSABLE;
+					tile->id = 255;
+					tile->bombable = false;
+                }
 			}
         }
     }
@@ -176,5 +192,6 @@ namespace Client
 				}
 			}
         }
+		throw std::out_of_range("Tile not in range!");
     }
 }

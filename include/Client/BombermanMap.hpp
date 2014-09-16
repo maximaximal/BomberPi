@@ -32,6 +32,8 @@ namespace Client
             void createPlayerSpace(std::vector<glm::ivec2> playerPositions);
             void clearSpaceForPlayer(glm::ivec2 pos, int layer);
 
+            void clearTile(glm::ivec3 pos);
+
             const BombermanMapTile& getTileAtPixel(glm::ivec3 pos);
         private:
             std::map<short, std::vector<std::vector<BombermanMapTile*>>> m_tiles;
