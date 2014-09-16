@@ -18,4 +18,22 @@ namespace Client
         seconds = 0;
         currentStep = 0;
     }
+    bool AnimationComponent::animationFinished()
+    {
+		if(animation)
+        {
+            if(animation->getTotalDuration() > seconds)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

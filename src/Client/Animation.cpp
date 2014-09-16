@@ -1,15 +1,53 @@
 #include <Client/Animation.hpp>
 #include <easylogging++.h>
 
+#include <yaml-cpp/yaml.h>
+
 namespace Client
 {
     Animation::Animation()
     {
 
     }
+
+    Animation::Animation(const std::string &definitionPath)
+    {
+
+    }
     Animation::~Animation()
     {
 
+    }
+
+    void Animation::loadDefinition(const std::string &definitionPath)
+    {
+		YAML::Node definition = YAML::LoadAllFromFile(definitionPath).front();
+        if(definition['step-duration'])
+        {
+        	m_stepDuration = definition['step-duration'].as<float>();
+        }
+
+        if(definition['steps'])
+        {
+            m_steps.clear();
+			SDL_Rect step;
+            for(YAML::const_iterator it = definition['steps'].begin(); it != definition['steps'].end(); ++it)
+			{
+                step.x = 0;
+                step.y = 0;
+                step.w = 0;
+                step.h = 0;
+
+				if((*it)['x'])
+                    step.x = (*it)['x'].as<int>();
+				if((*it)['y'])
+                    step.y = (*it)['y'].as<int>();
+				if((*it)['w'])
+                    step.w = (*it)['w'].as<int>();
+				if((*it)['h'])
+                    step.h = (*it)['h'].as<int>();
+			}
+        }
     }
     void Animation::addStep(const SDL_Rect &step)
     {
@@ -38,6 +76,11 @@ namespace Client
     float Animation::getStepDuration()
     {
         return m_stepDuration;
+    }
+
+    float Animation::getTotalDuration()
+    {
+        return m_stepDuration * m_steps.size();
     }
     Animation::StepsVector &Animation::getSteps()
     {

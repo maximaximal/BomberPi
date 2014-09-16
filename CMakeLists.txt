@@ -57,6 +57,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/BombExplodeSystem.cpp
     ${CLIENT_SRC}/AnimationSystem.cpp
     ${CLIENT_SRC}/ExplosionSystem.cpp
+    ${CLIENT_SRC}/ExplosionManagementSystem.cpp
     ${CLIENT_SRC}/Animation.cpp
     ${CLIENT_SRC}/EntityFactory.cpp
 )
@@ -91,6 +92,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/BombExplodeSystem.hpp
     ${CLIENT_INCLUDE}/AnimationSystem.hpp
     ${CLIENT_INCLUDE}/ExplosionSystem.hpp
+    ${CLIENT_INCLUDE}/ExplosionManagementSystem.hpp
     ${CLIENT_INCLUDE}/Animation.hpp
     ${CLIENT_INCLUDE}/EntityFactory.hpp
 )
@@ -126,9 +128,17 @@ find_package(SigC++ REQUIRED)
 if(${SIGC++_FOUND})
     target_link_libraries(Client ${SIGC++_LIBRARY})
     include_directories(${SIGC++_INCLUDE_DIR})
-    message(STATUS ${SIGC++_INCLUDE_DIR})
 elseif()
     message(STATUS "Did not find Sigc++2! Please install it before you try to compile again.")
+endif()
+
+# Add yaml-cpp
+find_package(YamlCpp REQUIRED)
+if(${YAMLCPP_FOUND})
+    target_link_libraries(Client ${YAMLCPP_LIBRARY})
+    include_directories(${YAMLCPP_INCLUDE_DIR})
+elseif()
+    message(STATUS "Did not find Yaml-Cpp! Please install it before you try to compile again.")
 endif()
 
 # Add anax
