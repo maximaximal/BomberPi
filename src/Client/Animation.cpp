@@ -21,6 +21,11 @@ namespace Client
 
     void Animation::loadDefinition(const std::string &definitionPath)
     {
+        /**
+         * Example Definition File:
+         *
+         *
+         */
 		YAML::Node definition = YAML::LoadAllFromFile(definitionPath).front();
         if(definition['step-duration'])
         {
@@ -47,6 +52,11 @@ namespace Client
 				if((*it)['h'])
                     step.h = (*it)['h'].as<int>();
 			}
+        }
+        if(definition['sequence'])
+        {
+            YAML::Node sequence = definition['sequence'];
+
         }
     }
     void Animation::addStep(const SDL_Rect &step)
