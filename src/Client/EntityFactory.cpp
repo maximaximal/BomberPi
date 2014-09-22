@@ -9,7 +9,7 @@
 #include <Client/BombLayerComponent.hpp>
 #include <Client/BombComponent.hpp>
 #include <Client/SpreadingComponent.hpp>
-
+#include <Client/AnimationComponent.hpp>
 #include <easylogging++.h>
 
 namespace Client
@@ -61,6 +61,9 @@ namespace Client
         timer->timeToPass = 1.3;
         entity.addComponent(timer);
         entity.addComponent(new BombComponent(thrower));
+        std::shared_ptr<Animation> anim = std::make_shared<Animation>();
+        anim->loadDefinition("bombAnimation.yml");
+        entity.addComponent(new AnimationComponent(anim));
         entity.activate();
 
         return entity;
@@ -79,6 +82,10 @@ namespace Client
         entity.addComponent(spriteComponent);
         entity.addComponent(new BodyComponent(0, 0, 32, 32));
         entity.addComponent(new SpreadingComponent(powerLeft, turnsLeft, from));
+        std::shared_ptr<Animation> anim = std::make_shared<Animation>();
+        anim->loadDefinition("explosionAnimation.yml");
+        anim->setRoot(0, 0);
+        entity.addComponent(new AnimationComponent(anim, true));
         entity.activate();
 
         return entity;

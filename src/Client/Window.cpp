@@ -13,17 +13,17 @@ namespace Client
     Window::~Window()
     {
 		// Clean the SDL objects.
-		if(m_renderer != nullptr)
-        {
-			SDL_DestroyRenderer(m_renderer);
-            m_renderer = nullptr;
-        }
 		if(m_window != nullptr)
         {
 			SDL_DestroyWindow(m_window);
             m_window = nullptr;
         }
-		if(m_SDLInitialized)
+        if(m_renderer != nullptr)
+        {
+            SDL_DestroyRenderer(m_renderer);
+            m_renderer = nullptr;
+        }
+        if(m_SDLInitialized)
 			SDL_Quit();
         if(m_SDLImageInitialized)
             IMG_Quit();

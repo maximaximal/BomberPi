@@ -6,7 +6,7 @@
 namespace Client
 {
     ExplosionManagementSystem::ExplosionManagementSystem(TextureManager *textureManager)
-    	: Base(anax::ComponentFilter().requires<AnimationComponent, PositionComponent>())
+        : Base(anax::ComponentFilter().requires<AnimationComponent, PositionComponent>())
     {
        	m_textureManager = textureManager;
     }
@@ -20,10 +20,12 @@ namespace Client
         {
 			auto &pos = entity.getComponent<PositionComponent>();
             auto &animation = entity.getComponent<AnimationComponent>();
-
-            if(animation.animationFinished())
+            if(animation.killAfterFinish)
             {
-                entity.kill();
+                if(animation.finished)
+                {
+
+                }
             }
         }
     }

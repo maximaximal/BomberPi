@@ -29,10 +29,20 @@ namespace Client
 				if(animation.animation->getStepDuration() <= animation.seconds)
                 {
                     animation.seconds = 0;
-                    if(animation.currentStep < animation.animation->getStepCount())
-						++animation.currentStep;
+                    if(animation.currentStep < animation.animation->getStepCount() - 1)
+                        ++animation.currentStep;
                     else
-                        animation.currentStep = 0;
+                    {
+                        if(animation.killAfterFinish)
+                        {
+                            entity.kill();
+                        }
+                        else
+                        {
+                            animation.currentStep = 0;
+                            animation.finished = true;
+                        }
+                    }
                 }
                 sprite.srcRect = animation.animation->getStep(animation.currentStep);
             }

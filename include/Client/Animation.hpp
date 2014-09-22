@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include <string>
+#include <glm/vec2.hpp>
 
 namespace Client
 {
@@ -19,6 +20,8 @@ namespace Client
 
             void addStep(const SDL_Rect &step);
             const SDL_Rect& getStep(unsigned int step);
+            void setRoot(int x, int y);
+            void setRoot(glm::ivec2 root);
             unsigned int getStepCount();
             void setStepDuration(float duration);
             float getStepDuration();

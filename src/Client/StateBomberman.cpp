@@ -15,6 +15,7 @@
 #include <Client/AnimationSystem.hpp>
 #include <Client/BombExplodeSystem.hpp>
 #include <Client/ExplosionSystem.hpp>
+#include <Client/ExplosionManagementSystem.hpp>
 #include <Client/PlayerComponent.hpp>
 #include <Client/VelocityComponent.hpp>
 #include <Client/BodyComponent.hpp>
@@ -45,7 +46,9 @@ namespace Client
         if(m_playerMovementSystem != nullptr)
             delete m_playerMovementSystem;
         if(m_explosionSystem != nullptr)
-        	delete m_explosionSystem;
+            delete m_explosionSystem;
+        if(m_explosionManagementSystem != nullptr)
+            delete m_explosionManagementSystem;
         if(m_timerSystem != nullptr)
             delete m_timerSystem;
         if(m_world != nullptr)
@@ -90,6 +93,9 @@ namespace Client
         m_explosionSystem = new ExplosionSystem(m_map, m_entityFactory);
         m_world->addSystem(*m_explosionSystem);
 
+        m_explosionManagementSystem = new ExplosionManagementSystem(getTextureManager());
+        m_world->addSystem(*m_explosionManagementSystem);
+
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
         m_map->init(glm::ivec2(17, 15));
@@ -133,6 +139,7 @@ namespace Client
     {
         m_world->refresh();
         m_timerSystem->update(frameTime);
+        m_explosionManagementSystem->update(frameTime);
         m_animationSystem->update(frameTime);
 		m_explosionSystem->update(frameTime);
 

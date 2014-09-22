@@ -8,6 +8,13 @@ namespace Client
         clear();
     }
 
+    AnimationComponent::AnimationComponent(std::shared_ptr<Animation> animation, bool killAfterFinish)
+    {
+        clear();
+        this->animation = animation;
+        this->killAfterFinish = killAfterFinish;
+    }
+
     AnimationComponent::~AnimationComponent()
     {
      	clear();
@@ -17,23 +24,7 @@ namespace Client
         animation.reset();
         seconds = 0;
         currentStep = 0;
-    }
-    bool AnimationComponent::animationFinished()
-    {
-		if(animation)
-        {
-            if(animation->getTotalDuration() > seconds)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        killAfterFinish = false;
+        finished = false;
     }
 }
