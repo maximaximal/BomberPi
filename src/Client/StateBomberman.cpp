@@ -16,6 +16,7 @@
 #include <Client/BombExplodeSystem.hpp>
 #include <Client/ExplosionSystem.hpp>
 #include <Client/ExplosionManagementSystem.hpp>
+#include <Client/CollisionSystem.hpp>
 #include <Client/PlayerComponent.hpp>
 #include <Client/VelocityComponent.hpp>
 #include <Client/BodyComponent.hpp>
@@ -47,6 +48,8 @@ namespace Client
             delete m_playerMovementSystem;
         if(m_explosionSystem != nullptr)
             delete m_explosionSystem;
+        if(m_collisionSystem != nullptr)
+            delete m_collisionSystem;
         if(m_explosionManagementSystem != nullptr)
             delete m_explosionManagementSystem;
         if(m_timerSystem != nullptr)
@@ -95,6 +98,9 @@ namespace Client
 
         m_explosionManagementSystem = new ExplosionManagementSystem(getTextureManager());
         m_world->addSystem(*m_explosionManagementSystem);
+
+        m_collisionSystem = new CollisionSystem(m_map);
+        m_world->addSystem(*m_collisionSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
@@ -149,6 +155,8 @@ namespace Client
 
         m_bombPlacePositionSystem->update();
         m_bombPlaceSystem->update();
+
+        m_collisionSystem->update(frameTime);
     }
 
     void StateBomberman::render(Window *window)

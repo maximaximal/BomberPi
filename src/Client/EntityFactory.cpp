@@ -39,7 +39,7 @@ namespace Client
         inputComponent->inputMap = inputMap;
         entity.addComponent(inputComponent);
         entity.addComponent(new BombLayerComponent());
-        entity.addComponent(new BodyComponent(10, 10, 10, 10));
+        entity.addComponent(new BodyComponent(5, 5, 20, 20));
         entity.addComponent(new PlayerComponent());
         entity.activate();
 

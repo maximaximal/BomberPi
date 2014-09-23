@@ -2,12 +2,17 @@
 #define CLIENT_BODYCOMPONENT_HPP_INCLUDED
 
 #include <anax/Component.hpp>
+#include <sigc++/sigc++.h>
+#include <memory>
+#include <Client/Collision.hpp>
 
 namespace Client
 {
     class BodyComponent : public anax::Component<BodyComponent>
     {
         public:
+            typedef sigc::signal<void, std::shared_ptr<Collision> > CollisionSignal;
+
             BodyComponent();
             BodyComponent(float x, float y, float w, float h);
 
@@ -21,6 +26,8 @@ namespace Client
             float h = 0;
 
             float drag = 0;
+
+            CollisionSignal collisionSignal;
     };
 }
 
