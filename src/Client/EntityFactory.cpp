@@ -10,6 +10,7 @@
 #include <Client/BombComponent.hpp>
 #include <Client/SpreadingComponent.hpp>
 #include <Client/AnimationComponent.hpp>
+#include <Client/PlayerMovementSystem.hpp>
 #include <easylogging++.h>
 
 namespace Client
@@ -26,7 +27,7 @@ namespace Client
 
     }
 
-    anax::Entity EntityFactory::createPlayer(const glm::ivec2 &pos, const InputMap &inputMap)
+    anax::Entity EntityFactory::createPlayer(const glm::ivec2 &pos, const InputMap &inputMap, PlayerMovementSystem *playerMovementSystem)
     {
         auto entity = m_world->createEntity();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
@@ -39,7 +40,9 @@ namespace Client
         inputComponent->inputMap = inputMap;
         entity.addComponent(inputComponent);
         entity.addComponent(new BombLayerComponent());
-        entity.addComponent(new BodyComponent(5, 5, 20, 20));
+        BodyComponent *body = new BodyComponent(10, 10, 10, 10);
+        body->collisionSignal.connect(sigc::mem_fun(playerMovementSystem, &PlayerMovementSystem::onPlayerCollision));
+        entity.addComponent(body);
         entity.addComponent(new PlayerComponent());
         entity.activate();
 

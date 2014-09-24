@@ -27,6 +27,8 @@ namespace Client
 
             float drag = 0;
 
+            glm::dvec2 lastMove;
+
             CollisionSignal collisionSignal;
     };
 }

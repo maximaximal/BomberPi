@@ -67,32 +67,6 @@ namespace Client
                 wasValidInput = true;
             }
 
-            if(wasValidInput)
-            {
-                glm::ivec3 nextXBodyPos(pos.pos.x + dir.x + body.x, pos.pos.y + body.y, 1);
-                glm::ivec3 nextYBodyPos(pos.pos.x + body.x, pos.pos.y + dir.y + body.y, 1);
-
-                glm::ivec3 nextXBodyWidthPos(pos.pos.x + body.x + dir.x + body.w, pos.pos.y + body.y, 1);
-                glm::ivec3 nextYBodyWidthPos(pos.pos.x + body.x, pos.pos.y + dir.y + body.y + body.h, 1);
-
-                if(m_bombermanMap->getTileAtPixel(nextXBodyPos).physics == BombermanMapTile::SOLID)
-                {
-                    dir.x = 0;
-                }
-                if(m_bombermanMap->getTileAtPixel(nextYBodyPos).physics == BombermanMapTile::SOLID)
-                {
-                    dir.y = 0;
-                }
-                if(m_bombermanMap->getTileAtPixel(nextXBodyWidthPos).physics == BombermanMapTile::SOLID)
-                {
-                    dir.x = 0;
-                }
-                if(m_bombermanMap->getTileAtPixel(nextYBodyWidthPos).physics == BombermanMapTile::SOLID)
-                {
-                    dir.y = 0;
-                }
-            }
-
             if(wasValidInput && (dir.x != 0 || dir.y != 0))
             {
                 glm::dvec2 normal(0, -1);
@@ -111,9 +85,24 @@ namespace Client
 
 				pos.orientation = glm::normalize(dir);
 
+                body.lastMove = dir;
+
 				pos.pos += dir;
             }
         }
     }
+    void PlayerMovementSystem::onPlayerCollision(std::shared_ptr<Collision> collision)
+    {
+		auto &playerPos = collision->getA().getComponent<PositionComponent>();
+		auto &playerBody = collision->getA().getComponent<BodyComponent>();
 
+		playerPos.pos = playerPos.pos - playerBody.lastMove;
+    }
+    void PlayerMovementSystem::onEntityRemoved(anax::Entity &e)
+    {
+        if(m_collisionConnections.count(e.getId()) > 0)
+        {
+            m_collisionConnections.erase(e.getId());
+        }
+    }
 }

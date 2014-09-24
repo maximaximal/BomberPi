@@ -3,6 +3,7 @@
 
 #include <anax/System.hpp>
 #include <Client/BombermanMap.hpp>
+#include <Client/Collision.hpp>
 
 namespace Client
 {
@@ -14,6 +15,7 @@ namespace Client
 
             void update(float frametime);
         private:
+            void collideWithMapTile(const BombermanMapTile &tile, const glm::ivec3 &pos, anax::Entity &e, bool &alreadyCollided);
             BombermanMap *m_map;
     };
 }

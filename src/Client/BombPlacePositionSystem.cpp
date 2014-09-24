@@ -55,18 +55,25 @@ namespace Client
                 layer.placePos.y -= 1 * 32;
             }
 
-            if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x, layer.placePos.y, 1)).physics
-                    == BombermanMapTile::PASSABLE)
+            try
             {
-                layer.canPlace = true;
+				if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x, layer.placePos.y, 1)).physics
+						== BombermanMapTile::PASSABLE)
+				{
+					layer.canPlace = true;
+				}
+				else
+				{
+					layer.canPlace = false;
+					if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x - pos.orientation.x * 32, layer.placePos.y - pos.orientation.y * 32, 1)).physics
+							== BombermanMapTile::PASSABLE)
+						layer.canPlace = true;
+				}
             }
-            else
+            catch(std::out_of_range &e)
             {
-                layer.canPlace = false;
-                LOG(INFO) << "Orientation: " << pos.orientation.x << "x" << pos.orientation.y;
-                if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x - pos.orientation.x * 32, layer.placePos.y - pos.orientation.y * 32, 1)).physics
-                        == BombermanMapTile::PASSABLE)
-                    layer.canPlace = true;
+                //Nothing to do!
+				layer.canPlace = false;
             }
 
             /**

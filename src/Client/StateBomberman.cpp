@@ -121,7 +121,7 @@ namespace Client
         inputMap.set(SDL_SCANCODE_D, PlayerInputEnum::RIGHT);
         inputMap.set(SDL_SCANCODE_SPACE, PlayerInputEnum::ACTION);
         playerPos.x = 32; playerPos.y = 32;
-		m_entityFactory->createPlayer(playerPos, inputMap);
+		m_entityFactory->createPlayer(playerPos, inputMap, m_playerMovementSystem);
         playerPositions.push_back(playerPos / 32);
 
         inputMap.clear();
@@ -132,7 +132,7 @@ namespace Client
         inputMap.set(SDL_SCANCODE_RIGHT, PlayerInputEnum::RIGHT);
         inputMap.set(SDL_SCANCODE_L, PlayerInputEnum::ACTION);
         playerPos.x = 15 * 32; playerPos.y = 13 * 32;
-		m_entityFactory->createPlayer(playerPos, inputMap);
+		m_entityFactory->createPlayer(playerPos, inputMap, m_playerMovementSystem);
         playerPositions.push_back(playerPos / 32);
 
         m_map->createPlayerSpace(playerPositions);

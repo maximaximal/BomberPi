@@ -11,6 +11,8 @@
 
 namespace Client
 {
+    class PlayerMovementSystem;
+
     class EntityFactory
     {
         public:
@@ -18,7 +20,7 @@ namespace Client
                           TextureManager *textureManager);
             virtual ~EntityFactory();
 
-            anax::Entity createPlayer(const glm::ivec2 &pos, const InputMap &inputMap);
+            anax::Entity createPlayer(const glm::ivec2 &pos, const InputMap &inputMap, Client::PlayerMovementSystem *playerMovementSystem);
 
             anax::Entity createBomb(const glm::ivec2 &pos, anax::Entity thrower);
 
