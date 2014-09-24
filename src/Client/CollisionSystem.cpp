@@ -1,7 +1,7 @@
 #include <Client/CollisionSystem.hpp>
-
 #include <Client/BodyComponent.hpp>
 #include <Client/PositionComponent.hpp>
+#include <easylogging++.h>
 
 namespace Client
 {
@@ -86,10 +86,7 @@ namespace Client
                     rectB.h = bodyB.h + rectA.y;
 
                     //Check for collisions.
-                    if(rectB.x > rectA.w
-                            || rectB.w < rectA.x
-                            || rectB.y > rectB.h
-                            || rectB.h < rectA.y)
+                    if(rectB.x > rectA.w)
                     {
                         //Collision detected!
                         collision = std::make_shared<Collision>(entityA, entityB);

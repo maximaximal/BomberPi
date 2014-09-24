@@ -128,7 +128,22 @@ namespace Client
 		a = getARect();
         b = getBRect();
 
-
+		if(a.x + a.w > b.x && a.x < b.x + b.w)
+        {
+            penetrationVec.x = (a.x + a.w) - b.x;
+        }
+        else
+        {
+            penetrationVec.x = a.x - (b.x + b.w);
+        }
+		if(a.y + a.h > b.y && a.h < b.y + b.h)
+        {
+            penetrationVec.y = (a.y + a.h) - b.y;
+        }
+        else
+        {
+            penetrationVec.y = a.y - (b.y + b.h);
+        }
 
         return penetrationVec;
     }

@@ -67,7 +67,11 @@ namespace Client
 					layer.canPlace = false;
 					if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x - pos.orientation.x * 32, layer.placePos.y - pos.orientation.y * 32, 1)).physics
 							== BombermanMapTile::PASSABLE)
+                    {
 						layer.canPlace = true;
+                        layer.placePos.x -= pos.orientation.x * 32;
+                        layer.placePos.y -= pos.orientation.y * 32;
+                    }
 				}
             }
             catch(std::out_of_range &e)

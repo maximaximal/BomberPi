@@ -97,6 +97,7 @@ namespace Client
 		auto &playerBody = collision->getA().getComponent<BodyComponent>();
 
 		playerPos.pos = playerPos.pos - playerBody.lastMove;
+        //playerPos.pos = playerPos.pos - collision->getPenetrationVec();
     }
     void PlayerMovementSystem::onEntityRemoved(anax::Entity &e)
     {
