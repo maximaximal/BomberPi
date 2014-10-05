@@ -93,11 +93,13 @@ namespace Client
     }
     void PlayerMovementSystem::onPlayerCollision(std::shared_ptr<Collision> collision)
     {
-		auto &playerPos = collision->getA().getComponent<PositionComponent>();
-		auto &playerBody = collision->getA().getComponent<BodyComponent>();
-
-		playerPos.pos = playerPos.pos - playerBody.lastMove;
-        //playerPos.pos = playerPos.pos - collision->getPenetrationVec();
+        if(collision->getType() == Collision::EntityWithRect)
+        {
+			auto &playerPos = collision->getA().getComponent<PositionComponent>();
+			auto &playerBody = collision->getA().getComponent<BodyComponent>();
+			playerPos.pos = playerPos.pos - playerBody.lastMove;
+			//playerPos.pos = playerPos.pos + collision->getPenetrationVec();
+        }
     }
     void PlayerMovementSystem::onEntityRemoved(anax::Entity &e)
     {

@@ -20,6 +20,7 @@
 #include <Client/PlayerComponent.hpp>
 #include <Client/VelocityComponent.hpp>
 #include <Client/BodyComponent.hpp>
+#include <Client/DamageSystem.hpp>
 
 namespace Client
 {
@@ -52,6 +53,8 @@ namespace Client
             delete m_collisionSystem;
         if(m_explosionManagementSystem != nullptr)
             delete m_explosionManagementSystem;
+        if(m_damageSystem != nullptr)
+            delete m_damageSystem;
         if(m_timerSystem != nullptr)
             delete m_timerSystem;
         if(m_world != nullptr)
@@ -101,6 +104,9 @@ namespace Client
 
         m_collisionSystem = new CollisionSystem(m_map);
         m_world->addSystem(*m_collisionSystem);
+
+        m_damageSystem = new DamageSystem();
+        m_world->addSystem(*m_damageSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
@@ -152,6 +158,8 @@ namespace Client
         m_playerInputSystem->update();
         m_playerMovementSystem->update(frameTime);
         m_bombExplodeSystem->update();
+
+        m_damageSystem->update(frameTime);
 
         m_bombPlacePositionSystem->update();
         m_bombPlaceSystem->update();

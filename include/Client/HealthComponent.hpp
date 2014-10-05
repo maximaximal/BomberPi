@@ -12,7 +12,7 @@ namespace Client
             HealthComponent(int health);
             virtual ~HealthComponent();
 
-            int health = 1;
+            float health = 1;
     };
 }
 

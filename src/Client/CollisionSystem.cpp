@@ -86,7 +86,10 @@ namespace Client
                     rectB.h = bodyB.h + rectA.y;
 
                     //Check for collisions.
-                    if(rectB.x > rectA.w)
+                    if(rectA.x < rectB.w
+                            && rectA.w > rectB.x
+                            && rectA.y < rectB.h
+                            && rectA.h > rectB.y)
                     {
                         //Collision detected!
                         collision = std::make_shared<Collision>(entityA, entityB);

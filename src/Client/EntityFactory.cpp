@@ -11,6 +11,8 @@
 #include <Client/SpreadingComponent.hpp>
 #include <Client/AnimationComponent.hpp>
 #include <Client/PlayerMovementSystem.hpp>
+#include <Client/DamageDealerComponent.hpp>
+#include <Client/HealthComponent.hpp>
 #include <easylogging++.h>
 
 namespace Client
@@ -44,6 +46,7 @@ namespace Client
         body->collisionSignal.connect(sigc::mem_fun(playerMovementSystem, &PlayerMovementSystem::onPlayerCollision));
         entity.addComponent(body);
         entity.addComponent(new PlayerComponent());
+        entity.addComponent(new HealthComponent(100));
         entity.activate();
 
         return entity;
@@ -89,6 +92,7 @@ namespace Client
         anim->loadDefinition("explosionAnimation.yml");
         anim->setRoot(0, 0);
         entity.addComponent(new AnimationComponent(anim, true));
+        entity.addComponent(new DamageDealerComponent(10));
         entity.activate();
 
         return entity;

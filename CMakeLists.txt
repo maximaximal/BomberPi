@@ -61,6 +61,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/ExplosionSystem.cpp
     ${CLIENT_SRC}/ExplosionManagementSystem.cpp
     ${CLIENT_SRC}/CollisionSystem.cpp
+    ${CLIENT_SRC}/DamageSystem.cpp
     ${CLIENT_SRC}/Animation.cpp
     ${CLIENT_SRC}/Collision.cpp
     ${CLIENT_SRC}/EntityFactory.cpp
@@ -100,6 +101,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/ExplosionSystem.hpp
     ${CLIENT_INCLUDE}/ExplosionManagementSystem.hpp
     ${CLIENT_INCLUDE}/CollisionSystem.hpp
+    ${CLIENT_INCLUDE}/DamageSystem.hpp
     ${CLIENT_INCLUDE}/Animation.hpp
     ${CLIENT_INCLUDE}/Collision.hpp
     ${CLIENT_INCLUDE}/EntityFactory.hpp

@@ -1,6 +1,7 @@
 #include <Client/Collision.hpp>
 #include <Client/PositionComponent.hpp>
 #include <Client/BodyComponent.hpp>
+#include <easylogging++.h>
 
 namespace Client
 {
@@ -43,20 +44,21 @@ namespace Client
         {
             return glm::dvec2(m_aRect->x, m_aRect->y);
         }
-        glm::dvec2 pos(0, 0), bodyPos(0, 0);
+        glm::dvec2 pos(0, 0);
         if(m_aEntity.hasComponent<BodyComponent>())
         {
             auto &body = m_aEntity.getComponent<BodyComponent>();
-            bodyPos.x = body.x;
-            bodyPos.y = body.y;
+            pos.x += body.x;
+            pos.y += body.y;
         }
         if(m_aEntity.hasComponent<PositionComponent>())
         {
             auto &posComponent = m_aEntity.getComponent<PositionComponent>();
-            pos.x = posComponent.pos.x;
-            pos.y = posComponent.pos.y;
+            pos.x += posComponent.pos.x;
+            pos.y += posComponent.pos.y;
+            LOG(INFO) << "HAS POS: " << posComponent.pos.x << "x" << posComponent.pos.y;
         }
-        return pos + bodyPos;
+        return pos;
     }
     glm::dvec2 Collision::getBPos()
     {
@@ -64,12 +66,12 @@ namespace Client
         {
             return glm::dvec2(m_bRect->x, m_bRect->y);
         }
-        glm::dvec2 pos(0, 0), bodyPos(0, 0);
+        glm::dvec2 pos(0, 0);
         if(m_bEntity.hasComponent<BodyComponent>())
         {
             auto &body = m_bEntity.getComponent<BodyComponent>();
-            bodyPos.x = body.x;
-            bodyPos.y = body.y;
+            pos.x += body.x;
+            pos.y += body.y;
         }
         if(m_bEntity.hasComponent<PositionComponent>())
         {
@@ -77,7 +79,7 @@ namespace Client
             pos.x = posComponent.pos.x;
             pos.y = posComponent.pos.y;
         }
-        return pos + bodyPos;
+        return pos;
     }
     SDL_Rect Collision::getARect()
     {
@@ -128,22 +130,19 @@ namespace Client
 		a = getARect();
         b = getBRect();
 
-		if(a.x + a.w > b.x && a.x < b.x + b.w)
-        {
-            penetrationVec.x = (a.x + a.w) - b.x;
-        }
-        else
-        {
+		if(a.x > b.x + b.w / 2)
             penetrationVec.x = a.x - (b.x + b.w);
-        }
-		if(a.y + a.h > b.y && a.h < b.y + b.h)
-        {
-            penetrationVec.y = (a.y + a.h) - b.y;
-        }
         else
-        {
-            penetrationVec.y = a.y - (b.y + b.h);
-        }
+            penetrationVec.x = (a.x + a.w) - b.x;
+        if(a.y + a.h > b.y && a.y < b.y + b.h)
+            penetrationVec.x = a.y - (b.y + b.h);
+        else
+            penetrationVec.y = (a.y + a.h) - b.y;
+
+
+        LOG(INFO) << "Penetration: " << penetrationVec.x << "x" << penetrationVec.y;
+        LOG(INFO) << "RectA: " << a.x << "x" << a.y << "x" << a.w << "x" << a.h;
+        LOG(INFO) << "RectB: " << b.x << "x" << b.y << "x" << b.w << "x" << b.h;
 
         return penetrationVec;
     }

@@ -6,6 +6,7 @@
 #include <Client/BombermanMap.hpp>
 #include <Client/BombermanMap.hpp>
 #include <Client/BodyComponent.hpp>
+#include <Client/CollisionSystem.hpp>
 
 namespace Client
 {
