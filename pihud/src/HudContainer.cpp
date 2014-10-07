@@ -2,7 +2,8 @@
 
 namespace PiH
 {
-    HudContainer::HudContainer()
+    HudContainer::HudContainer(Widget *parent)
+        : Widget(parent)
     {
 
     }
@@ -38,6 +39,10 @@ namespace PiH
         {
             widget.second->onRender(renderer, offset);
         }
+    }
+    void HudContainer::updateRectFromBeneath()
+    {
+
     }
     Widget *HudContainer::getWidget(const std::string &name)
     {

@@ -9,7 +9,7 @@ namespace PiH
     class Widget
     {
         public:
-            Widget();
+            Widget(Widget *parent);
             virtual ~Widget();
 
             FloatRect& getBoundingBox();
@@ -18,7 +18,9 @@ namespace PiH
             virtual void onEvent(const Event &e);
             virtual void onUpdate(float frametime);
             virtual void onRender(SDL_Renderer* renderer, const FloatRect &offset);
+            virtual void updateRectFromBeneath();
         protected:
             FloatRect m_boundingBox;
+            Widget *m_parent;
     };
 }

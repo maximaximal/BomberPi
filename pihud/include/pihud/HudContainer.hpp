@@ -9,13 +9,15 @@ namespace PiH
     class HudContainer : public Widget
     {
         public:
-            HudContainer();
+            HudContainer(Widget *parent);
             virtual ~HudContainer();
             void clear();
 
             virtual void onEvent(const Event &e);
             virtual void onUpdate(float frametime);
             virtual void onRender(SDL_Renderer *renderer, const FloatRect &offset);
+
+            virtual void updateRectFromBeneath();
 
             Widget* getWidget(const std::string &name);
             void addWidget(Widget *widget, std::string name = "");

@@ -175,14 +175,16 @@ else()
     message(STATUS "Please re-run cmake!")
 endif()
 
+#Add pihud
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/pihud)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/pihud/include)
 find_library(pihud_library
-    NAMES pihud libpihud libpihud.a
+    NAMES pihud libpihud libpihud.a libpihud.so
     HINTS ${CMAKE_CURRENT_BINARY_DIR}/pihud/
     NO_DEFAULT_PATH
 )
 target_link_libraries(Client ${pihud_library})
+add_dependencies(Client pihud)
 
 # Activate C++11
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")

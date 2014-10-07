@@ -7,6 +7,8 @@
 #include <Client/EntityFactory.hpp>
 #include <anax/World.hpp>
 
+#include <pihud/HudContainer.hpp>
+
 namespace Client
 {
     class SpriteRenderingSystem;
@@ -37,6 +39,8 @@ namespace Client
             BombermanMap *m_map = nullptr;
 			anax::World *m_world = nullptr;
 			EntityFactory *m_entityFactory = nullptr;
+
+            PiH::HudContainer *m_hudContainer = nullptr;
 
             //Systems
 				SpriteRenderingSystem *m_spriteRenderingSystem = nullptr;

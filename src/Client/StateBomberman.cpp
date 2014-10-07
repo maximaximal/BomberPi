@@ -27,7 +27,7 @@ namespace Client
 
     StateBomberman::StateBomberman()
     {
-
+		m_hudContainer = new PiH::HudContainer(nullptr);
     }
     StateBomberman::~StateBomberman()
     {
@@ -60,6 +60,7 @@ namespace Client
         if(m_world != nullptr)
             delete m_world;
 
+        delete m_hudContainer;
 		LOG(INFO) << "StateBomberman deleted.";
     }
 
@@ -171,5 +172,6 @@ namespace Client
     {
 		m_map->render(window);
         m_spriteRenderingSystem->render(window);
+        m_hudContainer->onRender(window->getSDLRenderer(), PiH::FloatRect(0, 0, 0, 0));
     }
 }

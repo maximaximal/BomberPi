@@ -23,7 +23,9 @@ namespace PiH
                 this->h = h;
             }
 
-            ~Rect();
+            ~Rect() {
+
+            }
 
             void clear() {
                 x = 0;

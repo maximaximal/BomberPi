@@ -2,9 +2,9 @@
 
 namespace PiH
 {
-    Widget::Widget()
+    Widget::Widget(Widget *parent)
     {
-
+		m_parent = parent;
     }
     Widget::~Widget()
     {
@@ -17,6 +17,10 @@ namespace PiH
     void Widget::setBoundingBox(const FloatRect &box)
     {
         m_boundingBox = box;
+        if(m_parent != nullptr)
+        {
+            m_parent->updateRectFromBeneath();
+        }
     }
     void Widget::onEvent(const Event &e)
     {
@@ -27,6 +31,10 @@ namespace PiH
 
     }
     void Widget::onRender(SDL_Renderer *renderer, const FloatRect &offset)
+    {
+
+    }
+    void Widget::updateRectFromBeneath()
     {
 
     }

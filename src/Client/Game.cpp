@@ -3,6 +3,7 @@
 #include <easylogging++.h>
 #include <Timer.hpp>
 #include <Client/StateBomberman.hpp>
+#include <pihud/pihud.hpp>
 
 _INITIALIZE_EASYLOGGINGPP
 
@@ -20,6 +21,8 @@ namespace Client
             delete m_textureManager;
         if(m_window != nullptr)
             delete m_window;
+
+        PiH::exit();
     }
     
     int Game::init()
@@ -36,6 +39,11 @@ namespace Client
 
         m_stateManager = new StateManager();
         m_stateManager->setTextureManager(m_textureManager);
+
+        //Initialize PiHUD
+        PiH::Config *pihudConfig = new PiH::Config();
+        pihudConfig->setupDefaultConfig();
+        PiH::initialize(pihudConfig);
 
         //Start the game loop!
         bool end = false;

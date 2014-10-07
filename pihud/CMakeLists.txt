@@ -13,6 +13,7 @@ set(SRCS
     ${SRC}/Event.cpp
     ${SRC}/Widget.cpp
     ${SRC}/Config.cpp
+    ${SRC}/Font.cpp
 )
 
 set(HDR ${CMAKE_CURRENT_SOURCE_DIR}/include/pihud/)
@@ -24,6 +25,9 @@ set(HDRS
     ${HDR}/InputEvent.hpp
     ${HDR}/DirectionEvent.hpp
     ${HDR}/Config.hpp
+    ${HDR}/pihud.hpp
+    ${HDR}/Font.hpp
+    ${HDR}/Label.hpp
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
