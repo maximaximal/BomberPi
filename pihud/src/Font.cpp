@@ -20,8 +20,12 @@ namespace PiH
     }
     void Font::load(const std::string &fontPath)
     {
-        //Get the font size from the last numbers after a ":" character in the name.
-        int ptSize = std::stoi(fontPath.substr(fontPath.find(":") + 1));
+       	int ptSize = 16;
+        if(fontPath.find(":") != std::string::npos)
+        {
+			//Get the font size from the last numbers after a ":" character in the name.
+			ptSize = std::stoi(fontPath.substr(fontPath.find(":") + 1));
+        }
 
         m_ptSize = ptSize;
 

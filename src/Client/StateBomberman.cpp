@@ -22,6 +22,9 @@
 #include <Client/BodyComponent.hpp>
 #include <Client/DamageSystem.hpp>
 
+#include <pihud/FontManager.hpp>
+#include <pihud/Label.hpp>
+
 namespace Client
 {
 
@@ -145,6 +148,17 @@ namespace Client
         m_map->createPlayerSpace(playerPositions);
 
         m_world->refresh();
+
+        //Test UI
+        PiH::Label *label = new PiH::Label(m_hudContainer);
+        label->setFont(getFontManager()->get("PressStart2P.ttf:22"));
+        label->setText("Test");
+        SDL_Color color;
+        color.r = 232; color.g = 179; color.b = 38;
+        label->setColor(color);
+        label->setBoundingBox(PiH::FloatRect(32, 490));
+        m_hudContainer->addWidget(label);
+
         LOG(INFO) << "StateBomberman initialized.";
     }
 
@@ -166,6 +180,8 @@ namespace Client
         m_bombPlaceSystem->update();
 
         m_collisionSystem->update(frameTime);
+
+        m_hudContainer->onUpdate(frameTime);
     }
 
     void StateBomberman::render(Window *window)

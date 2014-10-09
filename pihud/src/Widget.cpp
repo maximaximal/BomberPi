@@ -17,10 +17,14 @@ namespace PiH
     void Widget::setBoundingBox(const FloatRect &box)
     {
         m_boundingBox = box;
-        if(m_parent != nullptr)
-        {
-            m_parent->updateRectFromBeneath();
-        }
+        updateParent();
+    }
+
+    void Widget::setPosition(float x, float y)
+    {
+        m_boundingBox.x = x;
+        m_boundingBox.y = y;
+        updateParent();
     }
     void Widget::onEvent(const Event &e)
     {
@@ -37,5 +41,12 @@ namespace PiH
     void Widget::updateRectFromBeneath()
     {
 
+    }
+    void Widget::updateParent()
+    {
+        if(m_parent != nullptr)
+        {
+            m_parent->updateRectFromBeneath();
+        }
     }
 }

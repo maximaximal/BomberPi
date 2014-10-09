@@ -14,11 +14,14 @@ namespace PiH
 
             FloatRect& getBoundingBox();
             void setBoundingBox(const FloatRect &box);
+            void setPosition(float x, float y);
 
             virtual void onEvent(const Event &e);
             virtual void onUpdate(float frametime);
             virtual void onRender(SDL_Renderer* renderer, const FloatRect &offset);
             virtual void updateRectFromBeneath();
+
+            void updateParent();
         protected:
             FloatRect m_boundingBox;
             Widget *m_parent;

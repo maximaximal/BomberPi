@@ -44,6 +44,14 @@ namespace PiH
                 rect.h = h;
                 return rect;
             }
+            Rect<int32_t> toIntRect() {
+                Rect<int32_t> rect;
+                rect.x = x;
+                rect.y = y;
+                rect.w = w;
+                rect.h = h;
+                return rect;
+            }
 
             T x;
             T y;

@@ -17,6 +17,7 @@ set(SRCS
     ${SRC}/Font.cpp
     ${SRC}/FontManager.cpp
     ${SRC}/Label.cpp
+    ${SRC}/pihud.cpp
 )
 
 set(HDR ${CMAKE_CURRENT_SOURCE_DIR}/include/pihud/)

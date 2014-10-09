@@ -22,6 +22,7 @@ class State
     public:
 		std::shared_ptr<SDLEventHandler> getSDLEventHandler();
 		Client::TextureManager *getTextureManager();
+        PiH::FontManager *getFontManager();
         StateManager* getStateManager();
 
         void setHandlers(StateManager *stateManager);
@@ -30,7 +31,7 @@ class State
 
         virtual void render(Client::Window *window);
         virtual void update(float frameTime);
-    	private:
+	private:
 		std::shared_ptr<SDLEventHandler> m_sdlEventHandler;
         Client::TextureManager *m_textureManager;
         StateManager* m_stateManager;

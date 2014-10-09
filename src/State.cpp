@@ -12,7 +12,10 @@ Client::TextureManager *State::getTextureManager()
 {
     return m_textureManager;
 }
-
+PiH::FontManager *State::getFontManager()
+{
+    return m_fontManager;
+}
 StateManager* State::getStateManager()
 {
     return m_stateManager;
