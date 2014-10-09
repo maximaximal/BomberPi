@@ -19,6 +19,8 @@ namespace Client
             delete m_stateManager;
         if(m_textureManager != nullptr)
             delete m_textureManager;
+        if(m_fontManager != nullptr)
+            delete m_fontManager;
         if(m_window != nullptr)
             delete m_window;
 
@@ -37,11 +39,15 @@ namespace Client
 
         m_textureManager = new TextureManager(m_window);
 
+        m_fontManager = new PiH::FontManager();
+
         m_stateManager = new StateManager();
         m_stateManager->setTextureManager(m_textureManager);
+        m_stateManager->setFontManager(m_fontManager);
+
 
         //Initialize PiHUD
-        PiH::Config *pihudConfig = new PiH::Config();
+        PiH::Config *pihudConfig = new PiH::Config(m_window->getSDLRenderer());
         pihudConfig->setupDefaultConfig();
         PiH::initialize(pihudConfig);
 

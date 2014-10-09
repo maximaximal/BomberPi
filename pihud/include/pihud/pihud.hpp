@@ -8,7 +8,7 @@ namespace PiH
 
     void initialize(Config *config)
     {
-		if(GlobalConfig != nullptr)
+		if(GlobalConfig == nullptr)
         {
             GlobalConfig = config;
         }

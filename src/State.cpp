@@ -28,6 +28,11 @@ void State::setTextureManager(Client::TextureManager *textureManager)
     m_textureManager = textureManager;
 }
 
+void State::setFontManager(PiH::FontManager *fontManager)
+{
+    m_fontManager = fontManager;
+}
+
 void State::render(Client::Window *window)
 {
 

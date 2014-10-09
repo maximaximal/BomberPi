@@ -1,9 +1,10 @@
 project(pihud)
 cmake_minimum_required(VERSION 2.8)
 
-include(FindPkgConfig)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
 
 set(SRC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SRCS
@@ -14,6 +15,8 @@ set(SRCS
     ${SRC}/Widget.cpp
     ${SRC}/Config.cpp
     ${SRC}/Font.cpp
+    ${SRC}/FontManager.cpp
+    ${SRC}/Label.cpp
 )
 
 set(HDR ${CMAKE_CURRENT_SOURCE_DIR}/include/pihud/)
@@ -28,6 +31,7 @@ set(HDRS
     ${HDR}/pihud.hpp
     ${HDR}/Font.hpp
     ${HDR}/Label.hpp
+    ${HDR}/FontManager.hpp
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -40,9 +44,10 @@ list(APPEND CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 # Add SDL2 and SDL_image
 PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
 PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
+PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf)
 
-INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
+INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES})
 
 # Add sigc++2
 find_package(SigC++ REQUIRED)

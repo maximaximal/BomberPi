@@ -1,5 +1,6 @@
 #include <pihud/Font.hpp>
 #include <iostream>
+#include <SDL2/SDL_ttf.h>
 
 using std::cout;
 using std::endl;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SDL2/SDL_rect.h>
+
 namespace PiH
 {
     template<typename T>
@@ -32,6 +34,15 @@ namespace PiH
                 y = 0;
                 w = 0;
                 h = 0;
+            }
+
+            SDL_Rect toSDLRect() {
+                SDL_Rect rect;
+                rect.x = x;
+                rect.y = y;
+                rect.w = w;
+                rect.h = h;
+                return rect;
             }
 
             T x;

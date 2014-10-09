@@ -5,6 +5,7 @@ void StateManager::push(std::shared_ptr<State> state)
 {
     state->setHandlers(this);
     state->setTextureManager(m_textureManager);
+    state->setFontManager(m_fontManager);
     m_states.push_back(state);
 }
 
@@ -41,6 +42,11 @@ void StateManager::setTextureManager(Client::TextureManager *textureManager)
     {
         state->setTextureManager(textureManager);
     }
+}
+
+void StateManager::setFontManager(PiH::FontManager *fontManager)
+{
+    m_fontManager = fontManager;
 }
 
 void StateManager::onSDLEvent(const SDL_Event &e, float frametime)

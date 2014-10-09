@@ -2,13 +2,14 @@
 
 #include <string>
 #include <map>
+#include <SDL2/SDL.h>
 
 namespace PiH
 {
     class Config
     {
         public:
-            Config();
+            Config(SDL_Renderer *renderer);
             virtual ~Config();
 
             void setupDefaultConfig();
@@ -27,7 +28,10 @@ namespace PiH
             void setValueAsFloat(Config::Variable variable, float value);
             void setValueAsInt(Config::Variable variable, int value);
             void setValueAsString(Config::Variable variable, const std::string &value);
+
+            SDL_Renderer *getSDLRenderer();
         private:
             std::map<Config::Variable, std::string> m_values;
+            SDL_Renderer *m_sdlRenderer;
 	};
 }

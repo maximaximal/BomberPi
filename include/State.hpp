@@ -12,6 +12,11 @@ namespace Client
 	class TextureManager;
 }
 
+namespace PiH
+{
+    class FontManager;
+}
+
 class State
 {
     public:
@@ -21,6 +26,7 @@ class State
 
         void setHandlers(StateManager *stateManager);
         void setTextureManager(Client::TextureManager *textureManager);
+        void setFontManager(PiH::FontManager *fontManager);
 
         virtual void render(Client::Window *window);
         virtual void update(float frameTime);
@@ -28,6 +34,7 @@ class State
 		std::shared_ptr<SDLEventHandler> m_sdlEventHandler;
         Client::TextureManager *m_textureManager;
         StateManager* m_stateManager;
+        PiH::FontManager *m_fontManager;
 };
 
 #endif

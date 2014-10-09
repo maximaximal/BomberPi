@@ -2,9 +2,9 @@
 
 namespace PiH
 {
-    Config::Config()
+    Config::Config(SDL_Renderer *renderer)
     {
-
+		m_sdlRenderer = renderer;
     }
     Config::~Config()
     {
@@ -41,6 +41,10 @@ namespace PiH
     }
     void Config::setValueAsString(Config::Variable variable, const std::string &value)
     {
-		m_values[variable] = value;
+        m_values[variable] = value;
+    }
+    SDL_Renderer *Config::getSDLRenderer()
+    {
+        return m_sdlRenderer;
     }
 }

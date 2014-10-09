@@ -2,6 +2,7 @@
 #include <easylogging++.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 namespace Client
 {
@@ -27,6 +28,8 @@ namespace Client
 			SDL_Quit();
         if(m_SDLImageInitialized)
             IMG_Quit();
+        if(TTF_WasInit())
+            TTF_Quit();
 
 		LOG(INFO) << "Deleted Window.";
     }
@@ -47,6 +50,12 @@ namespace Client
             return 1;
         }
         m_SDLImageInitialized = true;
+
+        if(TTF_Init() == -1)
+        {
+			LOG(FATAL) << "TTF_Init failed! Error: " << TTF_GetError();
+			return 1;
+        }
 
 		m_window = SDL_CreateWindow("BomberPi", 100, 100, windowSize.x, windowSize.y, SDL_WINDOW_SHOWN);
 		if(m_window == nullptr)
