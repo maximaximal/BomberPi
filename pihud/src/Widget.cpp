@@ -17,6 +17,7 @@ namespace PiH
     void Widget::setBoundingBox(const FloatRect &box)
     {
         m_boundingBox = box;
+        updateBoundingBox();
         updateParent();
     }
 
@@ -24,6 +25,7 @@ namespace PiH
     {
         m_boundingBox.x = x;
         m_boundingBox.y = y;
+        updateBoundingBox();
         updateParent();
     }
     void Widget::onEvent(const Event &e)
@@ -48,5 +50,9 @@ namespace PiH
         {
             m_parent->updateRectFromBeneath();
         }
+    }
+    void Widget::updateBoundingBox()
+    {
+        //Empty function - can be derived in child class.
     }
 }

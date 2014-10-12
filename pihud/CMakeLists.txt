@@ -19,6 +19,8 @@ set(SRCS
     ${SRC}/Label.cpp
     ${SRC}/pihud.cpp
     ${SRC}/Texture.cpp
+    ${SRC}/Image.cpp
+    ${SRC}/IconHealthIndicator.cpp
 )
 
 set(HDR ${CMAKE_CURRENT_SOURCE_DIR}/include/pihud/)
@@ -35,6 +37,8 @@ set(HDRS
     ${HDR}/Label.hpp
     ${HDR}/FontManager.hpp
     ${HDR}/Texture.hpp
+    ${HDR}/Image.hpp
+    ${HDR}/IconHealthIndicator.hpp
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)

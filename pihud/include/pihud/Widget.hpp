@@ -23,6 +23,8 @@ namespace PiH
 
             void updateParent();
         protected:
+            virtual void updateBoundingBox();
+
             FloatRect m_boundingBox;
             Widget *m_parent;
     };
