@@ -18,6 +18,7 @@ set(SRCS
     ${SRC}/FontManager.cpp
     ${SRC}/Label.cpp
     ${SRC}/pihud.cpp
+    ${SRC}/Texture.cpp
 )
 
 set(HDR ${CMAKE_CURRENT_SOURCE_DIR}/include/pihud/)
@@ -33,6 +34,7 @@ set(HDRS
     ${HDR}/Font.hpp
     ${HDR}/Label.hpp
     ${HDR}/FontManager.hpp
+    ${HDR}/Texture.hpp
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
