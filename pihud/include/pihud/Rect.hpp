@@ -62,3 +62,6 @@ namespace PiH
     typedef Rect<float> FloatRect;
     typedef Rect<int32_t> IntRect;
 }
+
+inline bool operator==(const PiH::FloatRect &l, const PiH::FloatRect &r);
+inline bool operator!=(const PiH::FloatRect &l, const PiH::FloatRect &r);

@@ -12,7 +12,7 @@ namespace PiH
      *
      * An example would be the hears-lifebar in some games (like in zelda).
      */
-    class IconHealthIndicator : Widget
+    class IconHealthIndicator : public Widget
     {
         public:
             IconHealthIndicator(Widget *parent = nullptr);
@@ -26,6 +26,8 @@ namespace PiH
 
             void setFullIcon(const IntRect &rect);
             void setDepletedIcon(const IntRect &rect);
+
+            void setTexture(std::shared_ptr<Texture> texture);
 
             virtual void onRender(SDL_Renderer *renderer, const FloatRect &offset);
         protected:

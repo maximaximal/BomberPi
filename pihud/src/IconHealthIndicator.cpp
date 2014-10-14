@@ -47,6 +47,10 @@ namespace PiH
         }
         updateDimensions();
     }
+    void IconHealthIndicator::setTexture(std::shared_ptr<Texture> texture)
+    {
+        m_texture = texture;
+    }
     void IconHealthIndicator::onRender(SDL_Renderer *renderer, const FloatRect &offset)
     {
         for(auto &icon : m_icons)
