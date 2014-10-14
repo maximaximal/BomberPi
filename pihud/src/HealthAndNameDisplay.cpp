@@ -41,6 +41,10 @@ namespace PiH
     {
         m_iconHealthIndicator->setCurrentHealth(health);
     }
+    void HealthAndNameDisplay::setSideOfIcons(Direction side)
+    {
+        m_sideOfIcons = side;
+    }
     IconHealthIndicator *HealthAndNameDisplay::getHealthIndicator()
     {
 		return m_iconHealthIndicator;
@@ -71,11 +75,15 @@ namespace PiH
     void HealthAndNameDisplay::updateBoundingBox()
     {
         m_boundingBox.w = m_label->getBoundingBox().w;
-		m_label->setBoundingBox(FloatRect(m_boundingBox.x + m_boundingBox.w / 2 - m_label->getBoundingBox().w / 2,
+        m_boundingBox.h = m_label->getBoundingBox().h + m_distance
+                + m_iconHealthIndicator->getBoundingBox().h;
+
+        m_label->setBoundingBox(FloatRect(m_boundingBox.x,
                              			  m_boundingBox.y,
                                           m_boundingBox.w,
                                           18));
-        m_iconHealthIndicator->setBoundingBox(FloatRect(m_boundingBox.x + m_boundingBox.w - m_iconHealthIndicator->getBoundingBox().w,
+
+        m_iconHealthIndicator->setBoundingBox(FloatRect(m_boundingBox.x,
                                            				m_boundingBox.y + m_label->getBoundingBox().h + m_distance,
                                                         m_boundingBox.w,
                                                         32));

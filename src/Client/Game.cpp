@@ -44,6 +44,7 @@ namespace Client
         m_stateManager = new StateManager();
         m_stateManager->setTextureManager(m_textureManager);
         m_stateManager->setFontManager(m_fontManager);
+        m_stateManager->setWindow(m_window);
 
 
         //Initialize PiHUD

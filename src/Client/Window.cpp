@@ -79,6 +79,13 @@ namespace Client
 
     }
 
+    glm::ivec2 Window::getSize()
+    {
+        int x, y;
+        SDL_GetWindowSize(m_window, &x, &y);
+        return glm::ivec2(x, y);
+    }
+
     SDL_Renderer *Window::getSDLRenderer()
     {
         return m_renderer;

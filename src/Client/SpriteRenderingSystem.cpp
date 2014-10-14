@@ -12,7 +12,7 @@ namespace Client
     {
 
     }
-    void SpriteRenderingSystem::render(Window *window)
+    void SpriteRenderingSystem::render(Window *window, const glm::ivec2 &offset)
     {
         SDL_Rect dstRect;
         dstRect.x = 0;
@@ -26,8 +26,8 @@ namespace Client
 
             if(sprite.texture)
             {
-				dstRect.x = pos.pos.x;
-				dstRect.y = pos.pos.y;
+				dstRect.x = pos.pos.x + offset.x;
+				dstRect.y = pos.pos.y + offset.y;
 				dstRect.w = sprite.srcRect.w;
 				dstRect.h = sprite.srcRect.h;
 

@@ -46,9 +46,11 @@ namespace PiH
     }
     void Widget::updateParent()
     {
-        if(m_parent != nullptr)
+        if(m_parent != nullptr && !m_currentlyUpdating)
         {
+            m_currentlyUpdating = true;
             m_parent->updateRectFromBeneath();
+            m_currentlyUpdating = false;
         }
     }
     void Widget::updateBoundingBox()

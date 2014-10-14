@@ -23,7 +23,7 @@ namespace Client
 
             void setTexture(std::shared_ptr<Texture> texture);
 
-            void render(Window *window);
+            void render(Window *window, const glm::ivec2 &offset);
 
             void createOuterWall(short layer);
             void createFillerWalls();

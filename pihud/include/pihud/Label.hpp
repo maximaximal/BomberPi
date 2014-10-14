@@ -27,6 +27,5 @@ namespace PiH
             std::shared_ptr<Font> m_font;
             SDL_Texture *m_renderedText = nullptr;
             SDL_Color m_color;
-            bool m_hasToRedraw = false;
     };
 }

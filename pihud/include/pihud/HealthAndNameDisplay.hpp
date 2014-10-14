@@ -19,6 +19,7 @@ namespace PiH
             void setName(std::string text);
             void setDistance(int distance);
             void setCurrentHealth(int health);
+            void setSideOfIcons(PiH::Direction side);
 
             IconHealthIndicator* getHealthIndicator();
             Label* getLabel();
@@ -30,6 +31,7 @@ namespace PiH
         private:
             IconHealthIndicator *m_iconHealthIndicator;
             Label *m_label;
+            PiH::Direction m_sideOfIcons;
 
             int m_distance = 5;
     };

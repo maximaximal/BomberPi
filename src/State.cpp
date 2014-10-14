@@ -21,6 +21,11 @@ StateManager* State::getStateManager()
     return m_stateManager;
 }
 
+Client::Window *State::getWindow()
+{
+    return m_window;
+}
+
 void State::setHandlers(StateManager *stateManager)
 {
     m_stateManager = stateManager;
@@ -34,6 +39,11 @@ void State::setTextureManager(Client::TextureManager *textureManager)
 void State::setFontManager(PiH::FontManager *fontManager)
 {
     m_fontManager = fontManager;
+}
+
+void State::setWindow(Client::Window *window)
+{
+    m_window = window;
 }
 
 void State::render(Client::Window *window)

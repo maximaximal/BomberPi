@@ -51,6 +51,10 @@ namespace PiH
         }
         updateDimensions();
     }
+    void IconHealthIndicator::setSideOfIcons(Direction side)
+    {
+        m_sideOfIcons = side;
+    }
     void IconHealthIndicator::setTexture(std::shared_ptr<Texture> texture)
     {
         m_texture = texture;
@@ -105,10 +109,22 @@ namespace PiH
         updateDimensions();
 
         float x = m_boundingBox.x, y = m_boundingBox.y;
+		FloatRect box;
+		box.y = y;
+		box.w = 32;
+		box.h = 32;
 
         for(std::size_t i = 0; i < m_icons.size(); ++i)
         {
-            m_icons[i]->setBoundingBox(FloatRect(x + (m_boundingBox.w - m_fullIcon.w * i), y, 32, 32));
+            if(m_sideOfIcons == LEFT)
+            {
+				box.x = x + m_fullIcon.w * i;
+            }
+            else
+            {
+				box.x = x + m_boundingBox.w - (m_fullIcon.w * i);
+            }
+			m_icons[i]->setBoundingBox(box);
         }
     }
 

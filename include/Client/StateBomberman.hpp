@@ -44,6 +44,8 @@ namespace Client
 			anax::World *m_world = nullptr;
 			EntityFactory *m_entityFactory = nullptr;
 
+            glm::ivec2 m_offset;
+
             //Hud Components
 				PiH::HudContainer *m_hudContainer = nullptr;
 

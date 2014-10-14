@@ -56,7 +56,7 @@ namespace Client
         m_texture = texture;
     }
 
-    void BombermanMap::render(Window *window)
+    void BombermanMap::render(Window *window, const glm::ivec2 &offset)
     {
         SDL_Rect srcRect;
         SDL_Rect dsRect;
@@ -73,8 +73,8 @@ namespace Client
 
 					dsRect.w = 32;
 					dsRect.h = 32;
-					dsRect.x = x * 32;
-					dsRect.y = y * 32;
+					dsRect.x = x * 32 + offset.x;
+					dsRect.y = y * 32 + offset.y;
 					SDL_RenderCopy(window->getSDLRenderer(), m_texture->getSDLTexture(), &srcRect, &dsRect);
 				}
 			}

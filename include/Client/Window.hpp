@@ -25,6 +25,8 @@ namespace Client
 	    SDL_Window* getSDLWindow();
 
         void onEvent(const SDL_Event &e);
+
+        glm::ivec2 getSize();
 	private:
 	    SDL_Window *m_window = nullptr;
 	    SDL_Renderer *m_renderer = nullptr;

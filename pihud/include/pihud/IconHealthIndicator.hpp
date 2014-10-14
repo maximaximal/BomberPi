@@ -26,6 +26,7 @@ namespace PiH
 
             void setFullIcon(const IntRect &rect);
             void setDepletedIcon(const IntRect &rect);
+            void setSideOfIcons(Direction side);
 
             void setTexture(std::shared_ptr<Texture> texture);
 
@@ -41,6 +42,7 @@ namespace PiH
 
             int m_currentHealth = 10;
             int m_maximumHealth = 10;
+            Direction m_sideOfIcons;
             std::vector<std::unique_ptr<Image> > m_icons;
             std::shared_ptr<Texture> m_texture;
             IntRect m_fullIcon;

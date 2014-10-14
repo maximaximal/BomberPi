@@ -27,5 +27,7 @@ namespace PiH
 
             FloatRect m_boundingBox;
             Widget *m_parent;
+        private:
+            bool m_currentlyUpdating = false;
     };
 }

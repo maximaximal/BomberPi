@@ -32,6 +32,9 @@ namespace Client
     StateBomberman::StateBomberman()
     {
 		m_hudContainer = new PiH::HudContainer(nullptr);
+
+        m_offset.x = 50;
+        m_offset.y = 50;
     }
     StateBomberman::~StateBomberman()
     {
@@ -155,16 +158,6 @@ namespace Client
 
         m_world->refresh();
 
-        //Test UI
-        PiH::Label *label = new PiH::Label(m_hudContainer);
-        label->setFont(getFontManager()->get("PressStart2P.ttf:22"));
-        label->setText("Test");
-        SDL_Color color;
-        color.r = 232; color.g = 179; color.b = 38;
-        label->setColor(color);
-        label->setBoundingBox(PiH::FloatRect(32, 490));
-        m_hudContainer->addWidget(label);
-
         LOG(INFO) << "StateBomberman initialized.";
     }
 
@@ -193,25 +186,46 @@ namespace Client
 
     void StateBomberman::render(Window *window)
     {
-		m_map->render(window);
-        m_spriteRenderingSystem->render(window);
+		m_map->render(window, m_offset);
+        m_spriteRenderingSystem->render(window, m_offset);
         m_hudContainer->onRender(window->getSDLRenderer(), PiH::FloatRect(0, 0, 0, 0));
     }
     void StateBomberman::addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name)
     {
 
         PiH::HealthAndNameDisplay *healthIndicator = new PiH::HealthAndNameDisplay(m_hudContainer);
-        healthIndicator->setFont(getFontManager()->get("PressStart2P.ttf:18"));
-        healthIndicator->setTexture(getTextureManager()->get("hud.png"));
-        healthIndicator->setName(name);
-        healthIndicator->setPosition(playerPos.x, playerPos.y);
         healthIndicator->getHealthIndicator()->setFullIcon(PiH::IntRect(0, 0, 32, 32));
         healthIndicator->getHealthIndicator()->setDepletedIcon(PiH::IntRect(64, 0, 32, 32));
         healthIndicator->getHealthIndicator()->setMaximumHealth(3);
         healthIndicator->getHealthIndicator()->setCurrentHealth(3);
+        healthIndicator->setFont(getFontManager()->get("PressStart2P.ttf:18"));
+        healthIndicator->setTexture(getTextureManager()->get("hud.png"));
+        healthIndicator->setName(name);
+        healthIndicator->setPosition(playerPos.x, playerPos.y);
 
         m_hudContainer->addWidget(healthIndicator, "HealthAndName_" + name);
 
 		m_entityFactory->createPlayer(playerPos, inputs, m_playerMovementSystem, healthIndicator);
+
+        glm::ivec2 pos;
+        if(playerPos.x > (m_map->getMapSize().x * 32) / 2)
+        {
+            pos.x = getWindow()->getSize().x - healthIndicator->getBoundingBox().w;
+            healthIndicator->setSideOfIcons(PiH::RIGHT);
+        }
+        else
+        {
+            pos.x = 0;
+            healthIndicator->setSideOfIcons(PiH::LEFT);
+        }
+        if(playerPos.y > (m_map->getMapSize().y * 32) / 2)
+        {
+            pos.y = getWindow()->getSize().y - healthIndicator->getBoundingBox().h;
+        }
+        else
+        {
+            pos.y = 0;
+        }
+        healthIndicator->setPosition(pos.x, pos.y);
     }
 }

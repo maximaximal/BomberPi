@@ -11,7 +11,7 @@ namespace Client
         public:
             SpriteRenderingSystem();
 
-            void render(Window *window);
+            void render(Window *window, const glm::ivec2 &offset);
     };
 }
 
