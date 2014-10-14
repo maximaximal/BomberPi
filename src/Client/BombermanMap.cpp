@@ -178,7 +178,10 @@ namespace Client
 			}
         }
     }
-
+    const glm::ivec2 &BombermanMap::getMapSize()
+    {
+        return m_mapSize;
+    }
     const BombermanMapTile& BombermanMap::getTileAtPixel(glm::ivec3 pos)
     {
        	glm::ivec3 tilePos = pos / 32;

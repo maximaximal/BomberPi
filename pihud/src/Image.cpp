@@ -1,5 +1,9 @@
 #include <pihud/Image.hpp>
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
 namespace PiH
 {
     Image::Image(Widget *parent)
@@ -24,6 +28,7 @@ namespace PiH
         SDL_Rect srcRect = m_textureRect.toSDLRect();
         SDL_Rect dstRect = m_boundingBox.toSDLRect();
 
-        SDL_RenderCopy(renderer, m_texture->getSDLTexture(), &srcRect, &dstRect);
+        if(m_texture)
+			SDL_RenderCopy(renderer, m_texture->getSDLTexture(), &srcRect, &dstRect);
     }
 }

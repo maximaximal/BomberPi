@@ -29,7 +29,10 @@ namespace Client
 
     }
 
-    anax::Entity EntityFactory::createPlayer(const glm::ivec2 &pos, const InputMap &inputMap, PlayerMovementSystem *playerMovementSystem)
+    anax::Entity EntityFactory::createPlayer(const glm::ivec2 &pos,
+                                             const InputMap &inputMap,
+                                             PlayerMovementSystem *playerMovementSystem,
+                                             PiH::HealthAndNameDisplay *healthAndNameDisplay)
     {
         auto entity = m_world->createEntity();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
@@ -46,7 +49,7 @@ namespace Client
         body->collisionSignal.connect(sigc::mem_fun(playerMovementSystem, &PlayerMovementSystem::onPlayerCollision));
         entity.addComponent(body);
         entity.addComponent(new PlayerComponent());
-        entity.addComponent(new HealthComponent(100));
+        entity.addComponent(new HealthComponent(3, healthAndNameDisplay));
         entity.activate();
 
         return entity;
@@ -92,7 +95,7 @@ namespace Client
         anim->loadDefinition("explosionAnimation.yml");
         anim->setRoot(0, 0);
         entity.addComponent(new AnimationComponent(anim, true));
-        entity.addComponent(new DamageDealerComponent(10));
+        entity.addComponent(new DamageDealerComponent(1));
         entity.activate();
 
         return entity;

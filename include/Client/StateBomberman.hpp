@@ -8,6 +8,7 @@
 #include <anax/World.hpp>
 
 #include <pihud/HudContainer.hpp>
+#include <pihud/HealthAndNameDisplay.hpp>
 
 namespace Client
 {
@@ -23,6 +24,7 @@ namespace Client
     class ExplosionManagementSystem;
     class CollisionSystem;
     class DamageSystem;
+    class InvincibleSystem;
 
    	class StateBomberman : public State
     {
@@ -35,12 +37,15 @@ namespace Client
             virtual void update(float frameTime);
 
             virtual void render(Window *window);
+
+            void addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name);
         private:
             BombermanMap *m_map = nullptr;
 			anax::World *m_world = nullptr;
 			EntityFactory *m_entityFactory = nullptr;
 
-            PiH::HudContainer *m_hudContainer = nullptr;
+            //Hud Components
+				PiH::HudContainer *m_hudContainer = nullptr;
 
             //Systems
 				SpriteRenderingSystem *m_spriteRenderingSystem = nullptr;
@@ -55,6 +60,7 @@ namespace Client
                 ExplosionManagementSystem *m_explosionManagementSystem = nullptr;
                 CollisionSystem *m_collisionSystem = nullptr;
                 DamageSystem *m_damageSystem = nullptr;
+                InvincibleSystem *m_invincibleSystem = nullptr;
 
     };
 }

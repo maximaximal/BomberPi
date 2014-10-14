@@ -4,11 +4,11 @@ namespace Client
 {
     DamageDealerComponent::DamageDealerComponent()
     {
-		this->damagePerSecond = 0;
+		this->damage = 0;
     }
-    DamageDealerComponent::DamageDealerComponent(int damagePerSecond)
+    DamageDealerComponent::DamageDealerComponent(int damage)
     {
-    	this->damagePerSecond = damagePerSecond;
+    	this->damage = damage;
     }
     DamageDealerComponent::~DamageDealerComponent()
     {

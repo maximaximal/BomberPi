@@ -9,10 +9,10 @@ namespace Client
     {
         public:
             DamageDealerComponent();
-            DamageDealerComponent(int damagePerSecond);
+            DamageDealerComponent(int damage);
             virtual ~DamageDealerComponent();
 
-            int damagePerSecond = 0;
+            int damage = 0;
     };
 }
 

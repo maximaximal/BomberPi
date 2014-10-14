@@ -55,6 +55,10 @@ namespace PiH
     }
     void Label::redraw()
     {
+        if(m_renderedText != nullptr)
+        {
+            SDL_DestroyTexture(m_renderedText);
+        }
         SDL_Surface *rendered = TTF_RenderUTF8_Blended(m_font->getFont(), m_text.c_str(), m_color);
         if(rendered == nullptr)
         {

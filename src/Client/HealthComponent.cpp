@@ -6,9 +6,10 @@ namespace Client
     {
 
     }
-    HealthComponent::HealthComponent(int health)
+    HealthComponent::HealthComponent(int health, PiH::HealthAndNameDisplay *display)
     {
         this->health = health;
+        this->display = display;
     }
     HealthComponent::~HealthComponent()
     {

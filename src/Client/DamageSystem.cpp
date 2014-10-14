@@ -35,9 +35,15 @@ namespace Client
 			{
 				auto &health = witness.getComponent<HealthComponent>();
 				auto &damage = dealer.getComponent<DamageDealerComponent>();
-				health.health -= damage.damagePerSecond * m_lastFrametime;
 
-				LOG(INFO) << "Damage: " << damage.damagePerSecond * m_lastFrametime;
+                if(health.invincibleFor == 0)
+                {
+					health.health -= damage.damage;
+					health.invincibleFor = 1;
+
+					if(health.display != nullptr)
+						health.display->setCurrentHealth(health.health);
+                }
 			}
         }
     }

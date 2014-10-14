@@ -2,6 +2,7 @@
 #define CLIENT_HEALTHCOMPONENT_HPP_INCLUDED
 
 #include <anax/Component.hpp>
+#include <pihud/HealthAndNameDisplay.hpp>
 
 namespace Client
 {
@@ -9,10 +10,13 @@ namespace Client
     {
         public:
             HealthComponent();
-            HealthComponent(int health);
+            HealthComponent(int health, PiH::HealthAndNameDisplay *display = nullptr);
             virtual ~HealthComponent();
 
             float health = 1;
+            float invincibleFor = 0;
+
+            PiH::HealthAndNameDisplay *display = nullptr;
     };
 }
 

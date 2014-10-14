@@ -7,6 +7,12 @@ namespace PiH
     {
         m_label = new Label(this);
         m_iconHealthIndicator = new IconHealthIndicator(this);
+
+        SDL_Color labelColor;
+        labelColor.r = 81;
+        labelColor.g = 81;
+        labelColor.b = 204;
+        m_label->setColor(labelColor);
     }
     HealthAndNameDisplay::~HealthAndNameDisplay()
     {
@@ -16,6 +22,7 @@ namespace PiH
     void HealthAndNameDisplay::setTexture(std::shared_ptr<Texture> texture)
     {
 		m_iconHealthIndicator->setTexture(texture);
+        updateBoundingBox();
     }
     void HealthAndNameDisplay::setFont(std::shared_ptr<Font> font)
     {
@@ -29,6 +36,10 @@ namespace PiH
     {
         m_distance = distance;
         updateBoundingBox();
+    }
+    void HealthAndNameDisplay::setCurrentHealth(int health)
+    {
+        m_iconHealthIndicator->setCurrentHealth(health);
     }
     IconHealthIndicator *HealthAndNameDisplay::getHealthIndicator()
     {
@@ -47,8 +58,7 @@ namespace PiH
     {
         FloatRect boundingBox = getBoundingBox();
 
-        boundingBox.w = std::max(m_label->getBoundingBox().w,
-                                 m_iconHealthIndicator->getBoundingBox().w);
+        boundingBox.w = m_label->getBoundingBox().w;
         boundingBox.h = m_label->getBoundingBox().h + m_distance
                 + m_iconHealthIndicator->getBoundingBox().h;
 
@@ -60,9 +70,14 @@ namespace PiH
     }
     void HealthAndNameDisplay::updateBoundingBox()
     {
-		m_label->setPosition(m_boundingBox.x / 2 - m_label->getBoundingBox().w / 2,
-                             m_boundingBox.y);
-        m_iconHealthIndicator->setPosition(m_boundingBox.x,
-                                           m_boundingBox.y + m_label->getBoundingBox().h + m_distance);
+        m_boundingBox.w = m_label->getBoundingBox().w;
+		m_label->setBoundingBox(FloatRect(m_boundingBox.x + m_boundingBox.w / 2 - m_label->getBoundingBox().w / 2,
+                             			  m_boundingBox.y,
+                                          m_boundingBox.w,
+                                          18));
+        m_iconHealthIndicator->setBoundingBox(FloatRect(m_boundingBox.x + m_boundingBox.w - m_iconHealthIndicator->getBoundingBox().w,
+                                           				m_boundingBox.y + m_label->getBoundingBox().h + m_distance,
+                                                        m_boundingBox.w,
+                                                        32));
     }
 }

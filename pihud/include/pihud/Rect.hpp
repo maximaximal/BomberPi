@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL_rect.h>
+#include <iostream>
 
 namespace PiH
 {
@@ -57,11 +58,28 @@ namespace PiH
             T y;
             T w;
             T h;
+
+            void print() {
+                std::cout << "Rect-Print: " << x << "x" << y << "x" << w << "x" << h << "x" << std::endl;
+            }
     };
 
     typedef Rect<float> FloatRect;
     typedef Rect<int32_t> IntRect;
 }
 
-inline bool operator==(const PiH::FloatRect &l, const PiH::FloatRect &r);
-inline bool operator!=(const PiH::FloatRect &l, const PiH::FloatRect &r);
+inline bool operator==(const PiH::FloatRect &l, const PiH::FloatRect &r)
+{
+    return !(l == r);
+}
+inline bool operator!=(const PiH::FloatRect &l, const PiH::FloatRect &r)
+{
+    if(l.x == r.x
+            && l.y == r.y
+            && l.w == r.w
+            && l.h == r.h)
+    {
+        return true;
+    }
+    return false;
+}

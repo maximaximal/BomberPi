@@ -33,6 +33,7 @@ namespace PiH
         protected:
             void updateMaximum();
             void updateCurrent();
+            void updateTexture();
 
             virtual void updateBoundingBox();
         private:

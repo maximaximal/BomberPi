@@ -9,6 +9,8 @@
 #include <Client/TextureManager.hpp>
 #include <Client/SpreadingComponent.hpp>
 
+#include <pihud/HealthAndNameDisplay.hpp>
+
 namespace Client
 {
     class PlayerMovementSystem;
@@ -20,7 +22,9 @@ namespace Client
                           TextureManager *textureManager);
             virtual ~EntityFactory();
 
-            anax::Entity createPlayer(const glm::ivec2 &pos, const InputMap &inputMap, Client::PlayerMovementSystem *playerMovementSystem);
+            anax::Entity createPlayer(const glm::ivec2 &pos, const InputMap &inputMap,
+                                      Client::PlayerMovementSystem *playerMovementSystem,
+                                      PiH::HealthAndNameDisplay *healthAndNameDisplay);
 
             anax::Entity createBomb(const glm::ivec2 &pos, anax::Entity thrower);
 

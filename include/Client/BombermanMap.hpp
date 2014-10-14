@@ -34,6 +34,8 @@ namespace Client
 
             void clearTile(glm::ivec3 pos);
 
+            const glm::ivec2& getMapSize();
+
             const BombermanMapTile& getTileAtPixel(glm::ivec3 pos);
         private:
             std::map<short, std::vector<std::vector<BombermanMapTile*>>> m_tiles;

@@ -18,6 +18,7 @@ namespace PiH
             void setFont(std::shared_ptr<Font> font);
             void setName(std::string text);
             void setDistance(int distance);
+            void setCurrentHealth(int health);
 
             IconHealthIndicator* getHealthIndicator();
             Label* getLabel();

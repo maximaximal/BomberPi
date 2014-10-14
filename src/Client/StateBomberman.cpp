@@ -21,6 +21,7 @@
 #include <Client/VelocityComponent.hpp>
 #include <Client/BodyComponent.hpp>
 #include <Client/DamageSystem.hpp>
+#include <Client/InvincibleSystem.hpp>
 
 #include <pihud/FontManager.hpp>
 #include <pihud/Label.hpp>
@@ -50,6 +51,8 @@ namespace Client
             delete m_playerInputSystem;
         if(m_playerMovementSystem != nullptr)
             delete m_playerMovementSystem;
+        if(m_invincibleSystem != nullptr)
+            delete m_invincibleSystem;
         if(m_explosionSystem != nullptr)
             delete m_explosionSystem;
         if(m_collisionSystem != nullptr)
@@ -112,6 +115,9 @@ namespace Client
         m_damageSystem = new DamageSystem();
         m_world->addSystem(*m_damageSystem);
 
+        m_invincibleSystem = new InvincibleSystem();
+        m_world->addSystem(*m_invincibleSystem);
+
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
         m_map->init(glm::ivec2(17, 15));
@@ -131,7 +137,7 @@ namespace Client
         inputMap.set(SDL_SCANCODE_D, PlayerInputEnum::RIGHT);
         inputMap.set(SDL_SCANCODE_SPACE, PlayerInputEnum::ACTION);
         playerPos.x = 32; playerPos.y = 32;
-		m_entityFactory->createPlayer(playerPos, inputMap, m_playerMovementSystem);
+        this->addPlayer(inputMap, playerPos, "Player 1");
         playerPositions.push_back(playerPos / 32);
 
         inputMap.clear();
@@ -142,7 +148,7 @@ namespace Client
         inputMap.set(SDL_SCANCODE_RIGHT, PlayerInputEnum::RIGHT);
         inputMap.set(SDL_SCANCODE_L, PlayerInputEnum::ACTION);
         playerPos.x = 15 * 32; playerPos.y = 13 * 32;
-		m_entityFactory->createPlayer(playerPos, inputMap, m_playerMovementSystem);
+        this->addPlayer(inputMap, playerPos, "Player 2");
         playerPositions.push_back(playerPos / 32);
 
         m_map->createPlayerSpace(playerPositions);
@@ -169,6 +175,7 @@ namespace Client
         m_explosionManagementSystem->update(frameTime);
         m_animationSystem->update(frameTime);
 		m_explosionSystem->update(frameTime);
+        m_invincibleSystem->update(frameTime);
 
         m_playerInputSystem->update();
         m_playerMovementSystem->update(frameTime);
@@ -189,5 +196,22 @@ namespace Client
 		m_map->render(window);
         m_spriteRenderingSystem->render(window);
         m_hudContainer->onRender(window->getSDLRenderer(), PiH::FloatRect(0, 0, 0, 0));
+    }
+    void StateBomberman::addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name)
+    {
+
+        PiH::HealthAndNameDisplay *healthIndicator = new PiH::HealthAndNameDisplay(m_hudContainer);
+        healthIndicator->setFont(getFontManager()->get("PressStart2P.ttf:18"));
+        healthIndicator->setTexture(getTextureManager()->get("hud.png"));
+        healthIndicator->setName(name);
+        healthIndicator->setPosition(playerPos.x, playerPos.y);
+        healthIndicator->getHealthIndicator()->setFullIcon(PiH::IntRect(0, 0, 32, 32));
+        healthIndicator->getHealthIndicator()->setDepletedIcon(PiH::IntRect(64, 0, 32, 32));
+        healthIndicator->getHealthIndicator()->setMaximumHealth(3);
+        healthIndicator->getHealthIndicator()->setCurrentHealth(3);
+
+        m_hudContainer->addWidget(healthIndicator, "HealthAndName_" + name);
+
+		m_entityFactory->createPlayer(playerPos, inputs, m_playerMovementSystem, healthIndicator);
     }
 }

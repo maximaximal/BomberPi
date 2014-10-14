@@ -82,8 +82,8 @@ namespace Client
 
                     rectB.x = posB.pos.x + bodyB.x;
                     rectB.y = posB.pos.y + bodyB.y;
-                    rectB.w = bodyB.w + rectA.x;
-                    rectB.h = bodyB.h + rectA.y;
+                    rectB.w = bodyB.w + rectB.x;
+                    rectB.h = bodyB.h + rectB.y;
 
                     //Check for collisions.
                     if(rectA.x < rectB.w
@@ -93,7 +93,7 @@ namespace Client
                     {
                         //Collision detected!
                         collision = std::make_shared<Collision>(entityA, entityB);
-                        //bodyA.collisionSignal(collision);
+                        bodyA.collisionSignal(collision);
                     }
                 }
             }
