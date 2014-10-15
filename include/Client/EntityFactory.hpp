@@ -8,6 +8,7 @@
 #include <InputMap.hpp>
 #include <Client/TextureManager.hpp>
 #include <Client/SpreadingComponent.hpp>
+#include <Client/Player.hpp>
 
 #include <pihud/HealthAndNameDisplay.hpp>
 
@@ -24,7 +25,8 @@ namespace Client
 
             anax::Entity createPlayer(const glm::ivec2 &pos, const InputMap &inputMap,
                                       Client::PlayerMovementSystem *playerMovementSystem,
-                                      PiH::HealthAndNameDisplay *healthAndNameDisplay);
+                                      PiH::HealthAndNameDisplay *healthAndNameDisplay,
+                                      std::shared_ptr<Player> player);
 
             anax::Entity createBomb(const glm::ivec2 &pos, anax::Entity thrower);
 

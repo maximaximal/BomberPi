@@ -1,18 +1,18 @@
 #include <Client/Player.hpp>
 #include <Client/HealthComponent.hpp>
+#include <Client/PositionComponent.hpp>
+#include <Client/PlayerComponent.hpp>
 #include <easylogging++.h>
 
 namespace Client
 {
-    Player::Player(const std::string &name, anax::Entity entity)
+    Player::Player(const std::string &name)
     {
         m_name = name;
-        m_entity = entity;
     }
     Player::~Player()
     {
-        if(m_entity.isValid())
-			m_entity.kill();
+
     }
     void Player::setEntity(anax::Entity playerEntity)
     {
@@ -20,10 +20,7 @@ namespace Client
     }
     void Player::damageReceived(int damage, anax::Entity dealer)
     {
-		if(isDead())
-        {
-            LOG(INFO) << "The player is dead!!";
-        }
+        setPosition(getStartingPosition());
     }
     void Player::die()
     {
@@ -56,6 +53,39 @@ namespace Client
             {
                 auto &health = m_entity.getComponent<HealthComponent>();
                 health.health = value;
+            }
+        }
+    }
+    void Player::setPosition(const glm::ivec2 &pos)
+    {
+        if(m_entity.isValid())
+        {
+            if(m_entity.hasComponent<PositionComponent>())
+            {
+                auto &posComp = m_entity.getComponent<PositionComponent>();
+                posComp.pos = pos;
+            }
+        }
+    }
+
+    const glm::ivec2 &Player::getStartingPosition()
+    {
+        if(m_entity.isValid())
+        {
+            if(m_entity.hasComponent<PlayerComponent>())
+            {
+                auto &player = m_entity.getComponent<PlayerComponent>();
+                return player.startingPos;
+            }
+        }
+    }
+    void Player::update(float frametime)
+    {
+		if(isDead())
+        {
+            if(m_entity.isValid())
+            {
+                m_entity.kill();
             }
         }
     }

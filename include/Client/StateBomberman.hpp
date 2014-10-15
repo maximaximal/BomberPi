@@ -5,6 +5,7 @@
 #include <Client/Window.hpp>
 #include <Client/BombermanMap.hpp>
 #include <Client/EntityFactory.hpp>
+#include <Client/PlayerManager.hpp>
 #include <anax/World.hpp>
 
 #include <pihud/HudContainer.hpp>
@@ -43,6 +44,7 @@ namespace Client
             BombermanMap *m_map = nullptr;
 			anax::World *m_world = nullptr;
 			EntityFactory *m_entityFactory = nullptr;
+            PlayerManager *m_playerManager = nullptr;
 
             glm::ivec2 m_offset;
 

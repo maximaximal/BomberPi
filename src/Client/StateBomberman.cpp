@@ -48,6 +48,8 @@ namespace Client
             delete m_bombPlaceSystem;
         if(m_entityFactory != nullptr)
             delete m_entityFactory;
+        if(m_playerManager != nullptr)
+            delete m_playerManager;
         if(m_map != nullptr)
             delete m_map;
         if(m_playerInputSystem != nullptr)
@@ -78,6 +80,7 @@ namespace Client
         LOG(INFO) << "Initializing StateBomberman.";
         m_map = new BombermanMap();
         m_world = new anax::World();
+        m_playerManager = new PlayerManager();
 
         m_spriteRenderingSystem = new SpriteRenderingSystem();
 		m_world->addSystem(*m_spriteRenderingSystem);
@@ -168,18 +171,18 @@ namespace Client
         m_explosionManagementSystem->update(frameTime);
         m_animationSystem->update(frameTime);
 		m_explosionSystem->update(frameTime);
-        m_invincibleSystem->update(frameTime);
 
         m_playerInputSystem->update();
         m_playerMovementSystem->update(frameTime);
         m_bombExplodeSystem->update();
 
-        m_damageSystem->update(frameTime);
-
         m_bombPlacePositionSystem->update();
         m_bombPlaceSystem->update();
 
         m_collisionSystem->update(frameTime);
+        m_damageSystem->update(frameTime);
+        m_invincibleSystem->update(frameTime);
+        m_playerManager->update(frameTime);
 
         m_hudContainer->onUpdate(frameTime);
     }
@@ -205,7 +208,14 @@ namespace Client
 
         m_hudContainer->addWidget(healthIndicator, "HealthAndName_" + name);
 
-		m_entityFactory->createPlayer(playerPos, inputs, m_playerMovementSystem, healthIndicator);
+        std::shared_ptr<Player> player = std::make_shared<Player>(name);
+
+		anax::Entity playerEntity = m_entityFactory->createPlayer(playerPos,
+                                                                  inputs,
+                                                                  m_playerMovementSystem,
+                                                                  healthIndicator,
+                                                                  player);
+        player->setEntity(playerEntity);
 
         glm::ivec2 pos;
         if(playerPos.x > (m_map->getMapSize().x * 32) / 2)
@@ -227,5 +237,7 @@ namespace Client
             pos.y = 0;
         }
         healthIndicator->setPosition(pos.x, pos.y);
+
+        m_playerManager->set(player, name);
     }
 }

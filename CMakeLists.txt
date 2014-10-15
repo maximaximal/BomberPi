@@ -68,6 +68,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/Collision.cpp
     ${CLIENT_SRC}/EntityFactory.cpp
     ${CLIENT_SRC}/Player.cpp
+    ${CLIENT_SRC}/PlayerManager.cpp
 )
 
 SET(CLIENT_HDRS
@@ -111,6 +112,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/Collision.hpp
     ${CLIENT_INCLUDE}/EntityFactory.hpp
     ${CLIENT_INCLUDE}/Player.hpp
+    ${CLIENT_INCLUDE}/PlayerManager.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 

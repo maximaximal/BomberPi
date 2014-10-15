@@ -33,7 +33,8 @@ namespace Client
     anax::Entity EntityFactory::createPlayer(const glm::ivec2 &pos,
                                              const InputMap &inputMap,
                                              PlayerMovementSystem *playerMovementSystem,
-                                             PiH::HealthAndNameDisplay *healthAndNameDisplay)
+                                             PiH::HealthAndNameDisplay *healthAndNameDisplay,
+                                             std::shared_ptr<Player> player)
     {
         auto entity = m_world->createEntity();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
@@ -49,8 +50,10 @@ namespace Client
         BodyComponent *body = new BodyComponent(10, 10, 10, 10);
         body->collisionSignal.connect(sigc::mem_fun(playerMovementSystem, &PlayerMovementSystem::onPlayerCollision));
         entity.addComponent(body);
-        entity.addComponent(new PlayerComponent(150, pos));
-        entity.addComponent(new HealthComponent(3, healthAndNameDisplay));
+        entity.addComponent(new PlayerComponent(150, pos, player));
+        HealthComponent *healthComponent = new HealthComponent(3, healthAndNameDisplay);
+        healthComponent->damageOccured.connect(sigc::mem_fun(player.get(), &Player::damageReceived));
+        entity.addComponent(healthComponent);
         entity.addComponent(new EntityTypeComponent(Type::Player));
         entity.activate();
 
