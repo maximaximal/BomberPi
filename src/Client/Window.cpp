@@ -24,17 +24,17 @@ namespace Client
             SDL_DestroyRenderer(m_renderer);
             m_renderer = nullptr;
         }
-        if(m_SDLInitialized)
-			SDL_Quit();
         if(m_SDLImageInitialized)
             IMG_Quit();
         if(TTF_WasInit())
             TTF_Quit();
+        if(m_SDLInitialized)
+			SDL_Quit();
 
 		LOG(INFO) << "Deleted Window.";
     }
     
-    int Window::init(const glm::ivec2 &windowSize)
+    int Window::init(const glm::ivec2 &windowSize, bool fullscreen)
     {
 		LOG(INFO) << "Initializing Window (" << windowSize.x << "x" << windowSize.y << ")";
 		if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -57,7 +57,11 @@ namespace Client
 			return 1;
         }
 
-		m_window = SDL_CreateWindow("BomberPi", 100, 100, windowSize.x, windowSize.y, SDL_WINDOW_SHOWN);
+        Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+        if(fullscreen)
+            flags = flags | SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+		m_window = SDL_CreateWindow("BomberPi", 100, 100, windowSize.x, windowSize.y, flags);
 		if(m_window == nullptr)
 		{
 			LOG(FATAL) << "SDL_CreateWindow failed! Error: " << SDL_GetError();

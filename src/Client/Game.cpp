@@ -31,7 +31,7 @@ namespace Client
     {
 		LOG(INFO) << "Initializing Game!";
 		m_window = new Window();
-		if(m_window->init(glm::ivec2(800, 600)) != 0)
+		if(m_window->init(glm::ivec2(800, 600), false) != 0)
         {
             LOG(FATAL) << "Window did not initialize correctly. Exiting.";
             return 1;

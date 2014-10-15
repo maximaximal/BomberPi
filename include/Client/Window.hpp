@@ -19,7 +19,7 @@ namespace Client
 	     * 
 	     * @param windowSize The size the SDL Window should have. 
 	     */
-	    int init(const glm::ivec2 &windowSize);
+	    int init(const glm::ivec2 &windowSize, bool fullscreen);
 	    
 	    SDL_Renderer* getSDLRenderer();
 	    SDL_Window* getSDLWindow();
