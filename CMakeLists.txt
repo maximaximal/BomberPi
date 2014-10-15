@@ -195,7 +195,7 @@ find_library(pihud_library
     NO_DEFAULT_PATH
 )
 add_dependencies(Client pihud)
-if(NOT ${pihud_library} MATCHES "anax_library-NOTFOUND")
+if(NOT ${pihud_library} MATCHES "pihud_library-NOTFOUND")
 	target_link_libraries(Client ${pihud_library})
 endif()
 
