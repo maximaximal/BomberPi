@@ -24,7 +24,7 @@ namespace Client
     class ExplosionManagementSystem;
     class CollisionSystem;
     class DamageSystem;
-    class InvincibleSystem;
+    class HealthSystem;
 
    	class StateBomberman : public State
     {
@@ -62,7 +62,7 @@ namespace Client
                 ExplosionManagementSystem *m_explosionManagementSystem = nullptr;
                 CollisionSystem *m_collisionSystem = nullptr;
                 DamageSystem *m_damageSystem = nullptr;
-                InvincibleSystem *m_invincibleSystem = nullptr;
+                HealthSystem *m_invincibleSystem = nullptr;
 
     };
 }

@@ -21,17 +21,23 @@ namespace PiH
     }
     void IconHealthIndicator::setCurrentHealth(int health)
     {
-        if(health > m_maximumHealth)
-            health = m_maximumHealth;
-        if(health < 0)
-            health = 0;
-		m_currentHealth = health;
-        updateCurrent();
+        if(health != m_currentHealth)
+        {
+			if(health > m_maximumHealth)
+				health = m_maximumHealth;
+			if(health < 0)
+				health = 0;
+			m_currentHealth = health;
+			updateCurrent();
+        }
     }
     void IconHealthIndicator::setMaximumHealth(int maximumHealth)
     {
-		m_maximumHealth = maximumHealth;
-        updateMaximum();
+        if(maximumHealth != m_maximumHealth)
+        {
+			m_maximumHealth = maximumHealth;
+			updateMaximum();
+        }
     }
     void IconHealthIndicator::setFullIcon(const IntRect &rect)
     {

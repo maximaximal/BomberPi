@@ -40,8 +40,8 @@ namespace PiH
         private:
             void updateDimensions();
 
-            int m_currentHealth = 10;
-            int m_maximumHealth = 10;
+            int m_currentHealth = 0;
+            int m_maximumHealth = 0;
             Direction m_sideOfIcons;
             std::vector<std::unique_ptr<Image> > m_icons;
             std::shared_ptr<Texture> m_texture;

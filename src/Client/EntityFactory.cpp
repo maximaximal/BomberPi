@@ -49,7 +49,7 @@ namespace Client
         BodyComponent *body = new BodyComponent(10, 10, 10, 10);
         body->collisionSignal.connect(sigc::mem_fun(playerMovementSystem, &PlayerMovementSystem::onPlayerCollision));
         entity.addComponent(body);
-        entity.addComponent(new PlayerComponent());
+        entity.addComponent(new PlayerComponent(150, pos));
         entity.addComponent(new HealthComponent(3, healthAndNameDisplay));
         entity.addComponent(new EntityTypeComponent(Type::Player));
         entity.activate();

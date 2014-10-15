@@ -41,8 +41,8 @@ namespace Client
 					health.health -= damage.damage;
 					health.invincibleFor = 1;
 
-					if(health.display != nullptr)
-						health.display->setCurrentHealth(health.health);
+                    //Fire the damageOccured event from the health component.
+                    health.damageOccured(damage.damage, dealer);
                 }
 			}
         }

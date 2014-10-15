@@ -63,10 +63,11 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/ExplosionManagementSystem.cpp
     ${CLIENT_SRC}/CollisionSystem.cpp
     ${CLIENT_SRC}/DamageSystem.cpp
-    ${CLIENT_SRC}/InvincibleSystem.cpp
+    ${CLIENT_SRC}/HealthSystem.cpp
     ${CLIENT_SRC}/Animation.cpp
     ${CLIENT_SRC}/Collision.cpp
     ${CLIENT_SRC}/EntityFactory.cpp
+    ${CLIENT_SRC}/Player.cpp
 )
 
 SET(CLIENT_HDRS
@@ -105,10 +106,11 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/ExplosionManagementSystem.hpp
     ${CLIENT_INCLUDE}/CollisionSystem.hpp
     ${CLIENT_INCLUDE}/DamageSystem.hpp
-    ${CLIENT_INCLUDE}/InvincibleSystem.hpp
+    ${CLIENT_INCLUDE}/HealthSystem.hpp
     ${CLIENT_INCLUDE}/Animation.hpp
     ${CLIENT_INCLUDE}/Collision.hpp
     ${CLIENT_INCLUDE}/EntityFactory.hpp
+    ${CLIENT_INCLUDE}/Player.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 

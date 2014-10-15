@@ -2,7 +2,13 @@
 #define CLIENT_HEALTHCOMPONENT_HPP_INCLUDED
 
 #include <anax/Component.hpp>
-#include <pihud/HealthAndNameDisplay.hpp>
+#include <anax/Entity.hpp>
+#include <sigc++/sigc++.h>
+
+namespace PiH
+{
+    class HealthAndNameDisplay;
+}
 
 namespace Client
 {
@@ -17,6 +23,8 @@ namespace Client
             float invincibleFor = 0;
 
             PiH::HealthAndNameDisplay *display = nullptr;
+
+            sigc::signal<void, int, anax::Entity> damageOccured;
     };
 }
 

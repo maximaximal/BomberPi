@@ -1,19 +1,20 @@
 #include <Client/InvincibleSystem.hpp>
 
 #include <Client/HealthComponent.hpp>
+#include <pihud/HealthAndNameDisplay.hpp>
 
 namespace Client
 {
-    InvincibleSystem::InvincibleSystem()
+    HealthSystem::HealthSystem()
     	: Base(anax::ComponentFilter().requires<HealthComponent>())
     {
 
     }
-    InvincibleSystem::~InvincibleSystem()
+    HealthSystem::~HealthSystem()
     {
 
     }
-    void InvincibleSystem::update(float frametime)
+    void HealthSystem::update(float frametime)
     {
         for(auto &entity : getEntities())
         {
@@ -27,6 +28,9 @@ namespace Client
                     health.invincibleFor = 0;
                 }
             }
+
+			if(health.display != nullptr)
+				health.display->setCurrentHealth(health.health);
         }
     }
 }

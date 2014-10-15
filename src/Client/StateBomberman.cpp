@@ -118,7 +118,7 @@ namespace Client
         m_damageSystem = new DamageSystem();
         m_world->addSystem(*m_damageSystem);
 
-        m_invincibleSystem = new InvincibleSystem();
+        m_invincibleSystem = new HealthSystem();
         m_world->addSystem(*m_invincibleSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
