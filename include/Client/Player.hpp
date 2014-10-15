@@ -23,8 +23,10 @@ namespace Client
             void setHealth(int value);
             void setPosition(const glm::ivec2 &pos);
             const glm::ivec2& getStartingPosition();
+            glm::ivec2 getPosition();
 
             void update(float frametime);
+            void reset();
         private:
             std::string m_name;
             anax::Entity m_entity;

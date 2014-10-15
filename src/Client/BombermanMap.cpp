@@ -89,6 +89,7 @@ namespace Client
             m_tiles[layer][x][0]->physics = BombermanMapTile::SOLID;
             m_tiles[layer][x][m_mapSize.y - 1]->id = 0;
             m_tiles[layer][x][m_mapSize.y - 1]->physics = BombermanMapTile::SOLID;
+            m_tiles[layer][x][m_mapSize.y - 1]->bombable = false;
         }
         for(unsigned int y = 0; y < m_mapSize.y; ++y)
         {
@@ -96,6 +97,7 @@ namespace Client
             m_tiles[layer][0][y]->physics = BombermanMapTile::SOLID;
             m_tiles[layer][m_mapSize.x - 1][y]->id = 0;
             m_tiles[layer][m_mapSize.x - 1][y]->physics = BombermanMapTile::SOLID;
+            m_tiles[layer][m_mapSize.x - 1][y]->bombable = false;
         }
     }
 
@@ -106,7 +108,8 @@ namespace Client
         {
 			for(unsigned int y = 1; y < m_mapSize.y - 1; ++y)
 			{
-                if(m_tiles[layer][x][y]->physics != BombermanMapTile::SOLID)
+                if(m_tiles[layer][x][y]->physics == BombermanMapTile::PASSABLE
+                        || m_tiles[layer][x][y]->bombable == true)
                 {
                     m_tiles[layer][x][y]->id = 16 + (rand() % 3);
                     m_tiles[layer][x][y]->physics = BombermanMapTile::SOLID;
@@ -129,6 +132,7 @@ namespace Client
                 {
                     m_tiles[layer][x][y]->id = 1;
                     m_tiles[layer][x][y]->physics = BombermanMapTile::SOLID;
+                    m_tiles[layer][x][y]->bombable = false;
                 }
 			}
         }

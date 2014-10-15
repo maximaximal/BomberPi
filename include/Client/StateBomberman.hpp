@@ -40,6 +40,8 @@ namespace Client
 
             virtual void render(Window *window);
 
+            void startNewGame();
+
             void addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name);
         private:
             BombermanMap *m_map = nullptr;

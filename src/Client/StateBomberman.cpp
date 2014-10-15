@@ -131,12 +131,6 @@ namespace Client
 
         m_map->init(glm::ivec2(17, 15));
 
-        m_map->createOuterWall(0);
-        m_map->createOuterWall(1);
-        m_map->createInnerStamps();
-        m_map->createFillerWalls();
-
-        std::vector<glm::ivec2> playerPositions;
         glm::ivec2 playerPos(0, 0);
 
        	InputMap inputMap;
@@ -147,7 +141,6 @@ namespace Client
         inputMap.set(SDL_SCANCODE_SPACE, PlayerInputEnum::ACTION);
         playerPos.x = 32; playerPos.y = 32;
         this->addPlayer(inputMap, playerPos, "Player 1");
-        playerPositions.push_back(playerPos / 32);
 
         inputMap.clear();
 
@@ -158,11 +151,10 @@ namespace Client
         inputMap.set(SDL_SCANCODE_L, PlayerInputEnum::ACTION);
         playerPos.x = 15 * 32; playerPos.y = 13 * 32;
         this->addPlayer(inputMap, playerPos, "Player 2");
-        playerPositions.push_back(playerPos / 32);
-
-        m_map->createPlayerSpace(playerPositions);
 
         m_world->refresh();
+
+        startNewGame();
 
         LOG(INFO) << "StateBomberman initialized.";
     }
@@ -193,6 +185,7 @@ namespace Client
         if(m_winChecker->winDetected())
         {
             LOG(INFO) << "We have a winner! " << m_winChecker->getWinner()->getName();
+            startNewGame();
         }
     }
 
@@ -202,9 +195,19 @@ namespace Client
         m_spriteRenderingSystem->render(window, m_offset);
         m_hudContainer->onRender(window->getSDLRenderer(), PiH::FloatRect(0, 0, 0, 0));
     }
+
+    void StateBomberman::startNewGame()
+    {
+        m_map->createOuterWall(0);
+        m_map->createOuterWall(1);
+        m_map->createInnerStamps();
+        m_map->createFillerWalls();
+        m_playerManager->resetPlayers();
+        m_world->refresh();
+        m_map->createPlayerSpace(m_playerManager->getPlayerPositions(32));
+    }
     void StateBomberman::addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name)
     {
-
         PiH::HealthAndNameDisplay *healthIndicator = new PiH::HealthAndNameDisplay(m_hudContainer);
         healthIndicator->getHealthIndicator()->setFullIcon(PiH::IntRect(0, 0, 32, 32));
         healthIndicator->getHealthIndicator()->setDepletedIcon(PiH::IntRect(64, 0, 32, 32));

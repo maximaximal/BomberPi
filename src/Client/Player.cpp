@@ -79,7 +79,22 @@ namespace Client
                 auto &player = m_entity.getComponent<PlayerComponent>();
                 return player.startingPos;
             }
+			throw(std::out_of_range("The player component of the player's entity was not set!"));
         }
+    }
+
+    glm::ivec2 Player::getPosition()
+    {
+        if(m_entity.isValid())
+        {
+            if(m_entity.hasComponent<PositionComponent>())
+            {
+                auto &posComp = m_entity.getComponent<PositionComponent>();
+                return posComp.pos;
+            }
+			throw(std::out_of_range("The position component of the player's entity was not set!"));
+        }
+        return glm::ivec2(32, 32);
     }
     void Player::update(float frametime)
     {
@@ -87,8 +102,18 @@ namespace Client
         {
             if(m_entity.isValid())
             {
-                m_entity.deactivate();
+                die();
             }
+        }
+    }
+
+    void Player::reset()
+    {
+        setPosition(getStartingPosition());
+        setHealth(3);
+        if(m_entity.isValid())
+        {
+			m_entity.activate();
         }
     }
 }

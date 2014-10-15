@@ -26,6 +26,16 @@ namespace Client
     {
         m_players[name] = player;
     }
+
+    std::vector<glm::ivec2> PlayerManager::getPlayerPositions(int coordinateDivider)
+    {
+        std::vector<glm::ivec2> positions;
+        for(auto &player : m_players)
+        {
+            positions.push_back(player.second->getPosition() / coordinateDivider);
+        }
+        return positions;
+    }
     PlayerManager::PlayerMap &PlayerManager::getPlayers()
     {
         return m_players;
@@ -46,6 +56,14 @@ namespace Client
             }
         }
         return alivePlayers;
+    }
+
+    void PlayerManager::resetPlayers()
+    {
+        for(auto &player : m_players)
+        {
+            player.second->reset();
+        }
     }
     void PlayerManager::update(float frametime)
     {

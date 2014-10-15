@@ -4,6 +4,8 @@
 #include <memory>
 #include <string>
 #include <map>
+#include <vector>
+#include <glm/vec2.hpp>
 #include <Client/Player.hpp>
 
 namespace Client
@@ -20,10 +22,12 @@ namespace Client
             void set(std::shared_ptr<Player> player, const std::string &name);
 
             std::shared_ptr<Player> operator[](const std::string &index) {return get(index);}
+            std::vector<glm::ivec2> getPlayerPositions(int coordinateDivider);
 
             PlayerMap& getPlayers();
             int getPlayerCount();
             int getAlivePlayerCount();
+            void resetPlayers();
 
             void update(float frametime);
         private:
