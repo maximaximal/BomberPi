@@ -22,6 +22,8 @@ namespace Client
             std::shared_ptr<Player> operator[](const std::string &index) {return get(index);}
 
             PlayerMap& getPlayers();
+            int getPlayerCount();
+            int getAlivePlayerCount();
 
             void update(float frametime);
         private:

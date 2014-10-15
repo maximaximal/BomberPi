@@ -36,7 +36,7 @@ namespace Client
                                              PiH::HealthAndNameDisplay *healthAndNameDisplay,
                                              std::shared_ptr<Player> player)
     {
-        auto entity = m_world->createEntity();
+        anax::Entity entity = m_world->createEntity();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
         SpriteComponent *spriteComponent = new SpriteComponent();
         spriteComponent->texture = m_textureManager->get("player_proto.png");

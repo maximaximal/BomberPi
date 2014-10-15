@@ -6,6 +6,7 @@
 #include <Client/BombermanMap.hpp>
 #include <Client/EntityFactory.hpp>
 #include <Client/PlayerManager.hpp>
+#include <Client/WinChecker.hpp>
 #include <anax/World.hpp>
 
 #include <pihud/HudContainer.hpp>
@@ -45,6 +46,7 @@ namespace Client
 			anax::World *m_world = nullptr;
 			EntityFactory *m_entityFactory = nullptr;
             PlayerManager *m_playerManager = nullptr;
+            WinChecker *m_winChecker = nullptr;
 
             glm::ivec2 m_offset;
 

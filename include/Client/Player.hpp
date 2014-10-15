@@ -19,6 +19,7 @@ namespace Client
             void die();
             bool isDead();
             int getHealth();
+            const std::string& getName();
             void setHealth(int value);
             void setPosition(const glm::ivec2 &pos);
             const glm::ivec2& getStartingPosition();

@@ -44,7 +44,10 @@ namespace Client
         }
         return 0;
     }
-
+    const std::string &Player::getName()
+    {
+        return m_name;
+    }
     void Player::setHealth(int value)
     {
         if(m_entity.isValid())
@@ -67,7 +70,6 @@ namespace Client
             }
         }
     }
-
     const glm::ivec2 &Player::getStartingPosition()
     {
         if(m_entity.isValid())
@@ -85,7 +87,7 @@ namespace Client
         {
             if(m_entity.isValid())
             {
-                m_entity.kill();
+                m_entity.deactivate();
             }
         }
     }

@@ -48,6 +48,8 @@ namespace Client
             delete m_bombPlaceSystem;
         if(m_entityFactory != nullptr)
             delete m_entityFactory;
+        if(m_winChecker != nullptr)
+            delete m_winChecker;
         if(m_playerManager != nullptr)
             delete m_playerManager;
         if(m_map != nullptr)
@@ -81,6 +83,7 @@ namespace Client
         m_map = new BombermanMap();
         m_world = new anax::World();
         m_playerManager = new PlayerManager();
+        m_winChecker = new WinChecker(m_playerManager);
 
         m_spriteRenderingSystem = new SpriteRenderingSystem();
 		m_world->addSystem(*m_spriteRenderingSystem);
@@ -185,6 +188,12 @@ namespace Client
         m_playerManager->update(frameTime);
 
         m_hudContainer->onUpdate(frameTime);
+
+        //Check if anybody has won
+        if(m_winChecker->winDetected())
+        {
+            LOG(INFO) << "We have a winner! " << m_winChecker->getWinner()->getName();
+        }
     }
 
     void StateBomberman::render(Window *window)
