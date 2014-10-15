@@ -194,8 +194,10 @@ find_library(pihud_library
     HINTS ${CMAKE_CURRENT_BINARY_DIR}/pihud/
     NO_DEFAULT_PATH
 )
-target_link_libraries(Client ${pihud_library})
 add_dependencies(Client pihud)
+if(NOT ${pihud_library} MATCHES "anax_library-NOTFOUND")
+	target_link_libraries(Client ${pihud_library})
+endif()
 
 # Activate C++11
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
