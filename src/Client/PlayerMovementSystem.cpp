@@ -5,6 +5,7 @@
 #include <Client/PlayerInputComponent.hpp>
 #include <Client/SpriteComponent.hpp>
 #include <Client/BodyComponent.hpp>
+#include <Client/EntityTypeComponent.hpp>
 
 #include <easylogging++.h>
 
@@ -99,6 +100,20 @@ namespace Client
 			auto &playerBody = collision->getA().getComponent<BodyComponent>();
 			playerPos.pos = playerPos.pos - playerBody.lastMove;
 			//playerPos.pos = playerPos.pos + collision->getPenetrationVec();
+        }
+        if(collision->getType() == Collision::EntityWithEntity)
+        {
+            auto &B = collision->getB();
+            if(B.hasComponent<EntityTypeComponent>())
+            {
+                auto &type = B.getComponent<EntityTypeComponent>();
+                if(type.type == Type::Bomb)
+                {
+					auto &playerPos = collision->getA().getComponent<PositionComponent>();
+					auto &playerBody = collision->getA().getComponent<BodyComponent>();
+                }
+            }
+
         }
     }
     void PlayerMovementSystem::onEntityRemoved(anax::Entity &e)

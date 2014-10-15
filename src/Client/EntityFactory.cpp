@@ -13,6 +13,7 @@
 #include <Client/PlayerMovementSystem.hpp>
 #include <Client/DamageDealerComponent.hpp>
 #include <Client/HealthComponent.hpp>
+#include <Client/EntityTypeComponent.hpp>
 #include <easylogging++.h>
 
 namespace Client
@@ -50,6 +51,7 @@ namespace Client
         entity.addComponent(body);
         entity.addComponent(new PlayerComponent());
         entity.addComponent(new HealthComponent(3, healthAndNameDisplay));
+        entity.addComponent(new EntityTypeComponent(Type::Player));
         entity.activate();
 
         return entity;
@@ -73,6 +75,7 @@ namespace Client
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
         anim->loadDefinition("bombAnimation.yml");
         entity.addComponent(new AnimationComponent(anim));
+        entity.addComponent(new EntityTypeComponent(Type::Bomb));
         entity.activate();
 
         return entity;
@@ -96,6 +99,7 @@ namespace Client
         anim->setRoot(0, 0);
         entity.addComponent(new AnimationComponent(anim, true));
         entity.addComponent(new DamageDealerComponent(1));
+        entity.addComponent(new EntityTypeComponent(Type::Explosion));
         entity.activate();
 
         return entity;

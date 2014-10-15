@@ -130,15 +130,10 @@ namespace Client
 		a = getARect();
         b = getBRect();
 
-		if(a.x > b.x + b.w / 2)
-            penetrationVec.x = a.x - (b.x + b.w);
-        else
+		if(a.x + a.w > b.x)
             penetrationVec.x = (a.x + a.w) - b.x;
-        if(a.y + a.h > b.y && a.y < b.y + b.h)
-            penetrationVec.x = a.y - (b.y + b.h);
-        else
-            penetrationVec.y = (a.y + a.h) - b.y;
-
+		if(a.x + a.w > b.x + b.w / 2)
+            penetrationVec.x = a.x - (b.x + b.w);
 
         LOG(INFO) << "Penetration: " << penetrationVec.x << "x" << penetrationVec.y;
         LOG(INFO) << "RectA: " << a.x << "x" << a.y << "x" << a.w << "x" << a.h;
