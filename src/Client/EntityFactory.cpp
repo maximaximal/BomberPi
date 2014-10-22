@@ -13,6 +13,7 @@
 #include <Client/PlayerMovementSystem.hpp>
 #include <Client/DamageDealerComponent.hpp>
 #include <Client/HealthComponent.hpp>
+#include <Client/PowerupComponent.hpp>
 #include <Client/EntityTypeComponent.hpp>
 #include <easylogging++.h>
 
@@ -103,6 +104,29 @@ namespace Client
         entity.addComponent(new AnimationComponent(anim, true));
         entity.addComponent(new DamageDealerComponent(1));
         entity.addComponent(new EntityTypeComponent(Type::Explosion));
+        entity.activate();
+
+        return entity;
+    }
+
+    anax::Entity EntityFactory::createPowerup(const glm::ivec2 &pos, PowerupComponent *powerupComponent, const std::string &texture, const SDL_Rect &rect)
+    {
+        auto entity = m_world->createEntity();
+        entity.addComponent(new PositionComponent(pos.x, pos.y));
+        SpriteComponent *spriteComponent = new SpriteComponent();
+        spriteComponent->texture = m_textureManager->get(texture);
+        spriteComponent->srcRect.x = rect.x;
+        spriteComponent->srcRect.y = rect.y;
+		spriteComponent->srcRect.w = rect.w;
+		spriteComponent->srcRect.h = rect.h;
+        entity.addComponent(spriteComponent);
+        entity.addComponent(new BodyComponent(0, 0, 32, 32));
+        std::shared_ptr<Animation> anim = std::make_shared<Animation>();
+        anim->loadDefinition("explosionAnimation.yml");
+        anim->setRoot(0, 0);
+        entity.addComponent(new AnimationComponent(anim, true));
+        entity.addComponent(new EntityTypeComponent(Type::Powerup));
+        entity.addComponent(powerupComponent);
         entity.activate();
 
         return entity;

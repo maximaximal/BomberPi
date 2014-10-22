@@ -10,6 +10,7 @@ namespace Client
         Player,
         Bomb,
         Explosion,
+        Powerup,
 
         NOT_SET,
         _COUNT

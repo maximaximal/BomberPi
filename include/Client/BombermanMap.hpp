@@ -9,6 +9,7 @@
 #include <glm/vec3.hpp>
 #include <Client/Window.hpp>
 #include <Client/Texture.hpp>
+#include <Client/EntityDropGenerator.hpp>
 
 namespace Client
 {
@@ -20,6 +21,7 @@ namespace Client
 
             void init(glm::ivec2 mapSize);
             void clear();
+            void setEntityFactory(EntityFactory *entityFactory);
 
             void setTexture(std::shared_ptr<Texture> texture);
 
@@ -32,7 +34,7 @@ namespace Client
             void createPlayerSpace(std::vector<glm::ivec2> playerPositions);
             void clearSpaceForPlayer(glm::ivec2 pos, int layer);
 
-            void clearTile(glm::ivec3 pos);
+            void clearTile(glm::ivec3 pos, bool generateDrops = true);
 
             const glm::ivec2& getMapSize();
 
@@ -42,6 +44,8 @@ namespace Client
             glm::ivec2 m_mapSize;
 
             std::shared_ptr<Texture> m_texture;
+            EntityDropGenerator *m_entityDropGenerator = nullptr;
+            EntityFactory *m_entityFactory;
     };
 }
 

@@ -51,6 +51,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/DamageDealerComponent.cpp
     ${CLIENT_SRC}/HealthComponent.cpp
     ${CLIENT_SRC}/EntityTypeComponent.cpp
+    ${CLIENT_SRC}/PowerupComponent.cpp
     ${CLIENT_SRC}/BombPlaceSystem.cpp
     ${CLIENT_SRC}/BombPlacePositionSystem.cpp
     ${CLIENT_SRC}/SpriteRenderingSystem.cpp
@@ -68,6 +69,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/Collision.cpp
     ${CLIENT_SRC}/EntityFactory.cpp
     ${CLIENT_SRC}/Player.cpp
+    ${CLIENT_SRC}/Config.cpp
     ${CLIENT_SRC}/PlayerManager.cpp
     ${CLIENT_SRC}/WinChecker.cpp
 )
@@ -96,6 +98,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/DamageDealerComponent.hpp
     ${CLIENT_INCLUDE}/HealthComponent.hpp
     ${CLIENT_INCLUDE}/EntityTypeComponent.hpp
+    ${CLIENT_INCLUDE}/PowerupComponent.hpp
     ${CLIENT_INCLUDE}/SpriteRenderingSystem.hpp
     ${CLIENT_INCLUDE}/PlayerInputSystem.hpp
     ${CLIENT_INCLUDE}/PlayerMovementSystem.hpp
@@ -113,6 +116,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/Collision.hpp
     ${CLIENT_INCLUDE}/EntityFactory.hpp
     ${CLIENT_INCLUDE}/Player.hpp
+    ${CLIENT_INCLUDE}/Config.hpp
     ${CLIENT_INCLUDE}/PlayerManager.hpp
     ${CLIENT_INCLUDE}/WinChecker.hpp
 )

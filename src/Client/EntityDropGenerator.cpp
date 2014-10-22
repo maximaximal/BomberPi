@@ -1,8 +1,9 @@
 #include <Client/EntityDropGenerator.hpp>
+#include <easylogging++.h>
 
 namespace Client
 {
-    EntityDropGenerator::EntityDropGenerator(std::shared_ptr<EntityFactory> factory)
+    EntityDropGenerator::EntityDropGenerator(EntityFactory *factory)
     {
 		m_entityFactory = factory;
     }
@@ -19,7 +20,7 @@ namespace Client
             //Spawn something!
             unsigned int randomItem = abs(rand() % 6);
 
-
+			LOG(INFO) << "Spawn Item: " << randomItem;
         }
     }
     void EntityDropGenerator::setChance(unsigned int chance)

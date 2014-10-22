@@ -12,7 +12,7 @@ namespace Client
     class EntityDropGenerator
     {
         public:
-            EntityDropGenerator(std::shared_ptr<EntityFactory> factory);
+            EntityDropGenerator(EntityFactory *factory);
          	virtual ~EntityDropGenerator();
 
            	void run(glm::ivec3 tilePos);
@@ -20,7 +20,7 @@ namespace Client
             void setChance(unsigned int chance);
         protected:
             unsigned int m_chance = 900;
-            std::shared_ptr<EntityFactory> m_entityFactory;
+            EntityFactory *m_entityFactory;
     };
 }
 

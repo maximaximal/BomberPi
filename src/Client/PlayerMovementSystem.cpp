@@ -111,6 +111,7 @@ namespace Client
                 {
 					auto &playerPos = collision->getA().getComponent<PositionComponent>();
 					auto &playerBody = collision->getA().getComponent<BodyComponent>();
+
                 }
             }
 

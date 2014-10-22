@@ -102,6 +102,7 @@ namespace Client
         m_world->addSystem(*m_animationSystem);
 
         m_entityFactory = new EntityFactory(m_world, getTextureManager());
+        m_map->setEntityFactory(m_entityFactory);
 
         m_bombPlaceSystem = new BombPlaceSystem(m_entityFactory);
         m_world->addSystem(*m_bombPlaceSystem);

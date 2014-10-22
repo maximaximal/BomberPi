@@ -15,6 +15,7 @@
 namespace Client
 {
     class PlayerMovementSystem;
+    class PowerupComponent;
 
     class EntityFactory
     {
@@ -31,6 +32,9 @@ namespace Client
             anax::Entity createBomb(const glm::ivec2 &pos, anax::Entity thrower);
 
             anax::Entity createExplosion(const glm::ivec2 &pos, int powerLeft, int turnsLeft, Client::SpreadingComponent::SpreadingFrom from);
+
+            anax::Entity createPowerup(const glm::ivec2 &pos, PowerupComponent *powerupComponent,
+                                       const std::string &texture, const SDL_Rect &rect);
         private:
             TextureManager *m_textureManager;
             anax::World *m_world;

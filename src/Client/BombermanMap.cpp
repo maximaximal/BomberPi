@@ -16,6 +16,9 @@ namespace Client
     {
         clear();
 
+        m_entityDropGenerator = new EntityDropGenerator(m_entityFactory);
+        m_entityDropGenerator->setChance(1000);
+
 		m_mapSize = mapSize;
 
 		m_tiles[0].resize(mapSize.x);
@@ -31,6 +34,7 @@ namespace Client
 					tile = new BombermanMapTile();
 					tile->id = 255;
 					tile->physics = BombermanMapTile::PASSABLE;
+                    tile->dropGenerator = nullptr;
 				}
 			}
         }
@@ -49,6 +53,14 @@ namespace Client
             }
         }
         m_tiles.clear();
+        if(m_entityDropGenerator != nullptr)
+            delete m_entityDropGenerator;
+        m_entityDropGenerator = nullptr;
+    }
+
+    void BombermanMap::setEntityFactory(EntityFactory *entityFactory)
+    {
+        m_entityFactory = entityFactory;
     }
 
     void BombermanMap::setTexture(std::shared_ptr<Texture> texture)
@@ -114,6 +126,7 @@ namespace Client
                     m_tiles[layer][x][y]->id = 16 + (rand() % 3);
                     m_tiles[layer][x][y]->physics = BombermanMapTile::SOLID;
                     m_tiles[layer][x][y]->bombable = true;
+                    m_tiles[layer][x][y]->dropGenerator = m_entityDropGenerator;
                 }
 			}
         }
@@ -159,12 +172,12 @@ namespace Client
 			if((pos.x != 0 && pos.x != m_mapSize.x - 1)
 					&& (pos.y != 0 && pos.y != m_mapSize.y - 1))
 			{
-                clearTile(glm::ivec3(pos.x, pos.y, layer));
+                clearTile(glm::ivec3(pos.x, pos.y, layer), false);
 			}
         }
     }
 
-    void BombermanMap::clearTile(glm::ivec3 pos)
+    void BombermanMap::clearTile(glm::ivec3 pos, bool generateDrops)
     {
         if(pos.z < m_tiles.size())
         {
@@ -175,9 +188,16 @@ namespace Client
 						&& (pos.y != 0 && pos.y != m_mapSize.y - 1))
 				{
 					auto *tile = m_tiles[pos.z][pos.x][pos.y];
+
+                    if(tile->dropGenerator != nullptr && generateDrops)
+                    {
+                        tile->dropGenerator->run(pos);
+                    }
+
 					tile->physics = BombermanMapTile::PASSABLE;
 					tile->id = 255;
 					tile->bombable = false;
+                    tile->dropGenerator = nullptr;
                 }
 			}
         }
