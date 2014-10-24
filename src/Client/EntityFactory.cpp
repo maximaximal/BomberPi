@@ -1,5 +1,7 @@
 #include <Client/EntityFactory.hpp>
 
+#include <Client/PowerupCollisionResolver.hpp>
+
 #include <Client/PositionComponent.hpp>
 #include <Client/SpriteComponent.hpp>
 #include <Client/PlayerInputComponent.hpp>
@@ -35,7 +37,8 @@ namespace Client
                                              const InputMap &inputMap,
                                              PlayerMovementSystem *playerMovementSystem,
                                              PiH::HealthAndNameDisplay *healthAndNameDisplay,
-                                             std::shared_ptr<Player> player)
+                                             std::shared_ptr<Player> player,
+                                             float cooldown)
     {
         anax::Entity entity = m_world->createEntity();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
@@ -47,7 +50,7 @@ namespace Client
         PlayerInputComponent *inputComponent = new PlayerInputComponent();
         inputComponent->inputMap = inputMap;
         entity.addComponent(inputComponent);
-        entity.addComponent(new BombLayerComponent());
+        entity.addComponent(new BombLayerComponent(cooldown));
         BodyComponent *body = new BodyComponent(10, 10, 10, 10);
         body->collisionSignal.connect(sigc::mem_fun(playerMovementSystem, &PlayerMovementSystem::onPlayerCollision));
         entity.addComponent(body);
@@ -120,10 +123,18 @@ namespace Client
 		spriteComponent->srcRect.w = rect.w;
 		spriteComponent->srcRect.h = rect.h;
         entity.addComponent(spriteComponent);
-        entity.addComponent(new BodyComponent(0, 0, 32, 32));
+        BodyComponent *body = new BodyComponent(0, 0, 32, 32);
+        body->collisionSignal.connect(sigc::ptr_fun(&Resolver::OnPowerupCollison));
+        entity.addComponent(body);
+
+        //Generate animation.
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
-        anim->loadDefinition("explosionAnimation.yml");
-        anim->setRoot(0, 0);
+        SDL_Rect animRect = PowerupComponent::computeRectFor(powerupComponent);
+        anim->addStep(animRect);
+        animRect.x += animRect.w;
+        anim->addStep(animRect);
+        anim->setStepDuration(2);
+
         entity.addComponent(new AnimationComponent(anim, true));
         entity.addComponent(new EntityTypeComponent(Type::Powerup));
         entity.addComponent(powerupComponent);

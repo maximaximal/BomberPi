@@ -72,6 +72,8 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/Config.cpp
     ${CLIENT_SRC}/PlayerManager.cpp
     ${CLIENT_SRC}/WinChecker.cpp
+
+    ${CLIENT_SRC}/PowerupCollisionResolver.cpp
 )
 
 SET(CLIENT_HDRS
@@ -119,6 +121,8 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/Config.hpp
     ${CLIENT_INCLUDE}/PlayerManager.hpp
     ${CLIENT_INCLUDE}/WinChecker.hpp
+
+    ${CLIENT_INCLUDE}/PowerupCollisionResolver.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 

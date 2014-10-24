@@ -26,14 +26,13 @@ namespace Client
 
             if(input.isActive(PlayerInputEnum::ACTION))
             {
-                if(bombLayer.bombsRemaining > 0)
-                {
-                    if(bombLayer.canPlace)
-                    {
-						bombLayer.bombsRemaining -= 1;
-						m_entityFactory->createBomb(bombLayer.placePos, entity);
-                    }
-                }
+				if(bombLayer.canPlace())
+				{
+					bombLayer.bombsRemaining -= 1;
+					m_entityFactory->createBomb(bombLayer.placePos, entity);
+					bombLayer.lastPlacedBomb = -1;
+					bombLayer.positionOkay = false;
+				}
             }
         }
     }

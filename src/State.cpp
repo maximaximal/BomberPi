@@ -25,12 +25,14 @@ Client::Window *State::getWindow()
 {
     return m_window;
 }
-
+Client::Config *State::getConfig()
+{
+ 	return m_config;
+}
 void State::setHandlers(StateManager *stateManager)
 {
     m_stateManager = stateManager;
 }
-
 void State::setTextureManager(Client::TextureManager *textureManager)
 {
     m_textureManager = textureManager;
@@ -44,6 +46,11 @@ void State::setFontManager(PiH::FontManager *fontManager)
 void State::setWindow(Client::Window *window)
 {
     m_window = window;
+}
+
+void State::setConfig(Client::Config *config)
+{
+    m_config = config;
 }
 
 void State::render(Client::Window *window)

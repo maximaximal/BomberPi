@@ -7,6 +7,7 @@ void StateManager::push(std::shared_ptr<State> state)
     state->setTextureManager(m_textureManager);
     state->setFontManager(m_fontManager);
     state->setWindow(m_window);
+    state->setConfig(m_config);
     m_states.push_back(state);
 }
 
@@ -48,13 +49,28 @@ void StateManager::setTextureManager(Client::TextureManager *textureManager)
 void StateManager::setFontManager(PiH::FontManager *fontManager)
 {
     m_fontManager = fontManager;
+    for(auto &state : m_states)
+    {
+        state->setFontManager(fontManager);
+    }
 }
 
 void StateManager::setWindow(Client::Window *window)
 {
     m_window = window;
+    for(auto &state : m_states)
+    {
+        state->setWindow(window);
+    }
 }
-
+void StateManager::setConfig(Client::Config *config)
+{
+    m_config = config;
+    for(auto &state : m_states)
+    {
+        state->setConfig(config);
+    }
+}
 Client::Window *StateManager::getWindow()
 {
     return m_window;

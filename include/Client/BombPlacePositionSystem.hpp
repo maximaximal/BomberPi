@@ -12,7 +12,7 @@ namespace Client
             BombPlacePositionSystem(BombermanMap *bombermanMap);
             virtual ~BombPlacePositionSystem();
 
-            void update();
+            void update(float frametime);
         private:
             BombermanMap *m_bombermanMap;
     };

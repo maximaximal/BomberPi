@@ -10,15 +10,21 @@ namespace Client
     {
         public:
             BombLayerComponent();
+            BombLayerComponent(float cooldown);
             virtual ~BombLayerComponent();
+            void reset();
 
-            short bombsRemaining;
+            short bombsRemaining = 1;
+            short bombsRemainingMax = 1;
+            float speedBonus = 0;
+            float lastPlacedBomb = 0;
 
             glm::ivec2 placePos;
 
-            bool canPlace = false;
+            bool canPlace();
+			bool positionOkay = false;
 
-            //TODO Bomb modifiers.
+            float cooldown = 0.3;
     };
 }
 

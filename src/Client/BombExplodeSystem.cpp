@@ -34,7 +34,11 @@ namespace Client
 				if(bomb.thrower.hasComponent<BombLayerComponent>())
 				{
 					auto &layer = bomb.thrower.getComponent<BombLayerComponent>();
-                    layer.bombsRemaining += 1;
+
+                    //Only up the remaining bombs, if there are less than the maximum
+                    //This is needed for +1 Bomb powerups (they would be overpowered)
+                    if(layer.bombsRemaining < layer.bombsRemainingMax)
+						layer.bombsRemaining += 1;
 				}
                 m_entityFactory->createExplosion(pos.pos, 1, 0, SpreadingComponent::NOWHERE);
 				entity.kill();

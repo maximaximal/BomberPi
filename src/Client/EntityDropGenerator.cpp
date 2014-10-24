@@ -1,4 +1,5 @@
 #include <Client/EntityDropGenerator.hpp>
+#include <Client/PowerupComponent.hpp>
 #include <easylogging++.h>
 
 namespace Client
@@ -18,9 +19,12 @@ namespace Client
         if(randomValue <= m_chance)
         {
             //Spawn something!
-            unsigned int randomItem = abs(rand() % 6);
+            unsigned int randomItem = abs(rand() % PowerupComponent::_COUNT);
+            PowerupComponent::Predefined def = static_cast<PowerupComponent::Predefined>(randomItem);
 
-			LOG(INFO) << "Spawn Item: " << randomItem;
+            PowerupComponent *powerup = new PowerupComponent(def);
+            m_entityFactory->createPowerup(glm::ivec2(tilePos.x * 32, tilePos.y * 32), powerup,
+                                           "powerups.png", PowerupComponent::computeRectFor(powerup));
         }
     }
     void EntityDropGenerator::setChance(unsigned int chance)

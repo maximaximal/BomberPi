@@ -2,6 +2,7 @@
 #include <Client/HealthComponent.hpp>
 #include <Client/PositionComponent.hpp>
 #include <Client/PlayerComponent.hpp>
+#include <Client/BombLayerComponent.hpp>
 #include <easylogging++.h>
 
 namespace Client
@@ -25,6 +26,7 @@ namespace Client
     void Player::die()
     {
 		setHealth(0);
+        resetBombLayerComponent();
     }
     bool Player::isDead()
     {
@@ -70,6 +72,18 @@ namespace Client
             }
         }
     }
+
+    void Player::resetBombLayerComponent()
+    {
+        if(m_entity.isValid())
+        {
+            if(m_entity.hasComponent<BombLayerComponent>())
+            {
+                auto &layer = m_entity.getComponent<BombLayerComponent>();
+                layer.reset();
+            }
+        }
+    }
     const glm::ivec2 &Player::getStartingPosition()
     {
         if(m_entity.isValid())
@@ -111,6 +125,7 @@ namespace Client
     {
         setPosition(getStartingPosition());
         setHealth(3);
+        resetBombLayerComponent();
         if(m_entity.isValid())
         {
 			m_entity.activate();

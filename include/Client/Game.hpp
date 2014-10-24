@@ -5,6 +5,7 @@
 #include <Client/Window.hpp>
 #include <StateManager.hpp>
 #include <Client/TextureManager.hpp>
+#include <Client/Config.hpp>
 #include <pihud/FontManager.hpp>
 
 namespace Client 
@@ -27,6 +28,7 @@ namespace Client
             StateManager *m_stateManager = nullptr;
             TextureManager *m_textureManager = nullptr;
             PiH::FontManager *m_fontManager = nullptr;
+            Config *m_config = nullptr;
     };
 }
 

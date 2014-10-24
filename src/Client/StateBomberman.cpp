@@ -22,6 +22,7 @@
 #include <Client/BodyComponent.hpp>
 #include <Client/DamageSystem.hpp>
 #include <Client/InvincibleSystem.hpp>
+#include <Client/Config.hpp>
 
 #include <pihud/FontManager.hpp>
 #include <pihud/Label.hpp>
@@ -172,7 +173,7 @@ namespace Client
         m_playerMovementSystem->update(frameTime);
         m_bombExplodeSystem->update();
 
-        m_bombPlacePositionSystem->update();
+        m_bombPlacePositionSystem->update(frameTime);
         m_bombPlaceSystem->update();
 
         m_collisionSystem->update(frameTime);
@@ -227,7 +228,8 @@ namespace Client
                                                                   inputs,
                                                                   m_playerMovementSystem,
                                                                   healthIndicator,
-                                                                  player);
+                                                                  player,
+                                                                  getConfig()->getFloatValue(Config::BOMB_PLACE_COOLDOWN));
         player->setEntity(playerEntity);
 
         glm::ivec2 pos;

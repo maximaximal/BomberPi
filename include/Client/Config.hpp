@@ -15,6 +15,7 @@ namespace Client
                 WINDOW_SIZE_Y,
                 FULLSCREEN,
                 POWERUP_DROP_CHANCE,
+                BOMB_PLACE_COOLDOWN,
 
                 _COUNT
             };
@@ -23,6 +24,7 @@ namespace Client
             virtual ~Config();
 
             void loadFromFile(const std::string &file);
+            void setDefaultValues();
 
             int getIntValue(Value id);
             float getFloatValue(Value id);
@@ -32,7 +34,7 @@ namespace Client
             void setIntValue(Value id, int value);
             void setFloatValue(Value id, float value);
             void setStringValue(Value id, const std::string &value);
-            void setBooleanValue(bool value, Value id);
+            void setBooleanValue(Value id, bool value);
         private:
             std::map<Value, int> m_ints;
             std::map<Value, float> m_floats;

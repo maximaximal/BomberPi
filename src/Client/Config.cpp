@@ -14,6 +14,18 @@ namespace Client
     {
 
     }
+    void Config::setDefaultValues()
+    {
+        //Float Values
+        setFloatValue(BOMB_PLACE_COOLDOWN, 0.2);
+
+        //Int Values
+        setIntValue(WINDOW_SIZE_X, 800);
+        setIntValue(WINDOW_SIZE_Y, 600);
+
+        //Boolean Values
+        setBooleanValue(FULLSCREEN, false);
+    }
     int Config::getIntValue(Config::Value id)
     {
         return m_ints[id];
@@ -42,7 +54,7 @@ namespace Client
     {
         m_strings[id] = value;
     }
-    void Config::setBooleanValue(bool value, Config::Value id)
+    void Config::setBooleanValue(Config::Value id, bool value)
     {
         m_bools[id] = value;
     }

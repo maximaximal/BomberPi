@@ -27,7 +27,7 @@ namespace Client
             anax::Entity createPlayer(const glm::ivec2 &pos, const InputMap &inputMap,
                                       Client::PlayerMovementSystem *playerMovementSystem,
                                       PiH::HealthAndNameDisplay *healthAndNameDisplay,
-                                      std::shared_ptr<Player> player);
+                                      std::shared_ptr<Player> player, float cooldown);
 
             anax::Entity createBomb(const glm::ivec2 &pos, anax::Entity thrower);
 

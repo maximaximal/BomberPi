@@ -22,6 +22,7 @@ namespace Client
             const std::string& getName();
             void setHealth(int value);
             void setPosition(const glm::ivec2 &pos);
+            void resetBombLayerComponent();
             const glm::ivec2& getStartingPosition();
             glm::ivec2 getPosition();
 

@@ -25,16 +25,13 @@ namespace Client
     }
     void PlayerInputSystem::update()
     {
-        if(m_sdlEventHandler)
-        {
-			for(auto &entity : getEntities())
-            {
-				auto playerInput = entity.getComponent<PlayerInputComponent>();
+		for(auto &entity : getEntities())
+		{
+			auto playerInput = entity.getComponent<PlayerInputComponent>();
 
-				//Deactivate inputs which are only momentarly.
-                playerInput.inputs[PlayerInputEnum::ACTION] = false;
-            }
-        }
+			//Deactivate inputs which are only momentarly.
+			playerInput.inputs[PlayerInputEnum::ACTION] = false;
+		}
     }
 
     void PlayerInputSystem::onKeyDown(const SDL_Event &e, float frameTime)

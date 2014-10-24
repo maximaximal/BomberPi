@@ -23,6 +23,8 @@ namespace Client
             delete m_fontManager;
         if(m_window != nullptr)
             delete m_window;
+        if(m_config != nullptr)
+            delete m_config;
 
         PiH::exit();
     }
@@ -30,8 +32,14 @@ namespace Client
     int Game::init()
     {
 		LOG(INFO) << "Initializing Game!";
+
+        m_config = new Config();
+        m_config->setDefaultValues();
+
 		m_window = new Window();
-		if(m_window->init(glm::ivec2(800, 600), false) != 0)
+		if(m_window->init(glm::ivec2(m_config->getIntValue(Config::WINDOW_SIZE_X),
+                                     m_config->getIntValue(Config::WINDOW_SIZE_Y)),
+                          m_config->getBooleanValue(Config::FULLSCREEN)) != 0)
         {
             LOG(FATAL) << "Window did not initialize correctly. Exiting.";
             return 1;
@@ -45,6 +53,7 @@ namespace Client
         m_stateManager->setTextureManager(m_textureManager);
         m_stateManager->setFontManager(m_fontManager);
         m_stateManager->setWindow(m_window);
+        m_stateManager->setConfig(m_config);
 
 
         //Initialize PiHUD

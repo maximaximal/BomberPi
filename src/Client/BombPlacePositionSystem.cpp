@@ -17,12 +17,21 @@ namespace Client
     {
 
     }
-    void BombPlacePositionSystem::update()
+    void BombPlacePositionSystem::update(float frametime)
     {
 		for(auto &entity : getEntities())
         {
             auto &pos = entity.getComponent<PositionComponent>();
             auto &layer = entity.getComponent<BombLayerComponent>();
+
+            if(layer.lastPlacedBomb == -1)
+            {
+                layer.lastPlacedBomb = 0;
+            }
+            if(layer.lastPlacedBomb >= 0)
+            {
+				layer.lastPlacedBomb += frametime;
+            }
 
             layer.placePos = pos.pos;
             layer.placePos = ((glm::ivec2) (layer.placePos + 16) / 32) * 32;
@@ -60,15 +69,15 @@ namespace Client
 				if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x, layer.placePos.y, 1)).physics
 						== BombermanMapTile::PASSABLE)
 				{
-					layer.canPlace = true;
+					layer.positionOkay = true;
 				}
 				else
 				{
-					layer.canPlace = false;
+					layer.positionOkay = false;
 					if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x - pos.orientation.x * 32, layer.placePos.y - pos.orientation.y * 32, 1)).physics
 							== BombermanMapTile::PASSABLE)
                     {
-						layer.canPlace = true;
+						layer.positionOkay = true;
                         layer.placePos.x -= pos.orientation.x * 32;
                         layer.placePos.y -= pos.orientation.y * 32;
                     }
@@ -77,7 +86,7 @@ namespace Client
             catch(std::out_of_range &e)
             {
                 //Nothing to do!
-				layer.canPlace = false;
+				layer.positionOkay = false;
             }
 
             /**

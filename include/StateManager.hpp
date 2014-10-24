@@ -9,6 +9,7 @@ namespace Client
 {
     class Window;
     class TextureManager;
+    class Config;
 }
 namespace PiH
 {
@@ -27,6 +28,7 @@ class StateManager : public SDLEventHandler
         void setTextureManager(Client::TextureManager *textureManager);
         void setFontManager(PiH::FontManager *fontManager);
         void setWindow(Client::Window *window);
+        void setConfig(Client::Config *config);
 
         Client::Window* getWindow();
     protected:
@@ -35,6 +37,7 @@ class StateManager : public SDLEventHandler
         std::vector<std::shared_ptr<State>> m_states;
         Client::TextureManager *m_textureManager;
         Client::Window *m_window;
+        Client::Config *m_config;
         PiH::FontManager *m_fontManager;
 };
 
