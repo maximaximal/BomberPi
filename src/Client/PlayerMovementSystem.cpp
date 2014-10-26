@@ -98,8 +98,10 @@ namespace Client
         {
 			auto &playerPos = collision->getA().getComponent<PositionComponent>();
 			auto &playerBody = collision->getA().getComponent<BodyComponent>();
-			playerPos.pos = playerPos.pos - playerBody.lastMove;
-			//playerPos.pos = playerPos.pos + collision->getPenetrationVec();
+
+			playerPos.pos = playerPos.pos + collision->getPenetrationVec();
+
+            collision->getSide();
         }
         if(collision->getType() == Collision::EntityWithEntity)
         {
@@ -111,7 +113,8 @@ namespace Client
                 {
 					auto &playerPos = collision->getA().getComponent<PositionComponent>();
 					auto &playerBody = collision->getA().getComponent<BodyComponent>();
-
+                    if(!collision->isObstructed(5))
+						playerPos.pos = playerPos.pos + collision->getPenetrationVec();
                 }
             }
 

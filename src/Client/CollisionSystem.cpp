@@ -38,13 +38,12 @@ namespace Client
             point.z = 1;
 
             //Check the map for collisions
-			bool collided = false;
 
 				//TOP-LEFT
 				point.x = rectA.x; point.y = rectA.y;
                 try {
                     const BombermanMapTile &tile1 = m_map->getTileAtPixel(point);
-					collideWithMapTile(tile1, point, entityA, collided);
+					collideWithMapTile(tile1, point, entityA);
                 }
                 catch(std::out_of_range &e) {}
 
@@ -52,7 +51,7 @@ namespace Client
 				point.x = rectA.w; point.y = rectA.y;
                 try {
 					const BombermanMapTile &tile2 = m_map->getTileAtPixel(point);
-					collideWithMapTile(tile2, point, entityA, collided);
+					collideWithMapTile(tile2, point, entityA);
                 }
                 catch(std::out_of_range &e) {}
 
@@ -60,7 +59,7 @@ namespace Client
 				point.x = rectA.w; point.y = rectA.h;
                 try {
                     const BombermanMapTile &tile3 = m_map->getTileAtPixel(point);
-					collideWithMapTile(tile3, point, entityA, collided);
+					collideWithMapTile(tile3, point, entityA);
                 }
                 catch(std::out_of_range &e) {}
 
@@ -68,7 +67,7 @@ namespace Client
 				point.x = rectA.x; point.y = rectA.h;
                 try {
 					const BombermanMapTile &tile4 = m_map->getTileAtPixel(point);
-					collideWithMapTile(tile4, point, entityA, collided);
+					collideWithMapTile(tile4, point, entityA);
                 }
 				catch(std::out_of_range &e) {}
 
@@ -100,26 +99,22 @@ namespace Client
         }
     }
 
-    void CollisionSystem::collideWithMapTile(const BombermanMapTile &tile, const glm::ivec3 &pos, anax::Entity &e, bool &alreadyCollided)
+    void CollisionSystem::collideWithMapTile(const BombermanMapTile &tile, const glm::ivec3 &pos, anax::Entity &e)
     {
-        if(!alreadyCollided)
-        {
-			if(tile.physics != BombermanMapTile::PASSABLE)
+		if(tile.physics != BombermanMapTile::PASSABLE)
+		{
+			std::shared_ptr<Collision> collision;
+			SDL_Rect rect;
+			rect.x = ((int) pos.x / 32) * 32;
+			rect.y = ((int) pos.y / 32) * 32;
+			rect.w = 32;
+			rect.h = 32;
+			collision = std::make_shared<Collision>(e, rect);
+			if(e.hasComponent<BodyComponent>())
 			{
-				std::shared_ptr<Collision> collision;
-				SDL_Rect rect;
-				rect.x = ((int) pos.x / 32) * 32;
-				rect.y = ((int) pos.y / 32) * 32;
-				rect.w = 32;
-				rect.h = 32;
-				collision = std::make_shared<Collision>(e, rect);
-				if(e.hasComponent<BodyComponent>())
-				{
-					auto &body = e.getComponent<BodyComponent>();
-					body.collisionSignal(collision);
-				}
-				alreadyCollided = true;
+				auto &body = e.getComponent<BodyComponent>();
+				body.collisionSignal(collision);
 			}
-        }
+		}
 	}
 }

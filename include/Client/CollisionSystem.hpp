@@ -14,7 +14,7 @@ namespace Client
             virtual ~CollisionSystem();
 
             void update(float frametime);
-            void collideWithMapTile(const BombermanMapTile &tile, const glm::ivec3 &pos, anax::Entity &e, bool &alreadyCollided);
+            void collideWithMapTile(const BombermanMapTile &tile, const glm::ivec3 &pos, anax::Entity &e);
         private:
             BombermanMap *m_map;
     };

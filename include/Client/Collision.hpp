@@ -15,6 +15,14 @@ namespace Client
                 EntityWithRect,
                 EntityWithEntity
             };
+            enum Side {
+                LEFT,
+                TOP,
+                RIGHT,
+                BOTTOM,
+
+                NOT_CACHED
+            };
 
             Collision(anax::Entity &a, anax::Entity &b);
             Collision(anax::Entity &a, const SDL_Rect &b);
@@ -31,15 +39,26 @@ namespace Client
             SDL_Rect getBRect();
 
             Type getType();
+            Side getSide();
 
             glm::dvec2 getPenetrationVec();
+
+            bool isObstructed(float amount);
         private:
+            struct VectorRect {
+                    glm::dvec2 v1;
+                    glm::dvec2 v2;
+                    glm::dvec2 v3;
+                    glm::dvec2 v4;
+            };
+
             anax::Entity m_aEntity;
             anax::Entity m_bEntity;
             SDL_Rect *m_aRect = nullptr;
             SDL_Rect *m_bRect = nullptr;
 
             Collision::Type m_type;
+            Collision::Side m_sideCache = NOT_CACHED;
     };
 }
 

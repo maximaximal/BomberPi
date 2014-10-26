@@ -2,6 +2,8 @@
 #include <Client/PositionComponent.hpp>
 #include <Client/BodyComponent.hpp>
 #include <easylogging++.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 namespace Client
 {
@@ -56,7 +58,6 @@ namespace Client
             auto &posComponent = m_aEntity.getComponent<PositionComponent>();
             pos.x += posComponent.pos.x;
             pos.y += posComponent.pos.y;
-            LOG(INFO) << "HAS POS: " << posComponent.pos.x << "x" << posComponent.pos.y;
         }
         return pos;
     }
@@ -121,7 +122,51 @@ namespace Client
     {
         return m_type;
     }
+    Collision::Side Collision::getSide()
+    {
+        //Check if the side is already cached, else, compute the side.
+        if(m_sideCache != NOT_CACHED)
+        {
+            return m_sideCache;
+        }
+        SDL_Rect aRect = getARect();
+        SDL_Rect bRect = getBRect();
 
+        //Calculation Variables
+		glm::dvec2 Q(bRect.x + bRect.w / 2, bRect.y + bRect.h / 2);
+		glm::dvec2 M(aRect.x + aRect.w / 2, aRect.y + aRect.h / 2);
+
+        glm::dvec2 n(1, 0);
+
+        //calculate the angles of the vectors to the x-vector n ( 10 | 0 ).
+        float a = glm::orientedAngle(n, glm::normalize(Q - M));
+
+        Side side = NOT_CACHED;
+
+		if(a >= -45 && a < 45)
+        {
+            side = LEFT;
+        }
+        if(45 <= a && a < 135)
+        {
+            side = TOP;
+        }
+        if((135 <= a && a <= 180) || (-180 <= a && a < -135))
+        {
+            side = RIGHT;
+        }
+        if(-135 <= a && a < -45)
+        {
+            side = BOTTOM;
+        }
+
+        m_sideCache = side;
+        if(side != NOT_CACHED)
+            return side;
+
+        LOG(WARNING) << "The side of the collision could not be computed! Angle: " << a;
+        return Side::LEFT;
+    }
     glm::dvec2 Collision::getPenetrationVec()
     {
         glm::dvec2 penetrationVec;
@@ -130,15 +175,59 @@ namespace Client
 		a = getARect();
         b = getBRect();
 
-		if(a.x + a.w > b.x)
-            penetrationVec.x = (a.x + a.w) - b.x;
-		if(a.x + a.w > b.x + b.w / 2)
-            penetrationVec.x = a.x - (b.x + b.w);
+		switch(getSide())
+        {
+            case LEFT:
+                penetrationVec.x = (b.x) - (a.x + a.w);
+                break;
+            case TOP:
+                penetrationVec.y = (b.y) - (a.y + a.h);
+                break;
+            case RIGHT:
+                penetrationVec.x = (b.x + b.w) - a.x;
+                break;
+            case BOTTOM:
+                penetrationVec.y = (b.y + b.h) - a.y;
+                break;
 
-        LOG(INFO) << "Penetration: " << penetrationVec.x << "x" << penetrationVec.y;
-        LOG(INFO) << "RectA: " << a.x << "x" << a.y << "x" << a.w << "x" << a.h;
-        LOG(INFO) << "RectB: " << b.x << "x" << b.y << "x" << b.w << "x" << b.h;
+            default:
+                penetrationVec.x = 0;
+                penetrationVec.y = 0;
+                break;
+        }
 
         return penetrationVec;
+    }
+    bool Collision::isObstructed(float amount)
+    {
+        SDL_Rect a = getARect();
+        SDL_Rect b = getBRect();
+
+        float obstructed = 0;
+
+		switch(getSide())
+        {
+            case LEFT:
+                obstructed = (b.x) - (a.x + a.w);
+                break;
+            case TOP:
+                obstructed = (b.y) - (a.y + a.h);
+                break;
+            case RIGHT:
+                obstructed = (b.x + b.w) - a.x;
+                break;
+            case BOTTOM:
+                obstructed = (b.y + b.h) - a.y;
+                break;
+
+            default:
+                obstructed = 0;
+                break;
+        }
+		if(std::abs(obstructed) > amount)
+        {
+            return true;
+        }
+        return false;
     }
 }

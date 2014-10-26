@@ -150,7 +150,6 @@ namespace Client
 			}
         }
     }
-
     void BombermanMap::createPlayerSpace(std::vector<glm::ivec2> playerPositions)
     {
         const int layer = 1;
@@ -206,19 +205,24 @@ namespace Client
     {
         return m_mapSize;
     }
-    const BombermanMapTile& BombermanMap::getTileAtPixel(glm::ivec3 pos)
+    const BombermanMapTile& BombermanMap::getTileAtPixel(const glm::ivec3 &pos)
     {
        	glm::ivec3 tilePos = pos / 32;
+        tilePos.z = pos.z;
+        return getTileAt(tilePos);
+    }
+    const BombermanMapTile &BombermanMap::getTileAt(const glm::ivec3 &pos)
+    {
         if(m_tiles.count(pos.z) != 0)
         {
-			if(m_tiles[pos.z].size() >= tilePos.x)
+			if(m_tiles[pos.z].size() >= pos.x)
 			{
-				if((m_tiles[pos.z][tilePos.x]).size() >= tilePos.y)
+				if((m_tiles[pos.z][pos.x]).size() >= pos.y)
 				{
-					return *(m_tiles[pos.z][tilePos.x][tilePos.y]);
+					return *(m_tiles[pos.z][pos.x][pos.y]);
 				}
 			}
         }
-		throw std::out_of_range("Tile not in range!");
+        throw std::out_of_range("Tile not in range!");
     }
 }
