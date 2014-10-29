@@ -19,6 +19,9 @@ namespace Client
             float speedBonus = 0;
             float lastPlacedBomb = 0;
 
+            int bombTurns = 0;
+            int bombTiles = 3;
+
             glm::ivec2 placePos;
 
             bool canPlace();
