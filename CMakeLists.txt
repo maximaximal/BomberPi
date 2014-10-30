@@ -194,6 +194,31 @@ else()
     message(STATUS "Please re-run cmake!")
 endif()
 
+# Add piga
+ExternalProject_Add(piga_project
+    PREFIX piga
+    GIT_REPOSITORY https://github.com/maximaximal/piga.git
+    CONFIGURE_COMMAND cmake ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga
+    UPDATE_COMMAND git pull origin master
+    INSTALL_COMMAND ""
+)
+
+add_dependencies(Client piga_project)
+
+find_library(piga_library
+    NAMES piga libpiga libpiga_d libpiga_d.so
+    HINTS ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project-build/
+    NO_DEFAULT_PATH
+)
+
+if(NOT ${piga_library} MATCHES "piga_library-NOTFOUND")
+    target_link_libraries(Client ${piga_library})
+    include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga/include/)
+    message(STATUS "Piga Library: " ${piga_library})
+else()
+    message(STATUS "Please re-run cmake!")
+endif()
+
 #Add pihud
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/pihud)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/pihud/include)
