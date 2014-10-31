@@ -131,8 +131,6 @@ namespace Client
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
         SDL_Rect animRect = PowerupComponent::computeRectFor(powerupComponent);
         anim->addStep(animRect);
-        animRect.x += animRect.w;
-        anim->addStep(animRect);
         anim->setStepDuration(2);
 
         entity.addComponent(new AnimationComponent(anim, true));
