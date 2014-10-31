@@ -7,13 +7,14 @@
 #include <Client/TextureManager.hpp>
 #include <Client/Config.hpp>
 #include <pihud/FontManager.hpp>
+#include <piga/Interface.hpp>
 
 namespace Client 
 {
     class Game
     {
 		public:
-			Game();
+            Game(bool getCommandsFromSharedMemory = false);
 			virtual ~Game();
 
 			int init();
@@ -29,6 +30,10 @@ namespace Client
             TextureManager *m_textureManager = nullptr;
             PiH::FontManager *m_fontManager = nullptr;
             Config *m_config = nullptr;
+
+            bool m_getCommandsFromSharedMemory = false;
+
+            piga::Interface *m_pigaInterface = nullptr;
     };
 }
 

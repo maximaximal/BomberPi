@@ -74,6 +74,8 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/WinChecker.cpp
 
     ${CLIENT_SRC}/PowerupCollisionResolver.cpp
+
+    ${CLIENT_SRC}/KeyboardInputMethod.cpp
 )
 
 SET(CLIENT_HDRS
@@ -123,6 +125,8 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/WinChecker.hpp
 
     ${CLIENT_INCLUDE}/PowerupCollisionResolver.hpp
+
+    ${CLIENT_INCLUDE}/KeyboardInputMethod.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 
@@ -194,11 +198,18 @@ else()
     message(STATUS "Please re-run cmake!")
 endif()
 
+find_package(Boost REQUIRED COMPONENTS system thread)
+
+if(${Boost_FOUND})
+    include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
+    target_link_libraries(Client ${Boost_LIBRARIES})
+endif()
+
 # Add piga
 ExternalProject_Add(piga_project
     PREFIX piga
     GIT_REPOSITORY https://github.com/maximaximal/piga.git
-    CONFIGURE_COMMAND cmake ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga
+    CONFIGURE_COMMAND cmake ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     UPDATE_COMMAND git pull origin master
     INSTALL_COMMAND ""
 )
@@ -233,8 +244,9 @@ if(NOT ${pihud_library} MATCHES "pihud_library-NOTFOUND")
 endif()
 
 # Activate C++11
-list(APPEND CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+list(APPEND CMAKE_CXX_FLAGS "-std=c++11 -lrt ${CMAKE_CXX_FLAGS}")
 
 if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
 	list(APPEND ${CMAKE_CXX_FLAGS} "-Wall -std=x++11 ${CMAKE_CXX_FLAGS}")
 endif()
+

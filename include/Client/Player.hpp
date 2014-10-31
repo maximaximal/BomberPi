@@ -10,7 +10,7 @@ namespace Client
     class Player
     {
         public:
-            Player(const std::string &name);
+            Player(const std::string &name, int playerID);
             virtual ~Player();
 
             void setEntity(anax::Entity playerEntity);
@@ -19,6 +19,7 @@ namespace Client
             void die();
             bool isDead();
             int getHealth();
+            int getPlayerID();
             const std::string& getName();
             void setHealth(int value);
             void setPosition(const glm::ivec2 &pos);
@@ -31,6 +32,7 @@ namespace Client
         private:
             std::string m_name;
             anax::Entity m_entity;
+            int m_playerID;
     };
 }
 

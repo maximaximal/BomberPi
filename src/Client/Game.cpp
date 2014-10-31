@@ -9,9 +9,10 @@ _INITIALIZE_EASYLOGGINGPP
 
 namespace Client
 {
-    Game::Game()
+    Game::Game(bool getCommandsFromSharedMemory)
     {
-	
+        m_getCommandsFromSharedMemory = getCommandsFromSharedMemory;
+        m_pigaInterface = new piga::Interface(!getCommandsFromSharedMemory);
     }
     Game::~Game()
     {
@@ -25,6 +26,8 @@ namespace Client
             delete m_window;
         if(m_config != nullptr)
             delete m_config;
+        if(m_pigaInterface != nullptr)
+            delete m_pigaInterface;
 
         PiH::exit();
     }
@@ -54,6 +57,7 @@ namespace Client
         m_stateManager->setFontManager(m_fontManager);
         m_stateManager->setWindow(m_window);
         m_stateManager->setConfig(m_config);
+        m_stateManager->setPigaInterface(m_pigaInterface);
 
 
         //Initialize PiHUD
@@ -72,6 +76,9 @@ namespace Client
         stateBomberman->init();
 		stateBomberman.reset();
 
+        //The parameters are only temporary and will be set when the event is polled.
+        piga::GameEvent gameEvent(piga::GameControl::ACTION, false, 0);
+
         while(!end)
         {
 			timer.restart();
@@ -83,6 +90,14 @@ namespace Client
                     end = true;
                 }
 				onEvent(e, frametime);
+            }
+            if(m_pigaInterface->isSelfhosted())
+            {
+                m_pigaInterface->update();
+            }
+            while(m_pigaInterface->pollEvent(gameEvent))
+            {
+                m_stateManager->sendGameEvent(gameEvent, frametime);
             }
 
             update(frametime);
@@ -101,7 +116,6 @@ namespace Client
     {
 		m_stateManager->update(frametime);
     }
-
     void Game::onEvent(const SDL_Event &e, float frametime)
     {
         m_window->onEvent(e);
@@ -115,10 +129,23 @@ namespace Client
     }
 }
 
-int main(int argv, const char** argc)
+bool cmdOptionExists(char** begin, char** end, const std::string& option)
+{
+    return std::find(begin, end, option) != end;
+}
+
+int main(int argc, char* argv[])
 {
     LOG(INFO) << "Starting BomberPi.";
-    Client::Game *game = new Client::Game();
+
+    bool getCommandsFromSharedMemory = false;
+    if(cmdOptionExists(argv, argv + argc, "-c"))
+    {
+        getCommandsFromSharedMemory = true;
+        LOG(INFO) << "Getting Commands from shared memory! No keyboard state will be processed by this application.";
+    }
+
+    Client::Game *game = new Client::Game(getCommandsFromSharedMemory);
     
     game->init();
     

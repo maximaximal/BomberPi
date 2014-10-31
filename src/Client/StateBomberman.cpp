@@ -23,9 +23,12 @@
 #include <Client/DamageSystem.hpp>
 #include <Client/InvincibleSystem.hpp>
 #include <Client/Config.hpp>
+#include <Client/KeyboardInputMethod.hpp>
 
 #include <pihud/FontManager.hpp>
 #include <pihud/Label.hpp>
+
+#include <piga/Interface.hpp>
 
 namespace Client
 {
@@ -93,7 +96,7 @@ namespace Client
         m_world->addSystem(*m_timerSystem);
 
         m_playerInputSystem = new PlayerInputSystem();
-        m_playerInputSystem->setSDLEventHandler(getSDLEventHandler());
+        m_playerInputSystem->setGameEventHandler(getGameEventHandler());
         m_world->addSystem(*m_playerInputSystem);
 
         m_playerMovementSystem = new PlayerMovementSystem(m_map);
@@ -222,7 +225,7 @@ namespace Client
 
         m_hudContainer->addWidget(healthIndicator, "HealthAndName_" + name);
 
-        std::shared_ptr<Player> player = std::make_shared<Player>(name);
+        std::shared_ptr<Player> player = std::make_shared<Player>(name, m_playerManager->getPlayerCount());
 
 		anax::Entity playerEntity = m_entityFactory->createPlayer(playerPos,
                                                                   inputs,
@@ -231,6 +234,17 @@ namespace Client
                                                                   player,
                                                                   getConfig()->getFloatValue(Config::BOMB_PLACE_COOLDOWN));
         player->setEntity(playerEntity);
+
+        if(getInterface()->isSelfhosted())
+        {
+            std::shared_ptr<piga::PlayerInput> playerInput = std::make_shared<piga::PlayerInput>();
+            for(auto &input : inputs.getMaps())
+            {
+                playerInput->setInputMethod(new piga::KeyboardInputMethod(input.first, getSDLEventHandler()),
+                                            PlayerInputSystem::getPigaGameControlFromPlayerInputEnum(input.second));
+            }
+            getInterface()->addPlayerInput(playerInput);
+        }
 
         glm::ivec2 pos;
         if(playerPos.x > (m_map->getMapSize().x * 32) / 2)

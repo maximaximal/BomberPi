@@ -7,7 +7,7 @@ void SDLEventHandler::sendEvent(const SDL_Event &e, float frametime)
     m_signals[e.type](e, frametime);
 }
 
-SDLEventHandler::SDLEventSignal SDLEventHandler::getSignal(uint8_t type)
+SDLEventHandler::SDLEventSignal SDLEventHandler::getSignal(int32_t type)
 {
     return m_signals[type];
 }

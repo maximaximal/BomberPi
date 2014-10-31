@@ -7,9 +7,10 @@
 
 namespace Client
 {
-    Player::Player(const std::string &name)
+    Player::Player(const std::string &name, int playerID)
     {
         m_name = name;
+        m_playerID = playerID;
     }
     Player::~Player()
     {
@@ -45,6 +46,10 @@ namespace Client
             }
         }
         return 0;
+    }
+    int Player::getPlayerID()
+    {
+        return m_playerID;
     }
     const std::string &Player::getName()
     {

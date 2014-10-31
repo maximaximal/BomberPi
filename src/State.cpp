@@ -1,5 +1,6 @@
 #include <State.hpp>
 #include <SDLEventHandler.hpp>
+#include <piga/GameEventHandler.hpp>
 
 std::shared_ptr<SDLEventHandler> State::getSDLEventHandler()
 {
@@ -7,7 +8,12 @@ std::shared_ptr<SDLEventHandler> State::getSDLEventHandler()
         m_sdlEventHandler = std::make_shared<SDLEventHandler>();
     return m_sdlEventHandler;
 }
-
+std::shared_ptr<piga::GameEventHandler> State::getGameEventHandler()
+{
+    if(!m_gameEventHandler)
+        m_gameEventHandler = std::make_shared<piga::GameEventHandler>();
+    return m_gameEventHandler;
+}
 Client::TextureManager *State::getTextureManager()
 {
     return m_textureManager;
@@ -20,14 +26,17 @@ StateManager* State::getStateManager()
 {
     return m_stateManager;
 }
-
 Client::Window *State::getWindow()
 {
     return m_window;
 }
 Client::Config *State::getConfig()
 {
- 	return m_config;
+    return m_config;
+}
+piga::Interface *State::getInterface()
+{
+    return m_pigaInterface;
 }
 void State::setHandlers(StateManager *stateManager)
 {
@@ -52,12 +61,14 @@ void State::setConfig(Client::Config *config)
 {
     m_config = config;
 }
-
+void State::setInterface(piga::Interface *interface)
+{
+    m_pigaInterface = interface;
+}
 void State::render(Client::Window *window)
 {
 
 }
-
 void State::update(float frameTime)
 {
 

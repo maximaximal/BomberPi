@@ -8,6 +8,7 @@ void StateManager::push(std::shared_ptr<State> state)
     state->setFontManager(m_fontManager);
     state->setWindow(m_window);
     state->setConfig(m_config);
+    state->setInterface(m_pigaInterface);
     m_states.push_back(state);
 }
 
@@ -71,6 +72,14 @@ void StateManager::setConfig(Client::Config *config)
         state->setConfig(config);
     }
 }
+void StateManager::setPigaInterface(piga::Interface *interface)
+{
+    m_pigaInterface = interface;
+    for(auto &state : m_states)
+    {
+        state->setInterface(interface);
+    }
+}
 Client::Window *StateManager::getWindow()
 {
     return m_window;
@@ -81,5 +90,12 @@ void StateManager::onSDLEvent(const SDL_Event &e, float frametime)
     if(m_states.size() > 0)
     {
         top()->getSDLEventHandler()->sendEvent(e, frametime);
+    }
+}
+void StateManager::onGameEvent(const piga::GameEvent &gameEvent, float frametime)
+{
+    if(m_states.size() > 0)
+    {
+        top()->getGameEventHandler()->sendGameEvent(gameEvent, frametime);
     }
 }

@@ -4,8 +4,8 @@
 #include <map>
 #include <sigc++/connection.h>
 #include <anax/System.hpp>
-#include <SDLEventHandler.hpp>
 #include <Client/PlayerInputComponent.hpp>
+#include <piga/GameEventHandler.hpp>
 
 namespace Client
 {
@@ -15,21 +15,22 @@ namespace Client
       		PlayerInputSystem();
             virtual ~PlayerInputSystem();
 
-            void setSDLEventHandler(std::shared_ptr<SDLEventHandler> sdlEventHandler);
+            void setGameEventHandler(std::shared_ptr<piga::GameEventHandler> gameEventHandler);
 
             void update();
 
-            void onKeyDown(const SDL_Event &e, float frameTime);
-            void onKeyUp(const SDL_Event &e, float frameTime);
+            void onGameEvent(const piga::GameEvent &gameEvent, float frametime);
 
             virtual void onEntityAdded(anax::Entity &entity);
             virtual void onEntityRemoved(anax::Entity &entity);
-        private:
-            std::shared_ptr<SDLEventHandler> m_sdlEventHandler;
-            sigc::connection m_keyDownConnection;
-            sigc::connection m_keyUpConnection;
 
-            std::map<SDL_Scancode, PlayerInputComponent*> m_inputComponents;
+            static PlayerInputEnum getPlayerInputEnumFromPigaGameControl(piga::GameControl control);
+            static piga::GameControl getPigaGameControlFromPlayerInputEnum(PlayerInputEnum playerInput);
+        private:
+            std::shared_ptr<piga::GameEventHandler> m_gameEventHandler;
+            sigc::connection m_gameEventConnection;
+
+            std::map<int, PlayerInputComponent*> m_inputComponents;
     };
 }
 
