@@ -12,6 +12,8 @@ SET(INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 SET(CLIENT_SRC ${SRC}/Client/)
 SET(CLIENT_INCLUDE ${INCLUDE}/Client/)
 
+SET(PIGA_DIR "NotSet" CACHE STRING "The directory of the piga library")
+
 SET(SHARED_SRCS
     ${SRC}/Timer.cpp
     ${SRC}/State.cpp
@@ -205,30 +207,38 @@ if(${Boost_FOUND})
     target_link_libraries(Client ${Boost_LIBRARIES})
 endif()
 
+
 # Add piga
-ExternalProject_Add(piga_project
-    PREFIX piga
-    GIT_REPOSITORY https://github.com/maximaximal/piga.git
-    CONFIGURE_COMMAND cmake ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-    UPDATE_COMMAND git pull origin master
-    INSTALL_COMMAND ""
-)
-
-add_dependencies(Client piga_project)
-
-find_library(piga_library
-    NAMES piga libpiga libpiga_d libpiga_d.so
-    HINTS ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project-build/
-    NO_DEFAULT_PATH
-)
-
-if(NOT ${piga_library} MATCHES "piga_library-NOTFOUND")
-    target_link_libraries(Client ${piga_library})
-    include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga/include/)
-    message(STATUS "Piga Library: " ${piga_library})
+if(NOT ${PIGA_DIR} MATCHES "NotSet")
+    message(STATUS "Piga Dir: " ${PIGA_DIR})
+    add_subdirectory(${PIGA_DIR}/libpiga/ ${CMAKE_CURRENT_BINARY_DIR}/piga_dir/)
+    add_dependencies(Client piga)
+    include_directories(${LIBPIGA_INCLUDE_DIRECTORIES})
+    target_link_libraries(Client piga)
 else()
-    message(STATUS "Please re-run cmake!")
+    ExternalProject_Add(piga_project
+        PREFIX piga
+        GIT_REPOSITORY https://github.com/maximaximal/piga.git
+        CONFIGURE_COMMAND cmake ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        UPDATE_COMMAND git pull origin master
+    )
+    add_dependencies(Client piga_project)
+    find_library(piga_library
+        NAMES piga libpiga libpiga_d libpiga_d.so
+        HINTS ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project-build/
+        NO_DEFAULT_PATH
+    )
+    if(NOT ${piga_library} MATCHES "piga_library-NOTFOUND")
+        target_link_libraries(Client ${piga_library})
+        include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga/include/)
+        message(STATUS "Piga Library: " ${piga_library})
+    else()
+        message(STATUS "Please re-run cmake!")
+    endif()
 endif()
+
+
+
 
 #Add pihud
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/pihud)

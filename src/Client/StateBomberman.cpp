@@ -238,6 +238,7 @@ namespace Client
         if(getInterface()->isSelfhosted())
         {
             std::shared_ptr<piga::PlayerInput> playerInput = std::make_shared<piga::PlayerInput>();
+            playerInput->setPlayerID(player->getPlayerID());
             for(auto &input : inputs.getMaps())
             {
                 playerInput->setInputMethod(new piga::KeyboardInputMethod(input.first, getSDLEventHandler()),
