@@ -13,7 +13,7 @@ namespace Client
                 ADDITIONAL_BOMB,
                 ADDITIONAL_CORNER,
                 ADDITIONAL_TILE,
-                SPEED_MULTIPLICATOR,
+                SPEED_MULTIPLICATOR_BONUS,
 
                 _COUNT,
                 NOT_DEFINED
@@ -25,7 +25,7 @@ namespace Client
             int additionalBombs = 0;
             int additionalTurns = 0;
             int additionalTiles = 0;
-            float speedMultiplicator = 0;
+            float speedMultiplicatorBonus = 0;
 
             Predefined definition = NOT_DEFINED;
 

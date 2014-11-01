@@ -1,16 +1,18 @@
 #include <Client/ExplosionSystem.hpp>
 #include <Client/PositionComponent.hpp>
 #include <Client/SpreadingComponent.hpp>
+#include <Client/EntityTypeComponent.hpp>
 
 #include <easylogging++.h>
 
 namespace Client
 {
-    ExplosionSystem::ExplosionSystem(BombermanMap *map, EntityFactory *entityFactory)
+    ExplosionSystem::ExplosionSystem(BombermanMap *map, EntityFactory *entityFactory, CollisionSystem *collisionSystem)
     	: Base(anax::ComponentFilter().requires<PositionComponent, SpreadingComponent>())
     {
 		m_entityFactory = entityFactory;
         m_map = map;
+        m_collisionSystem = collisionSystem;
     }
     ExplosionSystem::~ExplosionSystem()
     {
@@ -61,10 +63,38 @@ namespace Client
 			if(m_map->getTileAtPixel(glm::ivec3(pos.x, pos.y, 1)).bombable)
 				m_map->clearTile(glm::ivec3(pos.x / 32, pos.y / 32, 1));
 
-			m_entityFactory->createExplosion(glm::ivec2(pos.x, pos.y),
-											 power,
-											 turns,
-                                             from);
+
+            anax::Entity e = m_collisionSystem->getEntityAt(glm::ivec2(pos.x, pos.y), cache);
+
+            if(!cache)
+                cache = true;
+            else
+            {
+                if(e.hasComponent<EntityTypeComponent>())
+                {
+                    auto &type = e.getComponent<EntityTypeComponent>();
+                    switch(type.type)
+                    {
+                        case Type::Explosion:
+                            cache = false;
+                            break;
+                        case Type::NOT_SET:
+                            cache = false;
+                            break;
+                        default:
+                            cache = true;
+                            break;
+                    }
+                }
+            }
+
+            if(cache)
+            {
+                m_entityFactory->createExplosion(glm::ivec2(pos.x, pos.y),
+                                                 power,
+                                                 turns,
+                                                 from);
+            }
             return true;
 		}
         return false;

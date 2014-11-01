@@ -215,9 +215,9 @@ namespace Client
     {
         if(m_tiles.count(pos.z) != 0)
         {
-			if(m_tiles[pos.z].size() >= pos.x)
+            if(m_tiles[pos.z].size() > pos.x)
 			{
-				if((m_tiles[pos.z][pos.x]).size() >= pos.y)
+                if((m_tiles[pos.z][pos.x]).size() > pos.y)
 				{
 					return *(m_tiles[pos.z][pos.x][pos.y]);
 				}

@@ -9,12 +9,12 @@ namespace Client
     class BombComponent : public anax::Component<BombComponent>
     {
         public:
-            BombComponent(anax::Entity bombThrower);
+            BombComponent(anax::Entity bombThrower, int tiles = 1, int turns = 0);
             virtual ~BombComponent();
 
             anax::Entity thrower;
-
-            //TODO add bomb modifiers.
+            int turns = 0;
+            int tiles = 1;
     };
 }
 

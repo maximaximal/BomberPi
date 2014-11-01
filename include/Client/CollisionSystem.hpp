@@ -15,6 +15,8 @@ namespace Client
 
             void update(float frametime);
             void collideWithMapTile(const BombermanMapTile &tile, const glm::ivec3 &pos, anax::Entity &e);
+
+            anax::Entity getEntityAt(const glm::ivec2 &pos, bool &entityFound);
         private:
             BombermanMap *m_map;
     };

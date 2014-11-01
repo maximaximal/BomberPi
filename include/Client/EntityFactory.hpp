@@ -29,7 +29,7 @@ namespace Client
                                       PiH::HealthAndNameDisplay *healthAndNameDisplay,
                                       std::shared_ptr<Player> player, float cooldown);
 
-            anax::Entity createBomb(const glm::ivec2 &pos, anax::Entity thrower);
+            anax::Entity createBomb(const glm::ivec2 &pos, anax::Entity thrower, int tiles, int turns);
 
             anax::Entity createExplosion(const glm::ivec2 &pos, int powerLeft, int turnsLeft, Client::SpreadingComponent::SpreadingFrom from);
 

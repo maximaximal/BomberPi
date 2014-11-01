@@ -98,7 +98,6 @@ namespace Client
             }
         }
     }
-
     void CollisionSystem::collideWithMapTile(const BombermanMapTile &tile, const glm::ivec3 &pos, anax::Entity &e)
     {
 		if(tile.physics != BombermanMapTile::PASSABLE)
@@ -115,6 +114,30 @@ namespace Client
 				auto &body = e.getComponent<BodyComponent>();
 				body.collisionSignal(collision);
 			}
-		}
-	}
+        }
+    }
+    anax::Entity CollisionSystem::getEntityAt(const glm::ivec2 &pos, bool &entityFound)
+    {
+        SDL_Rect rect;
+        entityFound = false;
+        for(auto &entity : getEntities())
+        {
+            auto &posComp = entity.getComponent<PositionComponent>();
+            auto &body = entity.getComponent<BodyComponent>();
+
+            rect.x = posComp.pos.x;
+            rect.y = posComp.pos.y;
+            rect.w = body.w;
+            rect.h = body.h;
+
+            if(pos.x < rect.x + rect.w
+                    && pos.x >= rect.x
+                    && pos.y >= rect.y
+                    && pos.y < rect.y + rect.h)
+            {
+                entityFound = true;
+                return entity;
+            }
+        }
+    }
 }

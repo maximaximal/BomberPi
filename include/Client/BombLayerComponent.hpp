@@ -16,11 +16,11 @@ namespace Client
 
             short bombsRemaining = 1;
             short bombsRemainingMax = 1;
-            float speedBonus = 0;
+            float speedMultiplicator = 1;
             float lastPlacedBomb = 0;
 
             int bombTurns = 0;
-            int bombTiles = 3;
+            int bombTiles = 1;
 
             glm::ivec2 placePos;
 

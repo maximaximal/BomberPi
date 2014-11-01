@@ -19,7 +19,7 @@ namespace Client
     }
     void BombPlaceSystem::update()
     {
-		for(auto entity : getEntities())
+        for(auto &entity : getEntities())
         {
             auto &input = entity.getComponent<PlayerInputComponent>();
             auto &bombLayer = entity.getComponent<BombLayerComponent>();
@@ -27,12 +27,12 @@ namespace Client
             if(input.isActive(PlayerInputEnum::ACTION))
             {
 				if(bombLayer.canPlace())
-				{
-					bombLayer.bombsRemaining -= 1;
-					m_entityFactory->createBomb(bombLayer.placePos, entity);
-					bombLayer.lastPlacedBomb = -1;
-					bombLayer.positionOkay = false;
-				}
+                {
+                    bombLayer.bombsRemaining -= 1;
+                    m_entityFactory->createBomb(bombLayer.placePos, entity, bombLayer.bombTiles, bombLayer.bombTurns);
+                    bombLayer.lastPlacedBomb = -1;
+                    bombLayer.positionOkay = false;
+                }
             }
         }
     }

@@ -6,6 +6,7 @@
 #include <Client/SpriteComponent.hpp>
 #include <Client/BodyComponent.hpp>
 #include <Client/EntityTypeComponent.hpp>
+#include <Client/BombLayerComponent.hpp>
 
 #include <easylogging++.h>
 
@@ -17,7 +18,8 @@ namespace Client
                PositionComponent,
                PlayerInputComponent,
                SpriteComponent,
-               BodyComponent>())
+               BodyComponent,
+               BombLayerComponent>())
     {
 		m_bombermanMap = bombermanMap;
     }
@@ -44,27 +46,30 @@ namespace Client
             auto &input = entity.getComponent<PlayerInputComponent>();
             auto &sprite = entity.getComponent<SpriteComponent>();
             auto &body = entity.getComponent<BodyComponent>();
+            auto &bombLayer = entity.getComponent<BombLayerComponent>();
 
             bool wasValidInput = false;
 
+            float speed = player.speed * bombLayer.speedMultiplicator * frameTime;
+
             if(input.isActive(PlayerInputEnum::UP))
             {
-                dir.y -= player.speed * frameTime;
+                dir.y -= speed;
                 wasValidInput = true;
             }
             if(input.isActive(PlayerInputEnum::DOWN))
             {
-                dir.y += player.speed * frameTime;
+                dir.y += speed;
                 wasValidInput = true;
             }
             if(input.isActive(PlayerInputEnum::LEFT))
             {
-                dir.x -= player.speed * frameTime;
+                dir.x -= speed;
                 wasValidInput = true;
             }
             if(input.isActive(PlayerInputEnum::RIGHT))
             {
-                dir.x += player.speed * frameTime;
+                dir.x += speed;
                 wasValidInput = true;
             }
 

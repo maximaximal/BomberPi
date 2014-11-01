@@ -21,8 +21,8 @@ namespace Client
             case ADDITIONAL_TILE:
                 additionalTiles = 1;
                 break;
-            case SPEED_MULTIPLICATOR:
-                speedMultiplicator = 1.25;
+            case SPEED_MULTIPLICATOR_BONUS:
+                speedMultiplicatorBonus = 0.25;
                 break;
         }
         this->definition = definition;
@@ -55,7 +55,7 @@ namespace Client
             case ADDITIONAL_TILE:
                 rect.y = 64;
                 break;
-            case SPEED_MULTIPLICATOR:
+            case SPEED_MULTIPLICATOR_BONUS:
                 rect.y = 32;
                 break;
         }

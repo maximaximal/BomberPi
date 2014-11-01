@@ -40,7 +40,7 @@ namespace Client
                     if(layer.bombsRemaining < layer.bombsRemainingMax)
 						layer.bombsRemaining += 1;
 				}
-                m_entityFactory->createExplosion(pos.pos, 1, 0, SpreadingComponent::NOWHERE);
+                m_entityFactory->createExplosion(pos.pos, bomb.tiles, bomb.turns, SpreadingComponent::NOWHERE);
 				entity.kill();
             }
         }

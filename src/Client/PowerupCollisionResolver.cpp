@@ -20,6 +20,9 @@ namespace Client
                     auto &layer = b.getComponent<BombLayerComponent>();
 
                     layer.bombsRemaining += powerup.additionalBombs;
+                    layer.bombTurns += powerup.additionalTurns;
+                    layer.bombTiles += powerup.additionalTiles;
+                    layer.speedMultiplicator += powerup.speedMultiplicatorBonus;
 
                     //Destroy the powerup entity.
                     a.kill();

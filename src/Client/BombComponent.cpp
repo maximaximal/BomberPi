@@ -2,9 +2,11 @@
 
 namespace Client
 {
-    BombComponent::BombComponent(anax::Entity bombThrower)
+    BombComponent::BombComponent(anax::Entity bombThrower, int tiles, int turns)
     {
-		thrower = bombThrower;
+        thrower = bombThrower;
+        this->tiles = tiles;
+        this->turns = turns;
     }
     BombComponent::~BombComponent()
     {

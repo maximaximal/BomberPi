@@ -22,7 +22,9 @@ namespace Client
         this->lastPlacedBomb = cooldown;
         this->bombsRemaining = 1;
         this->bombsRemainingMax = 1;
-        this->speedBonus = 0;
+        this->speedMultiplicator = 1;
+        this->bombTurns = 0;
+        this->bombTiles = 1;
     }
     bool BombLayerComponent::canPlace()
     {

@@ -5,13 +5,14 @@
 #include <Client/BombermanMap.hpp>
 #include <Client/EntityFactory.hpp>
 #include <Client/SpreadingComponent.hpp>
+#include <Client/CollisionSystem.hpp>
 
 namespace Client
 {
     class ExplosionSystem : public anax::System<ExplosionSystem>
     {
         public:
-            ExplosionSystem(BombermanMap *map, EntityFactory *entityFactory);
+            ExplosionSystem(BombermanMap *map, EntityFactory *entityFactory, CollisionSystem *collisionSystem);
             virtual ~ExplosionSystem();
 
             void update(float frametime);
@@ -22,6 +23,9 @@ namespace Client
             bool spreadFurther(glm::ivec2 pos, int power, int turns, SpreadingComponent::SpreadingFrom from);
             BombermanMap *m_map;
             EntityFactory *m_entityFactory;
+            CollisionSystem *m_collisionSystem;
+
+            bool cache = false;
     };
 }
 

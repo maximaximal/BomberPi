@@ -117,14 +117,14 @@ namespace Client
         m_bombExplodeSystem = new BombExplodeSystem(m_entityFactory);
         m_world->addSystem(*m_bombExplodeSystem);
 
-        m_explosionSystem = new ExplosionSystem(m_map, m_entityFactory);
+        m_collisionSystem = new CollisionSystem(m_map);
+        m_world->addSystem(*m_collisionSystem);
+
+        m_explosionSystem = new ExplosionSystem(m_map, m_entityFactory, m_collisionSystem);
         m_world->addSystem(*m_explosionSystem);
 
         m_explosionManagementSystem = new ExplosionManagementSystem(getTextureManager());
         m_world->addSystem(*m_explosionManagementSystem);
-
-        m_collisionSystem = new CollisionSystem(m_map);
-        m_world->addSystem(*m_collisionSystem);
 
         m_damageSystem = new DamageSystem();
         m_world->addSystem(*m_damageSystem);

@@ -41,6 +41,7 @@ namespace Client
                                              float cooldown)
     {
         anax::Entity entity = m_world->createEntity();
+        m_world->refresh();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
         SpriteComponent *spriteComponent = new SpriteComponent();
         spriteComponent->texture = m_textureManager->get("player_proto.png");
@@ -64,9 +65,10 @@ namespace Client
         return entity;
     }
 
-    anax::Entity EntityFactory::createBomb(const glm::ivec2 &pos, anax::Entity thrower)
+    anax::Entity EntityFactory::createBomb(const glm::ivec2 &pos, anax::Entity thrower, int tiles, int turns)
     {
         auto entity = m_world->createEntity();
+        m_world->refresh();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
         SpriteComponent *spriteComponent = new SpriteComponent();
         spriteComponent->texture = m_textureManager->get("bomb_proto.png");
@@ -78,7 +80,7 @@ namespace Client
         TimerComponent *timer = new TimerComponent();
         timer->timeToPass = 1.3;
         entity.addComponent(timer);
-        entity.addComponent(new BombComponent(thrower));
+        entity.addComponent(new BombComponent(thrower, tiles, turns));
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
         anim->loadDefinition("bombAnimation.yml");
         entity.addComponent(new AnimationComponent(anim));
@@ -92,6 +94,7 @@ namespace Client
                                                 SpreadingComponent::SpreadingFrom from)
     {
         auto entity = m_world->createEntity();
+        m_world->refresh();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
         SpriteComponent *spriteComponent = new SpriteComponent();
         spriteComponent->texture = m_textureManager->get("bomb_proto.png");
@@ -115,6 +118,7 @@ namespace Client
     anax::Entity EntityFactory::createPowerup(const glm::ivec2 &pos, PowerupComponent *powerupComponent, const std::string &texture, const SDL_Rect &rect)
     {
         auto entity = m_world->createEntity();
+        m_world->refresh();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
         SpriteComponent *spriteComponent = new SpriteComponent();
         spriteComponent->texture = m_textureManager->get(texture);

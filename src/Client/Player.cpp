@@ -22,12 +22,12 @@ namespace Client
     }
     void Player::damageReceived(int damage, anax::Entity dealer)
     {
-        setPosition(getStartingPosition());
+        die();
     }
     void Player::die()
     {
-		setHealth(0);
         resetBombLayerComponent();
+        setPosition(getStartingPosition());
     }
     bool Player::isDead()
     {
