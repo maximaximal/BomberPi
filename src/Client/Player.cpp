@@ -115,6 +115,17 @@ namespace Client
         }
         return glm::ivec2(32, 32);
     }
+    void Player::setPowerupQueueUI(UI::PowerupQueue *powerupQueueUI)
+    {
+        if(m_entity.isValid())
+        {
+            if(m_entity.hasComponent<BombLayerComponent>())
+            {
+                auto &layer = m_entity.getComponent<BombLayerComponent>();
+                layer.powerupQueue.setPowerupQueueUI(powerupQueueUI);
+            }
+        }
+    }
     void Player::update(float frametime)
     {
 		if(isDead())

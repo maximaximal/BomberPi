@@ -80,6 +80,8 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/PowerupCollisionResolver.cpp
 
     ${CLIENT_SRC}/KeyboardInputMethod.cpp
+
+    ${CLIENT_SRC}/UI/PowerupQueue.cpp
 )
 
 SET(CLIENT_HDRS
@@ -133,6 +135,8 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/PowerupCollisionResolver.hpp
 
     ${CLIENT_INCLUDE}/KeyboardInputMethod.hpp
+
+    ${CLIENT_INCLUDE}/UI/PowerupQueue.hpp
 )
 
 add_executable(Client ${CLIENT_SRCS} ${CLIENT_HDRS} 

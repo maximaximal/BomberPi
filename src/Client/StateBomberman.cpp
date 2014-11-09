@@ -25,6 +25,8 @@
 #include <Client/Config.hpp>
 #include <Client/KeyboardInputMethod.hpp>
 
+#include <Client/UI/PowerupQueue.hpp>
+
 #include <pihud/FontManager.hpp>
 #include <pihud/Label.hpp>
 
@@ -248,26 +250,35 @@ namespace Client
             getInterface()->addPlayerInput(playerInput);
         }
 
-        glm::ivec2 pos;
+        UI::PowerupQueue *powerupQueue = new UI::PowerupQueue(getTextureManager(), 3, m_hudContainer);
+        player->setPowerupQueueUI(powerupQueue);
+        m_hudContainer->addWidget(powerupQueue, "PowerupQueue_" + name);
+
+        glm::ivec2 pos, powerupQueuePos;
         if(playerPos.x > (m_map->getMapSize().x * 32) / 2)
         {
             pos.x = getWindow()->getSize().x - healthIndicator->getBoundingBox().w;
             healthIndicator->setSideOfIcons(PiH::RIGHT);
+            powerupQueuePos.x = getWindow()->getSize().x - powerupQueue->getMaxWidth(32);
         }
         else
         {
             pos.x = 0;
+            powerupQueuePos.x = 0;
             healthIndicator->setSideOfIcons(PiH::LEFT);
         }
         if(playerPos.y > (m_map->getMapSize().y * 32) / 2)
         {
             pos.y = getWindow()->getSize().y - healthIndicator->getBoundingBox().h;
+            powerupQueuePos.y = pos.y - 32;
         }
         else
         {
             pos.y = 0;
+            powerupQueuePos.y = healthIndicator->getBoundingBox().h;
         }
         healthIndicator->setPosition(pos.x, pos.y);
+        powerupQueue->setPosition(powerupQueuePos.x, powerupQueuePos.y);
 
         m_playerManager->set(player, name);
     }

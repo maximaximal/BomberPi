@@ -25,18 +25,18 @@ namespace PiH
                 this->w = w;
                 this->h = h;
             }
-
+            Rect(const SDL_Rect &sdlRect) {
+                fromSDLRect(sdlRect);
+            }
             ~Rect() {
 
             }
-
             void clear() {
                 x = 0;
                 y = 0;
                 w = 0;
                 h = 0;
             }
-
             SDL_Rect toSDLRect() {
                 SDL_Rect rect;
                 rect.x = x;
@@ -44,6 +44,12 @@ namespace PiH
                 rect.w = w;
                 rect.h = h;
                 return rect;
+            }
+            void fromSDLRect(const SDL_Rect &sdlRect) {
+                this->x = sdlRect.x;
+                this->y = sdlRect.y;
+                this->w = sdlRect.w;
+                this->h = sdlRect.h;
             }
             Rect<int32_t> toIntRect() {
                 Rect<int32_t> rect;

@@ -28,9 +28,18 @@ namespace Client
             {
 				if(bombLayer.canPlace())
                 {
-                    bombLayer.bombsRemaining -= 1;
                     m_entityFactory->createBomb(bombLayer.placePos, entity, bombLayer.getBombTiles(), bombLayer.getBombTurns());
+
+                    if(bombLayer.bombsRemaining == 0)
+                    {
+                        bombLayer.powerupQueue.removeOneOfPredefined(Powerup::ADDITIONAL_BOMB);
+                    }
+                    else
+                    {
+                        bombLayer.bombsRemaining -= 1;
+                    }
                     bombLayer.lastPlacedBomb = -1;
+
                     bombLayer.positionOkay = false;
                 }
             }

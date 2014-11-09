@@ -7,6 +7,10 @@
 
 namespace Client
 {
+    namespace UI
+    {
+        class PowerupQueue;
+    }
     class Player
     {
         public:
@@ -26,6 +30,7 @@ namespace Client
             void resetBombLayerComponent();
             const glm::ivec2& getStartingPosition();
             glm::ivec2 getPosition();
+            void setPowerupQueueUI(UI::PowerupQueue *powerupQueueUI);
 
             void update(float frametime);
             void reset();

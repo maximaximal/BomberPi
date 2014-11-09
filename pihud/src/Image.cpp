@@ -29,6 +29,21 @@ namespace PiH
         SDL_Rect dstRect = m_boundingBox.toSDLRect();
 
         if(m_texture)
-			SDL_RenderCopy(renderer, m_texture->getSDLTexture(), &srcRect, &dstRect);
+            SDL_RenderCopy(renderer, m_texture->getSDLTexture(), &srcRect, &dstRect);
+    }
+    void Image::renderTo(float x, float y, SDL_Renderer *renderer, const FloatRect &offset)
+    {
+        SDL_Rect srcRect = m_textureRect.toSDLRect();
+        SDL_Rect dstRect = m_boundingBox.toSDLRect();
+
+        dstRect.x = x;
+        dstRect.y = y;
+
+        if(m_texture)
+            SDL_RenderCopy(renderer, m_texture->getSDLTexture(), &srcRect, &dstRect);
+    }
+    void Image::updateBoundingBox()
+    {
+
     }
 }
