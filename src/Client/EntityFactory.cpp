@@ -115,17 +115,14 @@ namespace Client
         return entity;
     }
 
-    anax::Entity EntityFactory::createPowerup(const glm::ivec2 &pos, PowerupComponent *powerupComponent, const std::string &texture, const SDL_Rect &rect)
+    anax::Entity EntityFactory::createPowerup(const glm::ivec2 &pos, PowerupComponent *powerupComponent, const std::string &texture)
     {
         auto entity = m_world->createEntity();
         m_world->refresh();
         entity.addComponent(new PositionComponent(pos.x, pos.y));
         SpriteComponent *spriteComponent = new SpriteComponent();
         spriteComponent->texture = m_textureManager->get(texture);
-        spriteComponent->srcRect.x = rect.x;
-        spriteComponent->srcRect.y = rect.y;
-		spriteComponent->srcRect.w = rect.w;
-		spriteComponent->srcRect.h = rect.h;
+        spriteComponent->srcRect = powerupComponent->powerup->getRect();
         entity.addComponent(spriteComponent);
         BodyComponent *body = new BodyComponent(0, 0, 32, 32);
         body->collisionSignal.connect(sigc::ptr_fun(&Resolver::OnPowerupCollison));
@@ -133,7 +130,7 @@ namespace Client
 
         //Generate animation.
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
-        SDL_Rect animRect = PowerupComponent::computeRectFor(powerupComponent);
+        SDL_Rect animRect = powerupComponent->powerup->getRect();
         anim->addStep(animRect);
         anim->setStepDuration(2);
 

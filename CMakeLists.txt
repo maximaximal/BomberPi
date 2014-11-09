@@ -74,6 +74,8 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/Config.cpp
     ${CLIENT_SRC}/PlayerManager.cpp
     ${CLIENT_SRC}/WinChecker.cpp
+    ${CLIENT_SRC}/Powerup.cpp
+    ${CLIENT_SRC}/PowerupQueue.cpp
 
     ${CLIENT_SRC}/PowerupCollisionResolver.cpp
 
@@ -125,6 +127,8 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/Config.hpp
     ${CLIENT_INCLUDE}/PlayerManager.hpp
     ${CLIENT_INCLUDE}/WinChecker.hpp
+    ${CLIENT_INCLUDE}/Powerup.hpp
+    ${CLIENT_INCLUDE}/PowerupQueue.hpp
 
     ${CLIENT_INCLUDE}/PowerupCollisionResolver.hpp
 

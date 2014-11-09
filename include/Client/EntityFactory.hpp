@@ -34,7 +34,7 @@ namespace Client
             anax::Entity createExplosion(const glm::ivec2 &pos, int powerLeft, int turnsLeft, Client::SpreadingComponent::SpreadingFrom from);
 
             anax::Entity createPowerup(const glm::ivec2 &pos, PowerupComponent *powerupComponent,
-                                       const std::string &texture, const SDL_Rect &rect);
+                                       const std::string &texture);
         private:
             TextureManager *m_textureManager;
             anax::World *m_world;

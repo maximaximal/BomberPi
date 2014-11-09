@@ -3,6 +3,7 @@
 
 #include <glm/vec2.hpp>
 #include <anax/Component.hpp>
+#include <Client/PowerupQueue.hpp>
 
 namespace Client
 {
@@ -18,6 +19,13 @@ namespace Client
             short bombsRemainingMax = 1;
             float speedMultiplicator = 1;
             float lastPlacedBomb = 0;
+
+            short getBombsRemaining();
+            float getSpeedMultiplicator();
+            int getBombTurns();
+            int getBombTiles();
+
+            PowerupQueue powerupQueue;
 
             int bombTurns = 0;
             int bombTiles = 1;

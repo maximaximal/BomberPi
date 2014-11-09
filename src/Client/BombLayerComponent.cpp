@@ -25,10 +25,27 @@ namespace Client
         this->speedMultiplicator = 1;
         this->bombTurns = 0;
         this->bombTiles = 1;
+        powerupQueue.reset();
+    }
+    short BombLayerComponent::getBombsRemaining()
+    {
+        return bombsRemaining + powerupQueue.getCombinedPowerup().getAdditionalBombs();
+    }
+    float BombLayerComponent::getSpeedMultiplicator()
+    {
+        return speedMultiplicator + powerupQueue.getCombinedPowerup().getSpeedMultiplicatorBonus();
+    }
+    int BombLayerComponent::getBombTurns()
+    {
+        return bombTurns + powerupQueue.getCombinedPowerup().getAdditionalCorners();
+    }
+    int BombLayerComponent::getBombTiles()
+    {
+        return bombTiles + powerupQueue.getCombinedPowerup().getAdditionalTiles();
     }
     bool BombLayerComponent::canPlace()
     {
-        if(bombsRemaining > 0 && lastPlacedBomb >= cooldown && positionOkay)
+        if(getBombsRemaining() > 0 && lastPlacedBomb >= cooldown && positionOkay)
         {
             return true;
         }

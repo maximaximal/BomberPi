@@ -29,7 +29,7 @@ namespace Client
 				if(bombLayer.canPlace())
                 {
                     bombLayer.bombsRemaining -= 1;
-                    m_entityFactory->createBomb(bombLayer.placePos, entity, bombLayer.bombTiles, bombLayer.bombTurns);
+                    m_entityFactory->createBomb(bombLayer.placePos, entity, bombLayer.getBombTiles(), bombLayer.getBombTurns());
                     bombLayer.lastPlacedBomb = -1;
                     bombLayer.positionOkay = false;
                 }

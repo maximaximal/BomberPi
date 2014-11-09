@@ -50,7 +50,9 @@ namespace Client
 
             bool wasValidInput = false;
 
-            float speed = player.speed * bombLayer.speedMultiplicator * frameTime;
+            float speed = player.speed
+                    * (bombLayer.speedMultiplicator + bombLayer.powerupQueue.getCombinedPowerup().getSpeedMultiplicatorBonus())
+                    * frameTime;
 
             if(input.isActive(PlayerInputEnum::UP))
             {
