@@ -17,6 +17,7 @@ namespace Client
 		if(m_window != nullptr)
         {
 			SDL_DestroyWindow(m_window);
+            SDL_GL_DeleteContext(m_glContext);
             m_window = nullptr;
         }
         if(m_renderer != nullptr)
@@ -33,7 +34,6 @@ namespace Client
 
 		LOG(INFO) << "Deleted Window.";
     }
-    
     int Window::init(const glm::ivec2 &windowSize, bool fullscreen)
     {
 		LOG(INFO) << "Initializing Window (" << windowSize.x << "x" << windowSize.y << ")";
@@ -67,6 +67,20 @@ namespace Client
 			LOG(FATAL) << "SDL_CreateWindow failed! Error: " << SDL_GetError();
 			return 1;
 		}
+        m_glContext = SDL_GL_CreateContext(m_window);
+
+        //Load required functions for the window class.
+        m_glClear = SDL_GL_GetProcAddress("glClear");
+        m_glClearColor = SDL_GL_GetProcAddress("glClearColor");
+
+        if(m_glClear == nullptr)
+        {
+            LOG(WARNING) << "The OpenGL-Function \"glClear\" has not been received!";
+        }
+        if(m_glClearColor == nullptr)
+        {
+            LOG(WARNING) << "The OpenGL-Function \"glClearColor\" has not been received!";
+        }
 
         m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
         if(m_renderer == nullptr)
@@ -75,26 +89,31 @@ namespace Client
             return 1;
         }
 
+
         return 0;
     }
-
     void Window::onEvent(const SDL_Event &e)
     {
 
     }
-
     glm::ivec2 Window::getSize()
     {
         int x, y;
         SDL_GetWindowSize(m_window, &x, &y);
         return glm::ivec2(x, y);
     }
-
+    void Window::glClear()
+    {
+        if(m_glClear != nullptr && m_glClearColor != nullptr)
+        {
+            ((GLFunction_ClearColor) m_glClearColor)(0, 0, 0, 1);
+            ((GLFunction_Clear) m_glClear)(m_window);
+        }
+    }
     SDL_Renderer *Window::getSDLRenderer()
     {
         return m_renderer;
     }
-
     SDL_Window *Window::getSDLWindow()
     {
         return m_window;

@@ -123,8 +123,10 @@ namespace Client
     }
     void Game::render()
     {
+        m_window->glClear();
         SDL_RenderClear(m_window->getSDLRenderer());
-		m_stateManager->render(m_window);
+        m_stateManager->render(m_window);
+        SDL_GL_SwapWindow(m_window->getSDLWindow());
         SDL_RenderPresent(m_window->getSDLRenderer());
     }
 }

@@ -27,12 +27,21 @@ namespace Client
         void onEvent(const SDL_Event &e);
 
         glm::ivec2 getSize();
-	private:
+
+        void glClear();
+    private:
+        typedef void (*GLFunction_ClearColor)(float , float, float, float);
+        typedef void (*GLFunction_Clear)(SDL_Window*);
+
 	    SDL_Window *m_window = nullptr;
-	    SDL_Renderer *m_renderer = nullptr;
+        SDL_Renderer *m_renderer = nullptr;
+        SDL_GLContext m_glContext;
 	    
 	    bool m_SDLInitialized = false;
-	    bool m_SDLImageInitialized = false;
+        bool m_SDLImageInitialized = false;
+
+        void* m_glClearColor = nullptr;
+        void* m_glClear = nullptr;
     };
 }
 
