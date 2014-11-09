@@ -16,6 +16,7 @@
 #include <Client/BombExplodeSystem.hpp>
 #include <Client/ExplosionSystem.hpp>
 #include <Client/ExplosionManagementSystem.hpp>
+#include <Client/KillEntityTypeSystem.hpp>
 #include <Client/CollisionSystem.hpp>
 #include <Client/PlayerComponent.hpp>
 #include <Client/VelocityComponent.hpp>
@@ -74,6 +75,8 @@ namespace Client
             delete m_explosionManagementSystem;
         if(m_damageSystem != nullptr)
             delete m_damageSystem;
+        if(m_killEntityTypeSystem != nullptr)
+            delete m_killEntityTypeSystem;
         if(m_timerSystem != nullptr)
             delete m_timerSystem;
         if(m_world != nullptr)
@@ -130,6 +133,9 @@ namespace Client
 
         m_damageSystem = new DamageSystem();
         m_world->addSystem(*m_damageSystem);
+
+        m_killEntityTypeSystem = new KillEntityTypeSystem();
+        m_world->addSystem(*m_killEntityTypeSystem);
 
         m_invincibleSystem = new HealthSystem();
         m_world->addSystem(*m_invincibleSystem);
@@ -212,6 +218,11 @@ namespace Client
         m_playerManager->resetPlayers();
         m_world->refresh();
         m_map->createPlayerSpace(m_playerManager->getPlayerPositions(32));
+
+        //Kill all explosions, bombs and powerups.
+        m_killEntityTypeSystem->killType(Type::Explosion);
+        m_killEntityTypeSystem->killType(Type::Bomb);
+        m_killEntityTypeSystem->killType(Type::Powerup);
     }
     void StateBomberman::addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name)
     {
