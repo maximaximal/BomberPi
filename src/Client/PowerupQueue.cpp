@@ -15,6 +15,10 @@ namespace Client
     void PowerupQueue::reset()
     {
         m_powerups.clear();
+        if(m_powerupQueueUI != nullptr)
+        {
+            m_powerupQueueUI->clearPowerups();
+        }
     }
     void PowerupQueue::pushPowerup(std::shared_ptr<Powerup> powerup)
     {
