@@ -113,14 +113,14 @@ namespace Client
         m_bombPlaceSystem = new BombPlaceSystem(m_entityFactory);
         m_world->addSystem(*m_bombPlaceSystem);
 
-        m_bombPlacePositionSystem = new BombPlacePositionSystem(m_map);
-        m_world->addSystem(*m_bombPlacePositionSystem);
-
         m_bombExplodeSystem = new BombExplodeSystem(m_entityFactory);
         m_world->addSystem(*m_bombExplodeSystem);
 
         m_collisionSystem = new CollisionSystem(m_map);
         m_world->addSystem(*m_collisionSystem);
+
+        m_bombPlacePositionSystem = new BombPlacePositionSystem(m_map, m_collisionSystem);
+        m_world->addSystem(*m_bombPlacePositionSystem);
 
         m_explosionSystem = new ExplosionSystem(m_map, m_entityFactory, m_collisionSystem);
         m_world->addSystem(*m_explosionSystem);

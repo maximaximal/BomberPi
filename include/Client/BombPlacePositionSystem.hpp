@@ -6,15 +6,18 @@
 
 namespace Client
 {
+    class CollisionSystem;
+
     class BombPlacePositionSystem : public anax::System<BombPlacePositionSystem>
     {
         public:
-            BombPlacePositionSystem(BombermanMap *bombermanMap);
+            BombPlacePositionSystem(BombermanMap *bombermanMap, Client::CollisionSystem *collisionSystem);
             virtual ~BombPlacePositionSystem();
 
             void update(float frametime);
         private:
             BombermanMap *m_bombermanMap;
+            CollisionSystem *m_collisionSystem;
     };
 }
 

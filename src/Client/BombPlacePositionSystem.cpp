@@ -4,14 +4,17 @@
 
 #include <Client/PositionComponent.hpp>
 #include <Client/BombLayerComponent.hpp>
+#include <Client/CollisionSystem.hpp>
+#include <Client/EntityTypeComponent.hpp>
 
 namespace Client
 {
-    BombPlacePositionSystem::BombPlacePositionSystem(BombermanMap *bombermanMap)
+    BombPlacePositionSystem::BombPlacePositionSystem(BombermanMap *bombermanMap, CollisionSystem *collisionSystem)
     	: Base(anax::ComponentFilter().requires<BombLayerComponent,
                PositionComponent>())
     {
-		m_bombermanMap = bombermanMap;
+        m_bombermanMap = bombermanMap;
+        m_collisionSystem = collisionSystem;
     }
     BombPlacePositionSystem::~BombPlacePositionSystem()
     {
@@ -82,6 +85,30 @@ namespace Client
                         layer.placePos.y -= pos.orientation.y * 32;
                     }
 				}
+
+                //Check if there is already an entity and if there is one, check if it is allowed to place a bomb on it.
+                bool entityFound = false;
+                auto entity = m_collisionSystem->getEntityAt(layer.placePos, entityFound);
+                if(entityFound)
+                {
+                    layer.positionOkay = false;
+                    if(entity.hasComponent<EntityTypeComponent>())
+                    {
+                        auto &type = entity.getComponent<EntityTypeComponent>();
+                        switch(type.type)
+                        {
+                            case Type::Explosion:
+                                layer.positionOkay = true;
+                                break;
+                            case Type::Player:
+                                layer.positionOkay = true;
+                                break;
+                            default:
+                                //Nothing to set; it was set previosly.
+                                break;
+                        }
+                    }
+                }
             }
             catch(std::out_of_range &e)
             {
