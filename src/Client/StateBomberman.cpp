@@ -223,6 +223,8 @@ namespace Client
         m_killEntityTypeSystem->killType(Type::Explosion);
         m_killEntityTypeSystem->killType(Type::Bomb);
         m_killEntityTypeSystem->killType(Type::Powerup);
+
+        m_world->refresh();
     }
     void StateBomberman::addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name)
     {
