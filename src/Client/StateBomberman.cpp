@@ -237,6 +237,7 @@ namespace Client
 
         if(getInterface()->isSelfhosted())
         {
+            //Only if the piga interface is selfhosted, add a player controller over the keyboard!
             std::shared_ptr<piga::PlayerInput> playerInput = std::make_shared<piga::PlayerInput>();
             playerInput->setPlayerID(player->getPlayerID());
             for(auto &input : inputs.getMaps())
