@@ -44,6 +44,9 @@ class State
 
         virtual void render(Client::Window *window);
         virtual void update(float frameTime);
+
+        bool hasEnded();
+        void end();
 	private:
         std::shared_ptr<SDLEventHandler> m_sdlEventHandler;
         std::shared_ptr<piga::GameEventHandler> m_gameEventHandler;
@@ -53,6 +56,7 @@ class State
         Client::Window *m_window;
         Client::Config *m_config;
         piga::Interface *m_pigaInterface;
+        bool m_hasEnded = false;
 };
 
 #endif

@@ -35,6 +35,10 @@ void StateManager::update(float frameTime)
     if(m_states.size() > 0)
     {
         top()->update(frameTime);
+        if(top()->hasEnded())
+        {
+            pop();
+        }
     }
 }
 

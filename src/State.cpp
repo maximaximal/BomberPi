@@ -73,3 +73,11 @@ void State::update(float frameTime)
 {
 
 }
+bool State::hasEnded()
+{
+    return m_hasEnded;
+}
+void State::end()
+{
+    m_hasEnded = true;
+}
