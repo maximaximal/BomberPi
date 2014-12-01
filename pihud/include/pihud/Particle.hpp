@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
 #include <memory>
 #include <pihud/Widget.hpp>
+#include <pihud/Texture.hpp>
 
 namespace PiH
 {
@@ -26,14 +26,26 @@ namespace PiH
 
             float drag = 5;
 
+            void setX(float x);
+            void setY(float y);
+            float getX();
+            float getY();
+
+            void setTextureRect(const IntRect &rect);
+
             float rotation = 0;
             float rotationSpeed = 10;
 
-            IntRect textureRect;
-
             void onUpdate(float frametime);
             void onRender(SDL_Renderer *renderer);
+
+            std::shared_ptr<Texture> texture;
+
+            const IntRect& getCurrentDstRect();
+            const IntRect &getTextureRect();
         private:
-            std::vector<std::unique_ptr<Particle> > m_trailingParticles;
+            bool m_deletionPending = false;
+            FloatRect m_dstRect;
+            IntRect m_srcRect;
     };
 }

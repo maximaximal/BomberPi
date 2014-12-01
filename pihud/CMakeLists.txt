@@ -24,6 +24,8 @@ set(SRCS
     ${SRC}/HealthAndNameDisplay.cpp
     ${SRC}/Rect.cpp
     ${SRC}/QueueDisplayWidget.cpp
+    ${SRC}/Particle.cpp
+    ${SRC}/ParticleSource.cpp
 )
 
 set(HDR ${CMAKE_CURRENT_SOURCE_DIR}/include/pihud/)
@@ -44,6 +46,7 @@ set(HDRS
     ${HDR}/IconHealthIndicator.hpp
     ${HDR}/HealthAndNameDisplay.hpp
     ${HDR}/QueueDisplayWidget.hpp
+    ${HDR}/Particle.hpp
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
