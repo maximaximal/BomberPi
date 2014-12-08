@@ -203,7 +203,7 @@ namespace Client
             if(m_hudContainer->getWidget("WinnerWidget") == nullptr)
             {
                 PiH::WeHaveAWinnerWidget *winnerWidget = new PiH::WeHaveAWinnerWidget(m_hudContainer);
-                winnerWidget->setFont(getFontManager()->get("PressStart2P.ttf:18"));
+                winnerWidget->setFont(getFontManager()->get("PressStart2P.ttf:28"));
                 winnerWidget->setWinnerName(m_winChecker->getWinner()->getName());
                 winnerWidget->setVictoryImageTexture(getTextureManager()->get("hud.png"), PiH::IntRect(224, 0, 500, 152));
                 std::vector<PiH::IntRect> particles = {PiH::IntRect(0, 64, 96, 96)};
