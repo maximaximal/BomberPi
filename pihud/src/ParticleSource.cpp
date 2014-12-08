@@ -23,7 +23,7 @@ namespace PiH
             particle->texture = texture;
         }
     }
-    void ParticleSource::setTextureRectVector(std::vector<IntRect> textureRects)
+    void ParticleSource::setTextureRectVector(const std::vector<IntRect> &textureRects)
     {
         m_textureRects = textureRects;
         m_distribution = std::uniform_int_distribution<int>(0,textureRects.size() - 1);
@@ -31,6 +31,14 @@ namespace PiH
     void ParticleSource::setDuration(float time)
     {
         m_duration = time;
+    }
+    void ParticleSource::setGravity(float gravity)
+    {
+        m_gravity = gravity;
+    }
+    void ParticleSource::setSpawnsPerFrame(float count)
+    {
+        m_spawnsPerFrame = count;
     }
     void ParticleSource::setXSpeedRange(float min, float max)
     {
@@ -60,18 +68,22 @@ namespace PiH
     }
     void ParticleSource::onUpdate(float frametime)
     {
+        m_currentFrameSpawns += m_spawnsPerFrame;
         m_time += frametime;
         for(auto it = m_particles.begin(); it != m_particles.end(); ++it)
         {
-            if((*it)->getX() + (*it)->getTextureRect().w < 0
-                    || (*it)->getX() > getBoundingBox().x + getBoundingBox().y
-                    || (*it)->getY() + (*it)->getTextureRect().h > getBoundingBox().y + getBoundingBox().h)
+            (*it)->onUpdate(frametime, m_gravity);
+            if(((*it)->getX() + (*it)->getTextureRect().w < 0
+                    || (*it)->getX() > getBoundingBox().x + getBoundingBox().w
+                    || (*it)->getY() > getBoundingBox().y + getBoundingBox().h + (*it)->getTextureRect().h)
+                    && (*it)->velY > 1)
             {
                 m_particles.erase(it);
             }
         }
         while(spawnMoreParticles())
         {
+            m_currentFrameSpawns -= 1;
             addParticle();
         }
     }
@@ -104,7 +116,7 @@ namespace PiH
     }
     bool ParticleSource::spawnMoreParticles()
     {
-        if(m_particles.size() < m_targetCount)
+        if(m_particles.size() < m_targetCount && m_currentFrameSpawns > 0)
             return true;
         return false;
     }

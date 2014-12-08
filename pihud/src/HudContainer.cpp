@@ -46,7 +46,9 @@ namespace PiH
     }
     Widget *HudContainer::getWidget(const std::string &name)
     {
-        return m_widgets[name];
+        if(m_widgets.count(name))
+            return m_widgets[name];
+        return nullptr;
     }
     void HudContainer::addWidget(Widget *widget, std::string name)
     {
@@ -58,5 +60,13 @@ namespace PiH
             }
         }
         m_widgets[name] = widget;
+    }
+    void HudContainer::deleteWidget(const std::string &name)
+    {
+        if(m_widgets.count(name))
+        {
+            delete m_widgets[name];
+            m_widgets.erase(name);
+        }
     }
 }

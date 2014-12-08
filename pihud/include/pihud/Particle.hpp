@@ -36,7 +36,7 @@ namespace PiH
             float rotation = 0;
             float rotationSpeed = 10;
 
-            void onUpdate(float frametime);
+            void onUpdate(float frametime, float gravity = 0);
             void onRender(SDL_Renderer *renderer);
 
             std::shared_ptr<Texture> texture;

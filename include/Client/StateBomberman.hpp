@@ -12,6 +12,8 @@
 #include <pihud/HudContainer.hpp>
 #include <pihud/HealthAndNameDisplay.hpp>
 
+#include <piga/GameEventHandler.hpp>
+
 namespace Client
 {
     class SpriteRenderingSystem;
@@ -40,6 +42,8 @@ namespace Client
             virtual void update(float frameTime);
 
             virtual void render(Window *window);
+
+            void onGameEvent(const piga::GameEvent &gameEvent, float frametime);
 
             void startNewGame();
 

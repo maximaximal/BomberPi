@@ -22,6 +22,8 @@ namespace PiH
     void Image::setTextureRect(const IntRect &rect)
     {
         m_textureRect = rect;
+        m_boundingBox.w = rect.w;
+        m_boundingBox.h = rect.h;
     }
     void Image::onRender(SDL_Renderer *renderer, const FloatRect &offset)
     {

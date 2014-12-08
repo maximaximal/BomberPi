@@ -29,11 +29,15 @@ namespace PiH
     void Particle::setTextureRect(const IntRect &rect)
     {
         m_srcRect = rect;
+        m_dstRect.w = rect.w;
+        m_dstRect.h = rect.h;
     }
-    void Particle::onUpdate(float frametime)
+    void Particle::onUpdate(float frametime, float gravity)
     {
-        m_dstRect.x += velX;
-        m_dstRect.y += velY;
+        velY -= gravity;
+        m_dstRect.x += velX * frametime * 2;
+        m_dstRect.y += velY * frametime * 2;
+        rotation += rotationSpeed * frametime;
     }
     void Particle::onRender(SDL_Renderer *renderer)
     {

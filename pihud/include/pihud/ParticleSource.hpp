@@ -17,8 +17,10 @@ namespace PiH
 
             void setTargetCount(long count);
             void setTexture(std::shared_ptr<Texture> texture);
-            void setTextureRectVector(std::vector<IntRect> textureRects);
+            void setTextureRectVector(const std::vector<IntRect> &textureRects);
             void setDuration(float time);
+            void setGravity(float gravity);
+            void setSpawnsPerFrame(float count);
 
             void setXSpeedRange(float min, float max);
             void setYSpeedRange(float min, float max);
@@ -41,6 +43,9 @@ namespace PiH
             float m_duration = 0;
             float m_time = 0;
             float m_targetCount = 30;
+            float m_gravity = 9.81;
+            float m_spawnsPerFrame = 1;
+            float m_currentFrameSpawns = 0;
 
             std::default_random_engine m_generator;
             std::uniform_int_distribution<int> m_distribution;

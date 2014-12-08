@@ -30,6 +30,7 @@
 
 #include <pihud/FontManager.hpp>
 #include <pihud/Label.hpp>
+#include <pihud/WeHaveAWinnerWidget.hpp>
 
 #include <piga/Interface.hpp>
 
@@ -146,6 +147,8 @@ namespace Client
 
         glm::ivec2 playerPos(0, 0);
 
+        getGameEventHandler()->getGameEventSignal().connect(sigc::mem_fun(this, &StateBomberman::onGameEvent));
+
        	InputMap inputMap;
         inputMap.set(SDL_SCANCODE_W, PlayerInputEnum::UP);
        	inputMap.set(SDL_SCANCODE_A, PlayerInputEnum::LEFT);
@@ -178,7 +181,7 @@ namespace Client
         m_timerSystem->update(frameTime);
         m_explosionManagementSystem->update(frameTime);
         m_animationSystem->update(frameTime);
-		m_explosionSystem->update(frameTime);
+        m_explosionSystem->update(frameTime);
 
         m_playerInputSystem->update();
         m_playerMovementSystem->update(frameTime);
@@ -197,18 +200,42 @@ namespace Client
         //Check if anybody has won
         if(m_winChecker->winDetected())
         {
-            LOG(INFO) << "We have a winner! " << m_winChecker->getWinner()->getName();
-            startNewGame();
+            if(m_hudContainer->getWidget("WinnerWidget") == nullptr)
+            {
+                PiH::WeHaveAWinnerWidget *winnerWidget = new PiH::WeHaveAWinnerWidget(m_hudContainer);
+                winnerWidget->setFont(getFontManager()->get("PressStart2P.ttf:18"));
+                winnerWidget->setWinnerName(m_winChecker->getWinner()->getName());
+                winnerWidget->setVictoryImageTexture(getTextureManager()->get("hud.png"), PiH::IntRect(224, 0, 500, 152));
+                std::vector<PiH::IntRect> particles = {PiH::IntRect(0, 64, 96, 96)};
+                winnerWidget->setParticleTexture(getTextureManager()->get("hud.png"), particles);
+                winnerWidget->setBoundingBox(PiH::FloatRect(0, 0, getWindow()->getSize().x, getWindow()->getSize().y));
+                m_hudContainer->addWidget(winnerWidget, "WinnerWidget");
+            }
+            else
+            {
+                PiH::WeHaveAWinnerWidget *winnerWidget = static_cast<PiH::WeHaveAWinnerWidget*>(m_hudContainer->getWidget("WinnerWidget"));
+                if(winnerWidget->isDone())
+                {
+                    m_hudContainer->deleteWidget("WinnerWidget");
+                    startNewGame();
+                }
+            }
         }
     }
-
     void StateBomberman::render(Window *window)
     {
 		m_map->render(window, m_offset);
         m_spriteRenderingSystem->render(window, m_offset);
         m_hudContainer->onRender(window->getSDLRenderer(), PiH::FloatRect(0, 0, 0, 0));
     }
-
+    void StateBomberman::onGameEvent(const piga::GameEvent &gameEvent, float frametime)
+    {
+        if(m_hudContainer->getWidget("WinnerWidget") != nullptr)
+        {
+            PiH::WeHaveAWinnerWidget *winnerWidget = static_cast<PiH::WeHaveAWinnerWidget*>(m_hudContainer->getWidget("WinnerWidget"));
+            winnerWidget->setDone(true);
+        }
+    }
     void StateBomberman::startNewGame()
     {
         m_map->createOuterWall(0);
