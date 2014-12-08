@@ -58,6 +58,11 @@ namespace PiH
     }
     void WeHaveAWinnerWidget::onRender(SDL_Renderer *renderer, const FloatRect &offset)
     {
+        SDL_Rect rect = getBoundingBox().toSDLRect();
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(renderer, 30, 30, 30, 150);
+        SDL_RenderFillRect(renderer, &rect);
+
         m_particleSource->onRender(renderer, offset);
         m_victoryImage->onRender(renderer, offset);
         m_playerNameLabel->onRender(renderer, offset);
