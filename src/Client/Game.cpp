@@ -124,6 +124,7 @@ namespace Client
     void Game::render()
     {
         m_window->glClear();
+        SDL_SetRenderDrawColor(m_window->getSDLRenderer(), 0, 0, 0, 0);
         SDL_RenderClear(m_window->getSDLRenderer());
         m_stateManager->render(m_window);
         SDL_GL_SwapWindow(m_window->getSDLWindow());
