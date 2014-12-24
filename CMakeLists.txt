@@ -231,6 +231,7 @@ else()
         GIT_REPOSITORY https://github.com/maximaximal/piga.git
         CONFIGURE_COMMAND cmake ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         UPDATE_COMMAND git pull origin master
+        INSTALL_COMMAND ""
     )
     add_dependencies(Client piga_project)
     find_library(piga_library

@@ -2,6 +2,9 @@
 #include <Client/PositionComponent.hpp>
 #include <Client/BodyComponent.hpp>
 #include <easylogging++.h>
+
+#define GLM_FORCE_RADIANS
+
 #include <glm/glm.hpp>
 #include <glm/gtx/vector_angle.hpp>
 
@@ -143,19 +146,23 @@ namespace Client
 
         Side side = NOT_CACHED;
 
-		if(a >= -45 && a < 45)
+        // > -45° && < 45°
+		if(a >= -0.7853981634 && a < 0.7853981634)
         {
             side = LEFT;
         }
-        if(45 <= a && a < 135)
+        // < 45° && > 135°
+        if(0.7853981634 <= a && a < 2.3561944902)
         {
             side = TOP;
         }
-        if((135 <= a && a <= 180) || (-180 <= a && a < -135))
+        // 135° < && 180° < || -180° < a && < -135°
+        if((2.3561944902 <= a && a <= 3.1415926536) || (-3.1415926536 <= a && a < -2.3561944902))
         {
             side = RIGHT;
         }
-        if(-135 <= a && a < -45)
+        // -135° < && < -45°
+        if(-2.3561944902 <= a && a < -0.7853981634)
         {
             side = BOTTOM;
         }
