@@ -246,19 +246,20 @@ else()
     else()
         message(STATUS "Please re-run cmake!")
     endif()
+    set(PIGA_DIR ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/)
 endif()
 
 
 
 
 #Add pihud
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/pihud)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/pihud/include)
+include_directories(${PIGA_DIR}/pihud/include)
 find_library(pihud_library
     NAMES pihud libpihud libpihud.a libpihud.so
     HINTS ${CMAKE_CURRENT_BINARY_DIR}/pihud/
     NO_DEFAULT_PATH
 )
+add_dependencies(pihud piga)
 add_dependencies(Client pihud)
 if(NOT ${pihud_library} MATCHES "pihud_library-NOTFOUND")
 	target_link_libraries(Client ${pihud_library})
