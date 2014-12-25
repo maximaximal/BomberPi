@@ -4,6 +4,7 @@
 #include <string>
 #include <anax/Entity.hpp>
 #include <glm/vec2.hpp>
+#include <piga/Player.hpp>
 
 namespace Client
 {
@@ -11,7 +12,7 @@ namespace Client
     {
         class PowerupQueue;
     }
-    class Player
+    class Player : public piga::Player
     {
         public:
             Player(const std::string &name, int playerID);
@@ -23,8 +24,6 @@ namespace Client
             void die();
             bool isDead();
             int getHealth();
-            int getPlayerID();
-            const std::string& getName();
             void setHealth(int value);
             void setPosition(const glm::ivec2 &pos);
             void resetBombLayerComponent();
@@ -35,9 +34,7 @@ namespace Client
             void update(float frametime);
             void reset();
         private:
-            std::string m_name;
             anax::Entity m_entity;
-            int m_playerID;
     };
 }
 
