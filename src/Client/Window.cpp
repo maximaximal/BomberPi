@@ -16,8 +16,8 @@ namespace Client
 		// Clean the SDL objects.
 		if(m_window != nullptr)
         {
-			SDL_DestroyWindow(m_window);
             SDL_GL_DeleteContext(m_glContext);
+			SDL_DestroyWindow(m_window);
             m_window = nullptr;
         }
         if(m_renderer != nullptr)
