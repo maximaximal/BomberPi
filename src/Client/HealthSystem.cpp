@@ -1,5 +1,4 @@
-#include <Client/InvincibleSystem.hpp>
-
+#include <Client/HealthSystem.hpp>
 #include <Client/HealthComponent.hpp>
 #include <pihud/HealthAndNameDisplay.hpp>
 

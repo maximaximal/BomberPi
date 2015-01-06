@@ -10,24 +10,29 @@ namespace Client
     {
 		LOG(INFO) << "Creating Window.";
         m_renderer = nullptr;
+        m_glContext = nullptr;
     }
     Window::~Window()
     {
-		// Clean the SDL objects.
-		if(m_window != nullptr)
+        // Clean the SDL objects.
+        if(m_glContext != nullptr)
         {
             SDL_GL_DeleteContext(m_glContext);
-			SDL_DestroyWindow(m_window);
-            m_window = nullptr;
+            m_glContext = nullptr;
         }
         if(m_renderer != nullptr)
         {
             SDL_DestroyRenderer(m_renderer);
             m_renderer = nullptr;
         }
+        if(m_window != nullptr)
+        {
+            SDL_DestroyWindow(m_window);
+            m_window = nullptr;
+        }
         if(m_SDLImageInitialized)
             IMG_Quit();
-        if(TTF_WasInit())
+        if(m_SDLTTFInitialized)
             TTF_Quit();
         if(m_SDLInitialized)
 			SDL_Quit();
@@ -37,7 +42,7 @@ namespace Client
     int Window::init(const glm::ivec2 &windowSize, bool fullscreen)
     {
 		LOG(INFO) << "Initializing Window (" << windowSize.x << "x" << windowSize.y << ")";
-		if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
+        if(SDL_Init(SDL_INIT_VIDEO) != 0)
 		{
 			LOG(FATAL) << "SDL_Init fauled! Error: " << SDL_GetError();
 			return 1;
@@ -56,18 +61,25 @@ namespace Client
 			LOG(FATAL) << "TTF_Init failed! Error: " << TTF_GetError();
 			return 1;
         }
+        m_SDLTTFInitialized = true;
 
         Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
         if(fullscreen)
             flags = flags | SDL_WINDOW_FULLSCREEN_DESKTOP;
 
-		m_window = SDL_CreateWindow("BomberPi", 100, 100, windowSize.x, windowSize.y, flags);
+        m_window = SDL_CreateWindow("BomberPi", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSize.x, windowSize.y, flags);
 		if(m_window == nullptr)
 		{
 			LOG(FATAL) << "SDL_CreateWindow failed! Error: " << SDL_GetError();
 			return 1;
-		}
+        }
+
         m_glContext = SDL_GL_CreateContext(m_window);
+        if(m_glContext == nullptr)
+        {
+            LOG(WARNING) << "The OpenGL-Context could not be created!";
+            return 1;
+        }
 
         //Load required functions for the window class.
         m_glClear = SDL_GL_GetProcAddress("glClear");
@@ -88,7 +100,6 @@ namespace Client
             LOG(FATAL) << "SDL_CreateRenderer failed! Error: " << SDL_GetError();
             return 1;
         }
-
 
         return 0;
     }

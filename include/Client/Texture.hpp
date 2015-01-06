@@ -18,15 +18,19 @@ namespace Client
     class Texture : public PiH::Texture
     {
         public:
+            //For destroying the textures.
+            friend class TextureManager;
+
             Texture(Window *window);
             virtual ~Texture();
 
             int load(const std::string &path);
-            void destroy();
 
            	virtual const std::string& getPath();
 
             virtual SDL_Texture* getSDLTexture();
+        protected:
+            void destroy();
         private:
             SDL_Texture *m_texture = nullptr;
             Window *m_window;

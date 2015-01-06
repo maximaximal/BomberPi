@@ -14,7 +14,6 @@ namespace Client
             TextureManager(Window *window);
             virtual ~TextureManager();
 
-            void clear();
             void destroy();
 
             bool has(const std::string &path);

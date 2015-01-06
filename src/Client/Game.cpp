@@ -18,18 +18,17 @@ namespace Client
     {
         if(m_stateManager != nullptr)
             delete m_stateManager;
-        if(m_textureManager != nullptr)
-            delete m_textureManager;
         if(m_fontManager != nullptr)
             delete m_fontManager;
-        if(m_window != nullptr)
-            delete m_window;
+        if(m_textureManager != nullptr)
+            delete m_textureManager;
         if(m_config != nullptr)
             delete m_config;
         if(m_pigaInterface != nullptr)
             delete m_pigaInterface;
-
         PiH::exit();
+        if(m_window != nullptr)
+            delete m_window;
     }
     
     int Game::init()
@@ -91,10 +90,7 @@ namespace Client
                 }
 				onEvent(e, frametime);
             }
-            if(m_pigaInterface->isSelfhosted())
-            {
-                m_pigaInterface->update();
-            }
+            m_pigaInterface->update();
             while(m_pigaInterface->pollEvent(gameEvent))
             {
                 m_stateManager->sendGameEvent(gameEvent, frametime);
@@ -127,8 +123,8 @@ namespace Client
         SDL_SetRenderDrawColor(m_window->getSDLRenderer(), 0, 0, 0, 0);
         SDL_RenderClear(m_window->getSDLRenderer());
         m_stateManager->render(m_window);
-        SDL_GL_SwapWindow(m_window->getSDLWindow());
         SDL_RenderPresent(m_window->getSDLRenderer());
+        SDL_GL_SwapWindow(m_window->getSDLWindow());
     }
 }
 
@@ -153,6 +149,7 @@ int main(int argc, char* argv[])
     game->init();
     
     delete game;
+    game = nullptr;
     
     LOG(INFO) << "Exiting BomberPi.";
     return 0;

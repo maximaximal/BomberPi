@@ -256,13 +256,12 @@ endif()
 include_directories(${PIGA_DIR}/pihud/include)
 find_library(pihud_library
     NAMES pihud libpihud libpihud.a libpihud.so
-    HINTS ${CMAKE_CURRENT_BINARY_DIR}/pihud/
+    HINTS ${CMAKE_CURRENT_BINARY_DIR}/piga_dir/pihud
     NO_DEFAULT_PATH
 )
-add_dependencies(pihud piga)
-add_dependencies(Client pihud)
+add_dependencies(Client piga)
 if(NOT ${pihud_library} MATCHES "pihud_library-NOTFOUND")
-	target_link_libraries(Client ${pihud_library})
+    target_link_libraries(Client ${pihud_library})
 endif()
 
 # Activate C++11

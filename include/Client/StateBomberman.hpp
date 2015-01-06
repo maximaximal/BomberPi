@@ -73,7 +73,7 @@ namespace Client
                 ExplosionManagementSystem *m_explosionManagementSystem = nullptr;
                 CollisionSystem *m_collisionSystem = nullptr;
                 DamageSystem *m_damageSystem = nullptr;
-                HealthSystem *m_invincibleSystem = nullptr;
+                HealthSystem *m_healthSystem = nullptr;
                 KillEntityTypeSystem *m_killEntityTypeSystem = nullptr;
 
     };

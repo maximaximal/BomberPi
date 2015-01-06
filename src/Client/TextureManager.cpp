@@ -8,24 +8,21 @@ namespace Client
     }
     TextureManager::~TextureManager()
     {
-        clear();
+        destroy();
     }
-
-    void TextureManager::clear()
-    {
-        m_textures.clear();
-    }
-
     void TextureManager::destroy()
     {
-        for(auto &texture : m_textures)
+        for(auto texture : m_textures)
         {
-            auto shared_texture = texture.second.lock();
-            if(shared_texture)
-                shared_texture->destroy();
+            if(!texture.second.expired())
+            {
+                auto sharedTexture = texture.second.lock();
+                sharedTexture->destroy();
+                sharedTexture.reset();
+            }
         }
+        m_textures.clear();
     }
-
     bool TextureManager::has(const std::string &path)
     {
         if(m_textures.count(path) > 0)
@@ -41,7 +38,6 @@ namespace Client
         }
         return false;
     }
-
     std::shared_ptr<Texture> TextureManager::get(const std::string &path)
     {
         std::shared_ptr<Texture> texture;
@@ -57,7 +53,6 @@ namespace Client
         }
         return texture;
     }
-
     std::shared_ptr<Texture> TextureManager::operator[](std::string index)
     {
 		return get(index);

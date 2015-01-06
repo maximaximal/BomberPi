@@ -11,10 +11,13 @@
 class SDLEventHandler
 {
     public:
-        typedef sigc::signal<void, const SDL_Event&, float> SDLEventSignal;
+        SDLEventHandler();
+        virtual ~SDLEventHandler();
+
+        typedef sigc::signal2<void, const SDL_Event&, float> SDLEventSignal;
        	void sendEvent(const SDL_Event &e, float frametime);
 
-        SDLEventSignal getSignal(int32_t type);
+        SDLEventSignal& getSignal(int32_t type);
     protected:
         virtual void onSDLEvent(const SDL_Event &e, float frametime);
     private:

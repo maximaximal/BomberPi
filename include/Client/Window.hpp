@@ -35,10 +35,11 @@ namespace Client
 
 	    SDL_Window *m_window = nullptr;
         SDL_Renderer *m_renderer = nullptr;
-        SDL_GLContext m_glContext;
+        SDL_GLContext m_glContext = nullptr;
 	    
 	    bool m_SDLInitialized = false;
         bool m_SDLImageInitialized = false;
+        bool m_SDLTTFInitialized = true;
 
         void* m_glClearColor = nullptr;
         void* m_glClear = nullptr;

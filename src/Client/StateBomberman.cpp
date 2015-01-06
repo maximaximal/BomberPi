@@ -22,7 +22,7 @@
 #include <Client/VelocityComponent.hpp>
 #include <Client/BodyComponent.hpp>
 #include <Client/DamageSystem.hpp>
-#include <Client/InvincibleSystem.hpp>
+#include <Client/HealthSystem.hpp>
 #include <Client/Config.hpp>
 #include <Client/KeyboardInputMethod.hpp>
 
@@ -46,6 +46,10 @@ namespace Client
     }
     StateBomberman::~StateBomberman()
     {
+        delete m_hudContainer;
+
+        if(m_world != nullptr)
+            delete m_world;
         if(m_spriteRenderingSystem != nullptr)
         	delete m_spriteRenderingSystem;
         if(m_animationSystem != nullptr)
@@ -54,20 +58,14 @@ namespace Client
             delete m_bombExplodeSystem;
         if(m_bombPlaceSystem != nullptr)
             delete m_bombPlaceSystem;
-        if(m_entityFactory != nullptr)
-            delete m_entityFactory;
-        if(m_winChecker != nullptr)
-            delete m_winChecker;
-        if(m_playerManager != nullptr)
-            delete m_playerManager;
-        if(m_map != nullptr)
-            delete m_map;
+        if(m_bombPlacePositionSystem != nullptr)
+            delete m_bombPlacePositionSystem;
         if(m_playerInputSystem != nullptr)
             delete m_playerInputSystem;
         if(m_playerMovementSystem != nullptr)
             delete m_playerMovementSystem;
-        if(m_invincibleSystem != nullptr)
-            delete m_invincibleSystem;
+        if(m_healthSystem != nullptr)
+            delete m_healthSystem;
         if(m_explosionSystem != nullptr)
             delete m_explosionSystem;
         if(m_collisionSystem != nullptr)
@@ -80,11 +78,16 @@ namespace Client
             delete m_killEntityTypeSystem;
         if(m_timerSystem != nullptr)
             delete m_timerSystem;
-        if(m_world != nullptr)
-            delete m_world;
+        if(m_entityFactory != nullptr)
+            delete m_entityFactory;
+        if(m_winChecker != nullptr)
+            delete m_winChecker;
+        if(m_playerManager != nullptr)
+            delete m_playerManager;
+        if(m_map != nullptr)
+            delete m_map;
 
-        delete m_hudContainer;
-		LOG(INFO) << "StateBomberman deleted.";
+        LOG(INFO) << "StateBomberman deleted.";
     }
 
     void StateBomberman::init()
@@ -138,8 +141,8 @@ namespace Client
         m_killEntityTypeSystem = new KillEntityTypeSystem();
         m_world->addSystem(*m_killEntityTypeSystem);
 
-        m_invincibleSystem = new HealthSystem();
-        m_world->addSystem(*m_invincibleSystem);
+        m_healthSystem = new HealthSystem();
+        m_world->addSystem(*m_healthSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
 
@@ -192,7 +195,7 @@ namespace Client
 
         m_collisionSystem->update(frameTime);
         m_damageSystem->update(frameTime);
-        m_invincibleSystem->update(frameTime);
+        m_healthSystem->update(frameTime);
         m_playerManager->update(frameTime);
 
         m_hudContainer->onUpdate(frameTime);

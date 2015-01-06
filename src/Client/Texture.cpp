@@ -6,13 +6,13 @@ namespace Client
 {
     Texture::Texture(Window *window)
     {
-		m_window = window;
+        m_window = window;
+        m_texture = nullptr;
     }
     Texture::~Texture()
     {
         destroy();
     }
-
     int Texture::load(const std::string &path)
     {
 		destroy();
@@ -24,6 +24,7 @@ namespace Client
 			LOG(FATAL) << "Could not load texture \"" << path << "\"! Error: " << IMG_GetError();
             return 1;
         }
+        LOG(DEBUG) << "Loaded texture " << m_path;
         return 0;
     }
     void Texture::destroy()
@@ -32,10 +33,9 @@ namespace Client
         {
             SDL_DestroyTexture(m_texture);
             m_texture = nullptr;
+            LOG(DEBUG) << "Destroyed texture " << m_path;
         }
-        m_path = "";
     }
-
     const std::string &Texture::getPath()
     {
         return m_path;
