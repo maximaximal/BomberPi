@@ -13,6 +13,15 @@ namespace Client
     {
         m_getCommandsFromSharedMemory = getCommandsFromSharedMemory;
         m_pigaInterface = new piga::Interface(!getCommandsFromSharedMemory);
+
+        if(getCommandsFromSharedMemory)
+        {
+            if(!el::Helpers::installLogDispatchCallback<InterfaceLogger>("InterfaceLogger"))
+                LOG(WARNING) << "Cannot install the InterfaceLogger callback!";
+            m_interfaceLogger = el::Helpers::logDispatchCallback<InterfaceLogger>("InterfaceLogger");
+            m_interfaceLogger->setInterface(m_pigaInterface);
+            m_interfaceLogger->setEnabled(true);
+        }
     }
     Game::~Game()
     {
@@ -24,11 +33,16 @@ namespace Client
             delete m_textureManager;
         if(m_config != nullptr)
             delete m_config;
-        if(m_pigaInterface != nullptr)
-            delete m_pigaInterface;
         PiH::exit();
         if(m_window != nullptr)
             delete m_window;
+        if(m_getCommandsFromSharedMemory)
+        {
+            m_interfaceLogger->setInterface(nullptr);
+            m_interfaceLogger->setEnabled(false);
+        }
+        if(m_pigaInterface != nullptr)
+            delete m_pigaInterface;
     }
     
     int Game::init()
@@ -76,7 +90,7 @@ namespace Client
 		stateBomberman.reset();
 
         //The parameters are only temporary and will be set when the event is polled.
-        piga::GameEvent gameEvent(piga::GameControl::ACTION, false, 0);
+        piga::GameEvent gameEvent(0);
 
         while(!end)
         {

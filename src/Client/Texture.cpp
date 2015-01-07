@@ -24,7 +24,6 @@ namespace Client
 			LOG(FATAL) << "Could not load texture \"" << path << "\"! Error: " << IMG_GetError();
             return 1;
         }
-        LOG(DEBUG) << "Loaded texture " << m_path;
         return 0;
     }
     void Texture::destroy()
@@ -33,7 +32,6 @@ namespace Client
         {
             SDL_DestroyTexture(m_texture);
             m_texture = nullptr;
-            LOG(DEBUG) << "Destroyed texture " << m_path;
         }
     }
     const std::string &Texture::getPath()

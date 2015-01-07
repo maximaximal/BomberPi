@@ -35,9 +35,13 @@ namespace Client
     }
     void PlayerInputSystem::onGameEvent(const piga::GameEvent &gameEvent, float frametime)
     {
-        if(m_inputComponents.count(gameEvent.getPlayerID()) > 0)
+        if(gameEvent.type() == piga::GameEvent::GameInput)
         {
-            m_inputComponents[gameEvent.getPlayerID()]->inputs[getPlayerInputEnumFromPigaGameControl(gameEvent.getControl())] = gameEvent.isActive();
+            if(m_inputComponents.count(gameEvent.playerID()) > 0)
+            {
+                m_inputComponents[gameEvent.playerID()]->inputs[getPlayerInputEnumFromPigaGameControl(gameEvent.gameInput.control())]
+                        = gameEvent.gameInput.state();
+            }
         }
     }
     void PlayerInputSystem::onEntityAdded(anax::Entity &entity)
@@ -72,6 +76,24 @@ namespace Client
             case piga::ACTION:
                 inputEnum = ACTION;
                 break;
+            case piga::BUTTON1:
+                inputEnum = BUTTON1;
+                break;
+            case piga::BUTTON2:
+                inputEnum = BUTTON2;
+                break;
+            case piga::BUTTON3:
+                inputEnum = BUTTON3;
+                break;
+            case piga::BUTTON4:
+                inputEnum = BUTTON4;
+                break;
+            case piga::BUTTON5:
+                inputEnum = BUTTON5;
+                break;
+            case piga::BUTTON6:
+                inputEnum = BUTTON6;
+                break;
             default:
                 //Do nothing.
                 break;
@@ -97,6 +119,24 @@ namespace Client
                 break;
             case ACTION:
                 control = piga::ACTION;
+                break;
+            case BUTTON1:
+                control = piga::BUTTON1;
+                break;
+            case BUTTON2:
+                control = piga::BUTTON2;
+                break;
+            case BUTTON3:
+                control = piga::BUTTON3;
+                break;
+            case BUTTON4:
+                control = piga::BUTTON4;
+                break;
+            case BUTTON5:
+                control = piga::BUTTON5;
+                break;
+            case BUTTON6:
+                control = piga::BUTTON6;
                 break;
             default:
                 //Do nothing.

@@ -28,6 +28,7 @@ SET(SHARED_HDRS
     ${INCLUDE}/SDLEventHandler.hpp
     ${INCLUDE}/PlayerInput.hpp
     ${INCLUDE}/InputMap.hpp
+    ${INCLUDE}/InterfaceLogger.hpp
 )
 
 SET(CLIENT_SRCS
