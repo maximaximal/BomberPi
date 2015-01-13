@@ -45,12 +45,14 @@ namespace Client
             delete m_pigaInterface;
     }
     
-    int Game::init()
+    int Game::init(bool fullscreen)
     {
 		LOG(INFO) << "Initializing Game!";
 
         m_config = new Config();
         m_config->setDefaultValues();
+
+        m_config->setBooleanValue(Config::FULLSCREEN, fullscreen);
 
 		m_window = new Window();
 		if(m_window->init(glm::ivec2(m_config->getIntValue(Config::WINDOW_SIZE_X),
@@ -152,15 +154,22 @@ int main(int argc, char* argv[])
     LOG(INFO) << "Starting BomberPi.";
 
     bool getCommandsFromSharedMemory = false;
+    bool fullscreen = false;
+
     if(cmdOptionExists(argv, argv + argc, "-c"))
     {
         getCommandsFromSharedMemory = true;
         LOG(INFO) << "Getting Commands from shared memory! No keyboard state will be processed by this application.";
     }
+    if(cmdOptionExists(argv, argv + argc, "-f"))
+    {
+        fullscreen = true;
+        LOG(INFO) << "Launching BomberPi in fullscreen mode!";
+    }
 
     Client::Game *game = new Client::Game(getCommandsFromSharedMemory);
     
-    game->init();
+    game->init(fullscreen);
     
     delete game;
     game = nullptr;

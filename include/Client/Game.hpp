@@ -18,7 +18,7 @@ namespace Client
             Game(bool getCommandsFromSharedMemory = false);
 			virtual ~Game();
 
-			int init();
+			int init(bool fullscreen = false);
 
 			void update(float frametime);
 
