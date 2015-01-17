@@ -12,7 +12,7 @@ SET(INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 SET(CLIENT_SRC ${SRC}/Client/)
 SET(CLIENT_INCLUDE ${INCLUDE}/Client/)
 
-SET(PIGA_DIR "NotSet" CACHE STRING "The directory of the piga library")
+SET(PIGA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/piga)
 
 SET(SHARED_SRCS
     ${SRC}/Timer.cpp
@@ -163,19 +163,19 @@ include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/glm/src/GLM_Project/)
 
 find_package(SDL2)
 if(${SDL2_FOUND})
-    target_link_libraries(Client ${SDL2_LIBRARIES})
+    target_link_libraries(Client ${SDL2_LIBRARY})
     include_directories(${SDL2_INCLUDE_DIRS})
 endif()
 
 find_package(SDL2image)
 if(${SDL2IMAGE_FOUND})
-    target_link_libraries(Client ${SDL2IMAGE_LIBRARIES})
+    target_link_libraries(Client ${SDL2IMAGE_LIBRARY})
     include_directories(${SDL2IMAGE_INCLUDE_DIRS})
 endif()
 
 find_package(SDL2ttf)
 if(${SDL2TTF_FOUND})
-    target_link_libraries(Client ${SDL2TTF_LIBRARIES})
+    target_link_libraries(Client ${SDL2TTF_LIBRARY})
     include_directories(${SDL2TTF_INCLUDE_DIRS})
 endif()
 
@@ -228,37 +228,14 @@ if(${Boost_FOUND})
     target_link_libraries(Client ${Boost_LIBRARIES})
 endif()
 
-
 # Add piga
-if(NOT ${PIGA_DIR} MATCHES "NotSet")
-    message(STATUS "Piga Dir: " ${PIGA_DIR})
-    add_subdirectory(${PIGA_DIR}/libpiga/ ${CMAKE_CURRENT_BINARY_DIR}/piga_dir/)
-    add_dependencies(Client piga)
-    include_directories(${LIBPIGA_INCLUDE_DIRECTORIES})
-    target_link_libraries(Client piga)
-else()
-    ExternalProject_Add(piga
-        PREFIX piga
-        GIT_REPOSITORY https://github.com/maximaximal/piga.git
-        CONFIGURE_COMMAND cmake ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-        UPDATE_COMMAND git pull origin master
-        INSTALL_COMMAND ""
-    )
-    add_dependencies(Client piga)
-    find_library(piga_library
-        NAMES piga libpiga libpiga_d libpiga_d.so
-        HINTS ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga-build/
-        NO_DEFAULT_PATH
-    )
-    if(NOT ${piga_library} MATCHES "piga_library-NOTFOUND")
-        target_link_libraries(Client ${piga_library})
-        include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga/libpiga/include/)
-        message(STATUS "Piga Library: " ${piga_library})
-    else()
-        message(STATUS "Please re-run cmake!")
-    endif()
-    set(PIGA_DIR ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/)
-endif()
+message(STATUS "Piga Dir: " ${PIGA_DIR})
+add_subdirectory(${PIGA_DIR}/libpiga/ ${CMAKE_CURRENT_BINARY_DIR}/piga_dir/)
+add_dependencies(Client piga)
+include_directories(${LIBPIGA_INCLUDE_DIRECTORIES})
+target_link_libraries(Client piga)
+
+add_dependencies(Client piga)
 
 #Add pihud
 include_directories(${PIGA_DIR}/pihud/include)
@@ -267,10 +244,7 @@ find_library(pihud_library
     HINTS ${CMAKE_CURRENT_BINARY_DIR}/piga_dir/pihud
     NO_DEFAULT_PATH
 )
-add_dependencies(Client piga)
-if(NOT ${pihud_library} MATCHES "pihud_library-NOTFOUND")
-    target_link_libraries(Client ${pihud_library})
-endif()
+target_link_libraries(Client pihud)
 
 # Activate C++11
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 -lrt ${CMAKE_CXX_FLAGS}")
