@@ -161,13 +161,23 @@ include_directories(${INCLUDE})
 # GLM Headers in the glm/ path.
 include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/glm/src/GLM_Project/)
 
-# Add SDL2 and SDL_image
-PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
-PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
-PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf)
+find_package(SDL2)
+if(${SDL2_FOUND})
+    target_link_libraries(Client ${SDL2_LIBRARIES})
+    include_directories(${SDL2_INCLUDE_DIRS})
+endif()
 
-INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(Client ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES})
+find_package(SDL2image)
+if(${SDL2IMAGE_FOUND})
+    target_link_libraries(Client ${SDL2IMAGE_LIBRARIES})
+    include_directories(${SDL2IMAGE_INCLUDE_DIRS})
+endif()
+
+find_package(SDL2ttf)
+if(${SDL2TTF_FOUND})
+    target_link_libraries(Client ${SDL2TTF_LIBRARIES})
+    include_directories(${SDL2TTF_INCLUDE_DIRS})
+endif()
 
 # Add sigc++2
 find_package(SigC++ REQUIRED)
@@ -227,31 +237,28 @@ if(NOT ${PIGA_DIR} MATCHES "NotSet")
     include_directories(${LIBPIGA_INCLUDE_DIRECTORIES})
     target_link_libraries(Client piga)
 else()
-    ExternalProject_Add(piga_project
+    ExternalProject_Add(piga
         PREFIX piga
         GIT_REPOSITORY https://github.com/maximaximal/piga.git
         CONFIGURE_COMMAND cmake ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         UPDATE_COMMAND git pull origin master
         INSTALL_COMMAND ""
     )
-    add_dependencies(Client piga_project)
+    add_dependencies(Client piga)
     find_library(piga_library
         NAMES piga libpiga libpiga_d libpiga_d.so
-        HINTS ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project-build/
+        HINTS ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga-build/
         NO_DEFAULT_PATH
     )
     if(NOT ${piga_library} MATCHES "piga_library-NOTFOUND")
         target_link_libraries(Client ${piga_library})
-        include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/libpiga/include/)
+        include_directories(SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga/libpiga/include/)
         message(STATUS "Piga Library: " ${piga_library})
     else()
         message(STATUS "Please re-run cmake!")
     endif()
     set(PIGA_DIR ${CMAKE_CURRENT_BINARY_DIR}/piga/src/piga_project/)
 endif()
-
-
-
 
 #Add pihud
 include_directories(${PIGA_DIR}/pihud/include)
