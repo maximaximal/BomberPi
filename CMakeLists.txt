@@ -153,6 +153,7 @@ ExternalProject_Add(GLM_Project
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
+    CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
 )
 
 add_dependencies(Client GLM_Project)
@@ -203,6 +204,7 @@ ExternalProject_Add(anax_project
     GIT_REPOSITORY https://github.com/miguelmartin75/anax.git 
     UPDATE_COMMAND git pull origin master
     INSTALL_COMMAND ""
+    CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
 )
 
 add_dependencies(Client anax_project)
