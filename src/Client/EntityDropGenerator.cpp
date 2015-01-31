@@ -14,7 +14,7 @@ namespace Client
 
     }
 
-    void EntityDropGenerator::run(glm::ivec3 tilePos)
+    void EntityDropGenerator::run(const glm::ivec3 &tilePos)
     {
         unsigned int randomValue = abs(rand() % 1000);
         if(randomValue <= m_chance)

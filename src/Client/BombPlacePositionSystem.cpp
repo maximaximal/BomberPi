@@ -6,6 +6,7 @@
 #include <Client/BombLayerComponent.hpp>
 #include <Client/CollisionSystem.hpp>
 #include <Client/EntityTypeComponent.hpp>
+#include <Client/EmbeddedChunk.hpp>
 
 namespace Client
 {
@@ -69,16 +70,16 @@ namespace Client
 
             try
             {
-				if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x, layer.placePos.y, 1)).physics
-						== BombermanMapTile::PASSABLE)
+                if(m_bombermanMap->getCollisionOf(glm::ivec2(layer.placePos.x / EmbeddedChunk::tileWidth,
+                                                             layer.placePos.y / EmbeddedChunk::tileWidth)) == EmbeddedTilemap::NoCollision)
 				{
 					layer.positionOkay = true;
 				}
 				else
 				{
 					layer.positionOkay = false;
-					if(m_bombermanMap->getTileAtPixel(glm::ivec3(layer.placePos.x - pos.orientation.x * 32, layer.placePos.y - pos.orientation.y * 32, 1)).physics
-							== BombermanMapTile::PASSABLE)
+                    if(m_bombermanMap->getCollisionOf(glm::ivec2(layer.placePos.x / EmbeddedChunk::tileWidth - pos.orientation.x,
+                                                                 layer.placePos.y / EmbeddedChunk::tileWidth - pos.orientation.y)) == EmbeddedTilemap::NoCollision)
                     {
 						layer.positionOkay = true;
                         layer.placePos.x -= pos.orientation.x * 32;

@@ -20,6 +20,7 @@ namespace Client
                 TOP,
                 RIGHT,
                 BOTTOM,
+                NONE,
 
                 NOT_CACHED
             };

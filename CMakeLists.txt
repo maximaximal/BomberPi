@@ -78,6 +78,8 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/WinChecker.cpp
     ${CLIENT_SRC}/Powerup.cpp
     ${CLIENT_SRC}/PowerupQueue.cpp
+    ${CLIENT_SRC}/EmbeddedTilemap.cpp
+    ${CLIENT_SRC}/EmbeddedChunk.cpp
 
     ${CLIENT_SRC}/PowerupCollisionResolver.cpp
 
@@ -134,6 +136,8 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/WinChecker.hpp
     ${CLIENT_INCLUDE}/Powerup.hpp
     ${CLIENT_INCLUDE}/PowerupQueue.hpp
+    ${CLIENT_INCLUDE}/EmbeddedTilemap.hpp
+    ${CLIENT_INCLUDE}/EmbeddedChunk.hpp
 
     ${CLIENT_INCLUDE}/PowerupCollisionResolver.hpp
 
@@ -252,6 +256,6 @@ target_link_libraries(Client pihud)
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 -lrt ${CMAKE_CXX_FLAGS}")
 
 if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
-	list(APPEND ${CMAKE_CXX_FLAGS} "-Wall -std=c++11 ${CMAKE_CXX_FLAGS}")
+    list(APPEND ${CMAKE_CXX_FLAGS} "-Wall -std=c++11 ${CMAKE_CXX_FLAGS}")
 endif()
 

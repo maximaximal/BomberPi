@@ -1,118 +1,65 @@
 #include <Client/BombermanMap.hpp>
+#include <Client/EmbeddedChunk.hpp>
 #include <easylogging++.h>
 
 namespace Client
 {
     BombermanMap::BombermanMap()
     {
-
+        m_embeddedTilemap.reset(new EmbeddedTilemap());
     }
     BombermanMap::~BombermanMap()
     {
-		clear();
-    }
 
-    void BombermanMap::init(glm::ivec2 mapSize)
+    }
+    void BombermanMap::init(const glm::ivec2 &mapSize)
     {
         clear();
-
         m_entityDropGenerator = new EntityDropGenerator(m_entityFactory);
         m_entityDropGenerator->setChance(1000);
-
 		m_mapSize = mapSize;
-
-		m_tiles[0].resize(mapSize.x);
-		m_tiles[1].resize(mapSize.x);
-
-        for(auto &layer : m_tiles)
-        {
-			for(auto &yTiles : layer.second)
-			{
-				yTiles.resize(mapSize.y);
-				for(auto &tile : yTiles)
-				{
-					tile = new BombermanMapTile();
-					tile->id = 255;
-					tile->physics = BombermanMapTile::PASSABLE;
-                    tile->dropGenerator = nullptr;
-				}
-			}
-        }
     }
-
     void BombermanMap::clear()
     {
-        for(auto &layer : m_tiles)
-        {
-            for(auto &yTiles : layer.second)
-            {
-                for(auto &tile : yTiles)
-                {
-                    delete tile;
-                }
-            }
-        }
-        m_tiles.clear();
         if(m_entityDropGenerator != nullptr)
             delete m_entityDropGenerator;
         m_entityDropGenerator = nullptr;
+        m_embeddedTilemap->clear();
     }
-
     void BombermanMap::setEntityFactory(EntityFactory *entityFactory)
     {
         m_entityFactory = entityFactory;
     }
-
     void BombermanMap::setTexture(std::shared_ptr<Texture> texture)
     {
-        m_texture = texture;
+        m_embeddedTilemap->setTextureForLayer(texture, 0);
+        m_embeddedTilemap->setTextureForLayer(texture, 1);
     }
-
     void BombermanMap::render(Window *window, const glm::ivec2 &offset)
     {
-        SDL_Rect srcRect;
-        SDL_Rect dsRect;
-        for(auto &layer : m_tiles)
-        {
-			for(unsigned int x = 0; x < m_mapSize.x; ++x)
-			{
-				for(unsigned int y = 0; y < m_mapSize.y; ++y)
-				{
-					srcRect.h = 32;
-					srcRect.w = 32;
-					srcRect.x = layer.second[x][y]->id % (512 / 32) * 32;
-					srcRect.y = layer.second[x][y]->id / (512 / 32) * 32;
-
-					dsRect.w = 32;
-					dsRect.h = 32;
-					dsRect.x = x * 32 + offset.x;
-					dsRect.y = y * 32 + offset.y;
-					SDL_RenderCopy(window->getSDLRenderer(), m_texture->getSDLTexture(), &srcRect, &dsRect);
-				}
-			}
-        }
+        m_embeddedTilemap->render(window, offset);
     }
-
-    void BombermanMap::createOuterWall(short layer)
+    void BombermanMap::createOuterWall()
     {
         for(unsigned int x = 0; x < m_mapSize.x; ++x)
         {
-            m_tiles[layer][x][0]->id = 0;
-            m_tiles[layer][x][0]->physics = BombermanMapTile::SOLID;
-            m_tiles[layer][x][m_mapSize.y - 1]->id = 0;
-            m_tiles[layer][x][m_mapSize.y - 1]->physics = BombermanMapTile::SOLID;
-            m_tiles[layer][x][m_mapSize.y - 1]->bombable = false;
+            m_embeddedTilemap->setTile(x, 0, 0, 0);
+            m_embeddedTilemap->setTileUserdata(x, 0, 0, 0);
+            m_embeddedTilemap->setCollisionOf(x, 0, EmbeddedTilemap::CollideFully);
+            m_embeddedTilemap->setTile(x, m_mapSize.y - 1, 0, 0);
+            m_embeddedTilemap->setTileUserdata(x, m_mapSize.y - 1, 0, 0);
+            m_embeddedTilemap->setCollisionOf(x, m_mapSize.y - 1, EmbeddedTilemap::CollideFully);
         }
         for(unsigned int y = 0; y < m_mapSize.y; ++y)
         {
-            m_tiles[layer][0][y]->id = 0;
-            m_tiles[layer][0][y]->physics = BombermanMapTile::SOLID;
-            m_tiles[layer][m_mapSize.x - 1][y]->id = 0;
-            m_tiles[layer][m_mapSize.x - 1][y]->physics = BombermanMapTile::SOLID;
-            m_tiles[layer][m_mapSize.x - 1][y]->bombable = false;
+            m_embeddedTilemap->setTile(0, y, 0, 0);
+            m_embeddedTilemap->setTileUserdata(0, y, 0, 0);
+            m_embeddedTilemap->setCollisionOf(0, y, EmbeddedTilemap::CollideFully);
+            m_embeddedTilemap->setTile(m_mapSize.x - 1, y, 0, 0);
+            m_embeddedTilemap->setTileUserdata(m_mapSize.x - 1, y, 0, 0);
+            m_embeddedTilemap->setCollisionOf(m_mapSize.x - 1, y, EmbeddedTilemap::CollideFully);
         }
     }
-
     void BombermanMap::createFillerWalls()
     {
         const short layer = 1;
@@ -120,18 +67,16 @@ namespace Client
         {
 			for(unsigned int y = 1; y < m_mapSize.y - 1; ++y)
 			{
-                if(m_tiles[layer][x][y]->physics == BombermanMapTile::PASSABLE
-                        || m_tiles[layer][x][y]->bombable == true)
+                if(m_embeddedTilemap->getCollisionOf(x, y) == EmbeddedTilemap::NoCollision
+                        || m_embeddedTilemap->getTileUserdata(x, y, layer) == 1)
                 {
-                    m_tiles[layer][x][y]->id = 16 + (rand() % 3);
-                    m_tiles[layer][x][y]->physics = BombermanMapTile::SOLID;
-                    m_tiles[layer][x][y]->bombable = true;
-                    m_tiles[layer][x][y]->dropGenerator = m_entityDropGenerator;
+                    m_embeddedTilemap->setTile(x, y, layer, 16 + (rand() % 3));
+                    m_embeddedTilemap->setCollisionOf(x, y, EmbeddedTilemap::CollideFully);
+                    m_embeddedTilemap->setTileUserdata(x, y, layer, 1);
                 }
 			}
         }
     }
-
     void BombermanMap::createInnerStamps()
     {
         const short layer = 1;
@@ -139,18 +84,19 @@ namespace Client
         {
 			for(unsigned int y = 1; y < m_mapSize.y - 1; ++y)
 			{
-				m_tiles[0][x][y]->id = 2;
-				m_tiles[0][x][y]->physics = BombermanMapTile::PASSABLE;
-				if(x % 2 == 0 && y % 2 == 0)
+                m_embeddedTilemap->setTile(x, y, 0, 2);
+                m_embeddedTilemap->setCollisionOf(x, y, EmbeddedTilemap::NoCollision);
+                m_embeddedTilemap->setTileUserdata(x, y, 0, 0);
+                if(x % 2 == 0 && y % 2 == 0)
                 {
-                    m_tiles[layer][x][y]->id = 1;
-                    m_tiles[layer][x][y]->physics = BombermanMapTile::SOLID;
-                    m_tiles[layer][x][y]->bombable = false;
+                    m_embeddedTilemap->setTile(x, y, layer, 1);
+                    m_embeddedTilemap->setCollisionOf(x, y, EmbeddedTilemap::CollideFully);
+                    m_embeddedTilemap->setTileUserdata(x, y, layer, 0);
                 }
 			}
         }
     }
-    void BombermanMap::createPlayerSpace(std::vector<glm::ivec2> playerPositions)
+    void BombermanMap::createPlayerSpace(const std::vector<glm::ivec2> &playerPositions)
     {
         const int layer = 1;
         for(auto &pos : playerPositions)
@@ -162,8 +108,7 @@ namespace Client
 			clearSpaceForPlayer(glm::ivec2(pos.x, pos.y + 1), layer);
         }
     }
-
-    void BombermanMap::clearSpaceForPlayer(glm::ivec2 pos, int layer)
+    void BombermanMap::clearSpaceForPlayer(const glm::ivec2 &pos, int layer)
     {
         if((pos.x >= 0 && pos.x < m_mapSize.x)
                 && pos.y >= 0 && pos.y < m_mapSize.y)
@@ -175,54 +120,55 @@ namespace Client
 			}
         }
     }
-
-    void BombermanMap::clearTile(glm::ivec3 pos, bool generateDrops)
+    void BombermanMap::clearTile(const glm::ivec3 &pos, bool generateDrops)
     {
-        if(pos.z < m_tiles.size())
+        if((pos.x >= 0 && pos.x < m_mapSize.x)
+                && pos.y >= 0 && pos.y < m_mapSize.y)
         {
-			if((pos.x >= 0 && pos.x < m_mapSize.x)
-					&& pos.y >= 0 && pos.y < m_mapSize.y)
-			{
-				if((pos.x != 0 && pos.x != m_mapSize.x - 1)
-						&& (pos.y != 0 && pos.y != m_mapSize.y - 1))
-				{
-					auto *tile = m_tiles[pos.z][pos.x][pos.y];
-
-                    if(tile->dropGenerator != nullptr && generateDrops)
-                    {
-                        tile->dropGenerator->run(pos);
-                    }
-
-					tile->physics = BombermanMapTile::PASSABLE;
-					tile->id = 255;
-					tile->bombable = false;
-                    tile->dropGenerator = nullptr;
-                }
-			}
+            if((pos.x != 0 && pos.x != m_mapSize.x - 1)
+                    && (pos.y != 0 && pos.y != m_mapSize.y - 1))
+            {
+                if(generateDrops)
+                    m_entityDropGenerator->run(pos);
+                m_embeddedTilemap->setTile(pos.x, pos.y, pos.z, 255);
+                m_embeddedTilemap->setTileUserdata(pos.x, pos.y, pos.z, 0);
+                m_embeddedTilemap->setCollisionOf(pos.x, pos.y, EmbeddedTilemap::NoCollision);
+            }
         }
+    }
+    void BombermanMap::setTile(const glm::ivec3 &pos, uint8_t tile)
+    {
+        m_embeddedTilemap->setTile(pos.x, pos.y, pos.z, tile);
+    }
+    void BombermanMap::setTileBombable(const glm::ivec3 &pos, bool state)
+    {
+        if(state)
+            m_embeddedTilemap->setTileUserdata(pos.x, pos.y, pos.z, 1);
+        else
+            m_embeddedTilemap->setTileUserdata(pos.x, pos.y, pos.z, 0);
+    }
+    bool BombermanMap::isTileBombable(const glm::ivec3 &pos)
+    {
+        if(m_embeddedTilemap->getTileUserdata(pos.x, pos.y, pos.z) == 1)
+            return true;
+        return false;
+    }
+    uint8_t BombermanMap::getCollisionOf(const glm::ivec2 &pos)
+    {
+        return m_embeddedTilemap->getCollisionOf(pos.x, pos.y);
     }
     const glm::ivec2 &BombermanMap::getMapSize()
     {
         return m_mapSize;
     }
-    const BombermanMapTile& BombermanMap::getTileAtPixel(const glm::ivec3 &pos)
+    uint8_t BombermanMap::getTileAtPixel(const glm::ivec3 &pos)
     {
-       	glm::ivec3 tilePos = pos / 32;
+        glm::ivec3 tilePos = pos / (int) EmbeddedChunk::tileWidth;
         tilePos.z = pos.z;
         return getTileAt(tilePos);
     }
-    const BombermanMapTile &BombermanMap::getTileAt(const glm::ivec3 &pos)
+    uint8_t BombermanMap::getTileAt(const glm::ivec3 &pos)
     {
-        if(m_tiles.count(pos.z) != 0)
-        {
-            if(m_tiles[pos.z].size() > pos.x)
-			{
-                if((m_tiles[pos.z][pos.x]).size() > pos.y)
-				{
-					return *(m_tiles[pos.z][pos.x][pos.y]);
-				}
-			}
-        }
-        throw std::out_of_range("Tile not in range!");
+        return m_embeddedTilemap->getTile(pos.x, pos.y, pos.z);
     }
 }

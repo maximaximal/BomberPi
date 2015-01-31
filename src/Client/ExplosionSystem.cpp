@@ -2,6 +2,7 @@
 #include <Client/PositionComponent.hpp>
 #include <Client/SpreadingComponent.hpp>
 #include <Client/EntityTypeComponent.hpp>
+#include <Client/EmbeddedChunk.hpp>
 
 #include <easylogging++.h>
 
@@ -57,11 +58,11 @@ namespace Client
     }
     bool ExplosionSystem::spreadTo(glm::ivec2 pos, int power, int turns, SpreadingComponent::SpreadingFrom from)
     {
-		if(m_map->getTileAtPixel(glm::ivec3(pos.x, pos.y, 1)).physics == BombermanMapTile::PASSABLE
-                || m_map->getTileAtPixel(glm::ivec3(pos.x, pos.y, 1)).bombable)
+        if(m_map->getCollisionOf(glm::ivec2(pos.x / EmbeddedChunk::tileWidth, pos.y / EmbeddedChunk::tileWidth)) == EmbeddedTilemap::NoCollision
+                || m_map->isTileBombable(glm::ivec3(pos.x / EmbeddedChunk::tileWidth, pos.y / EmbeddedChunk::tileWidth, 1)))
 		{
-			if(m_map->getTileAtPixel(glm::ivec3(pos.x, pos.y, 1)).bombable)
-				m_map->clearTile(glm::ivec3(pos.x / 32, pos.y / 32, 1));
+            if(m_map->isTileBombable(glm::ivec3(pos.x / EmbeddedChunk::tileWidth, pos.y / EmbeddedChunk::tileWidth, 1)))
+                m_map->clearTile(glm::ivec3(pos.x / EmbeddedChunk::tileWidth, pos.y / EmbeddedChunk::tileWidth, 1));
 
 
             anax::Entity e = m_collisionSystem->getEntityAt(glm::ivec2(pos.x, pos.y), cache);

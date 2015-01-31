@@ -10,6 +10,7 @@
 #include <Client/Window.hpp>
 #include <Client/Texture.hpp>
 #include <Client/EntityDropGenerator.hpp>
+#include <Client/EmbeddedTilemap.hpp>
 
 namespace Client
 {
@@ -19,7 +20,7 @@ namespace Client
             BombermanMap();
             virtual ~BombermanMap();
 
-            void init(glm::ivec2 mapSize);
+            void init(const glm::ivec2 &mapSize);
             void clear();
             void setEntityFactory(EntityFactory *entityFactory);
 
@@ -27,24 +28,27 @@ namespace Client
 
             void render(Window *window, const glm::ivec2 &offset);
 
-            void createOuterWall(short layer);
+            void createOuterWall();
             void createFillerWalls();
             void createInnerStamps();
 
-            void createPlayerSpace(std::vector<glm::ivec2> playerPositions);
-            void clearSpaceForPlayer(glm::ivec2 pos, int layer);
+            void createPlayerSpace(const std::vector<glm::ivec2> &playerPositions);
+            void clearSpaceForPlayer(const glm::ivec2 &pos, int layer);
 
-            void clearTile(glm::ivec3 pos, bool generateDrops = true);
+            void clearTile(const glm::ivec3 &pos, bool generateDrops = true);
+            void setTile(const glm::ivec3 &pos, uint8_t tile);
+            void setTileBombable(const glm::ivec3 &pos, bool state);
+            bool isTileBombable(const glm::ivec3 &pos);
+            uint8_t getCollisionOf(const glm::ivec2 &pos);
 
             const glm::ivec2& getMapSize();
 
-            const BombermanMapTile& getTileAtPixel(const glm::ivec3 &pos);
-            const BombermanMapTile& getTileAt(const glm::ivec3 &pos);
+            uint8_t getTileAtPixel(const glm::ivec3 &pos);
+            uint8_t getTileAt(const glm::ivec3 &pos);
         private:
-            std::map<short, std::vector<std::vector<BombermanMapTile*>>> m_tiles;
-            glm::ivec2 m_mapSize;
+            std::unique_ptr<EmbeddedTilemap> m_embeddedTilemap;
 
-            std::shared_ptr<Texture> m_texture;
+            glm::ivec2 m_mapSize;
             EntityDropGenerator *m_entityDropGenerator = nullptr;
             EntityFactory *m_entityFactory;
     };

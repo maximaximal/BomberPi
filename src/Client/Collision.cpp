@@ -171,8 +171,7 @@ namespace Client
         if(side != NOT_CACHED)
             return side;
 
-        LOG(WARNING) << "The side of the collision could not be computed! Angle: " << a;
-        return Side::LEFT;
+        return Side::NONE;
     }
     glm::dvec2 Collision::getPenetrationVec()
     {

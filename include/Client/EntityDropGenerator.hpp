@@ -15,7 +15,7 @@ namespace Client
             EntityDropGenerator(EntityFactory *factory);
          	virtual ~EntityDropGenerator();
 
-           	void run(glm::ivec3 tilePos);
+           	void run(const glm::ivec3 &tilePos);
 
             void setChance(unsigned int chance);
         protected:

@@ -241,10 +241,9 @@ namespace Client
     }
     void StateBomberman::startNewGame()
     {
-        m_map->createOuterWall(0);
-        m_map->createOuterWall(1);
         m_map->createInnerStamps();
         m_map->createFillerWalls();
+        m_map->createOuterWall();
         m_playerManager->resetPlayers();
         m_world->refresh();
         m_map->createPlayerSpace(m_playerManager->getPlayerPositions(32));

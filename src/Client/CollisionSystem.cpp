@@ -22,7 +22,7 @@ namespace Client
 
         SDL_Rect rectA;
         SDL_Rect rectB;
-        glm::ivec3 point;
+        glm::ivec2 point;
 		std::shared_ptr<Collision> collision;
         for(auto &entityA : getEntities())
         {
@@ -35,41 +35,22 @@ namespace Client
             rectA.h = bodyA.h + rectA.y;    //BOTTOM
 
 
-            point.z = 1;
-
             //Check the map for collisions
+            //TOP-LEFT
+            point.x = (int) rectA.x / 32; point.y = (int) rectA.y / 32;
+            collideWithMapTile(m_map->getCollisionOf(point), point, entityA);
 
-				//TOP-LEFT
-				point.x = rectA.x; point.y = rectA.y;
-                try {
-                    const BombermanMapTile &tile1 = m_map->getTileAtPixel(point);
-					collideWithMapTile(tile1, point, entityA);
-                }
-                catch(std::out_of_range &e) {}
+            //TOP-RIGHT
+            point.x = (int) rectA.w / 32; point.y = (int) rectA.y / 32;
+            collideWithMapTile(m_map->getCollisionOf(point), point, entityA);
 
-				//TOP-RIGHT
-				point.x = rectA.w; point.y = rectA.y;
-                try {
-					const BombermanMapTile &tile2 = m_map->getTileAtPixel(point);
-					collideWithMapTile(tile2, point, entityA);
-                }
-                catch(std::out_of_range &e) {}
+            //BOTTOM-RIGHT
+            point.x = (int) rectA.w / 32; point.y = (int) rectA.h / 32;
+            collideWithMapTile(m_map->getCollisionOf(point), point, entityA);
 
-				//BOTTOM-RIGHT
-				point.x = rectA.w; point.y = rectA.h;
-                try {
-                    const BombermanMapTile &tile3 = m_map->getTileAtPixel(point);
-					collideWithMapTile(tile3, point, entityA);
-                }
-                catch(std::out_of_range &e) {}
-
-				//BOTTOM-RIGHT
-				point.x = rectA.x; point.y = rectA.h;
-                try {
-					const BombermanMapTile &tile4 = m_map->getTileAtPixel(point);
-					collideWithMapTile(tile4, point, entityA);
-                }
-				catch(std::out_of_range &e) {}
+            //BOTTOM-LEFT
+            point.x = (int) rectA.x / 32; point.y = (int) rectA.h / 32;
+            collideWithMapTile(m_map->getCollisionOf(point), point, entityA);
 
             for(auto &entityB : getEntities())
             {
@@ -98,21 +79,21 @@ namespace Client
             }
         }
     }
-    void CollisionSystem::collideWithMapTile(const BombermanMapTile &tile, const glm::ivec3 &pos, anax::Entity &e)
+    void CollisionSystem::collideWithMapTile(uint8_t collision, const glm::ivec2 &tile, anax::Entity &e)
     {
-		if(tile.physics != BombermanMapTile::PASSABLE)
+        if(collision == EmbeddedTilemap::CollideFully)
 		{
 			std::shared_ptr<Collision> collision;
 			SDL_Rect rect;
-			rect.x = ((int) pos.x / 32) * 32;
-			rect.y = ((int) pos.y / 32) * 32;
+            rect.x = tile.x * 32;
+            rect.y = tile.y * 32;
 			rect.w = 32;
 			rect.h = 32;
 			collision = std::make_shared<Collision>(e, rect);
 			if(e.hasComponent<BodyComponent>())
 			{
 				auto &body = e.getComponent<BodyComponent>();
-				body.collisionSignal(collision);
+                body.collisionSignal(collision);
 			}
         }
     }
