@@ -117,9 +117,9 @@ namespace Client
             render();
 
             int delay = (1000 / 60) - timer.getMilliseconds();
-			if(delay > 0)
-				SDL_Delay(delay);
-			frametime = timer.getMilliseconds() / 1000.0;
+            if(delay > 0)
+                SDL_Delay(delay);
+            frametime = timer.getMilliseconds() / 1000.0;
         }
 
         return 0;

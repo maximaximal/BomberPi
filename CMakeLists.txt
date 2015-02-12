@@ -244,6 +244,7 @@ target_link_libraries(Client piga)
 add_dependencies(Client piga)
 
 #Add pihud
+add_subdirectory(${PIGA_DIR}/pihud/ pihud)
 include_directories(${PIGA_DIR}/pihud/include)
 find_library(pihud_library
     NAMES pihud libpihud libpihud.a libpihud.so
