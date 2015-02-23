@@ -1,0 +1,17 @@
+---
+Name: "BomberPi"
+ProgramPath: "Client"
+Parameters: "-f"
+
+KeyboardMappings:
+  - "0:UP->W"
+  - "0:DOWN->S"
+  - "0:LEFT->A"
+  - "0:RIGHT->D"
+  - "0:ACTION->space"
+
+Description: "A clone of the old Bomberman games."
+Version: "1.0"
+Author: "maximaximal"
+BackgroundImage: "powerups.png"
+Logo: "player_proto.png"
