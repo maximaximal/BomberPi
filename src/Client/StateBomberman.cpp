@@ -205,7 +205,7 @@ namespace Client
         {
             if(m_hudContainer->getWidget("WinnerWidget") == nullptr)
             {
-                PiH::WeHaveAWinnerWidget *winnerWidget = new PiH::WeHaveAWinnerWidget(m_hudContainer);
+                std::shared_ptr<PiH::WeHaveAWinnerWidget> winnerWidget(new PiH::WeHaveAWinnerWidget(m_hudContainer));
                 winnerWidget->setFont(getFontManager()->get("PressStart2P.ttf:28"));
                 winnerWidget->setWinnerName(m_winChecker->getWinner()->getName());
                 winnerWidget->setVictoryImageTexture(getTextureManager()->get("hud.png"), PiH::IntRect(224, 0, 500, 152));
@@ -216,7 +216,7 @@ namespace Client
             }
             else
             {
-                PiH::WeHaveAWinnerWidget *winnerWidget = static_cast<PiH::WeHaveAWinnerWidget*>(m_hudContainer->getWidget("WinnerWidget"));
+                std::shared_ptr<PiH::WeHaveAWinnerWidget> winnerWidget = std::static_pointer_cast<PiH::WeHaveAWinnerWidget>(m_hudContainer->getWidget("WinnerWidget"));
                 if(winnerWidget->isDone())
                 {
                     m_hudContainer->deleteWidget("WinnerWidget");
@@ -235,7 +235,7 @@ namespace Client
     {
         if(m_hudContainer->getWidget("WinnerWidget") != nullptr)
         {
-            PiH::WeHaveAWinnerWidget *winnerWidget = static_cast<PiH::WeHaveAWinnerWidget*>(m_hudContainer->getWidget("WinnerWidget"));
+            std::shared_ptr<PiH::WeHaveAWinnerWidget> winnerWidget = std::static_pointer_cast<PiH::WeHaveAWinnerWidget>(m_hudContainer->getWidget("WinnerWidget"));
             winnerWidget->setDone(true);
         }
     }
@@ -257,7 +257,7 @@ namespace Client
     }
     void StateBomberman::addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name)
     {
-        PiH::HealthAndNameDisplay *healthIndicator = new PiH::HealthAndNameDisplay(m_hudContainer);
+        std::shared_ptr<PiH::HealthAndNameDisplay> healthIndicator(new PiH::HealthAndNameDisplay(m_hudContainer));
         healthIndicator->getHealthIndicator()->setFullIcon(PiH::IntRect(0, 0, 32, 32));
         healthIndicator->getHealthIndicator()->setDepletedIcon(PiH::IntRect(64, 0, 32, 32));
         healthIndicator->getHealthIndicator()->setMaximumHealth(3);
@@ -274,7 +274,7 @@ namespace Client
 		anax::Entity playerEntity = m_entityFactory->createPlayer(playerPos,
                                                                   inputs,
                                                                   m_playerMovementSystem,
-                                                                  healthIndicator,
+                                                                  healthIndicator.get(),
                                                                   player,
                                                                   getConfig()->getFloatValue(Config::BOMB_PLACE_COOLDOWN));
         player->setEntity(playerEntity);
@@ -292,8 +292,8 @@ namespace Client
             getInterface()->addPlayerInput(playerInput);
         }
 
-        UI::PowerupQueue *powerupQueue = new UI::PowerupQueue(getTextureManager(), 3, m_hudContainer);
-        player->setPowerupQueueUI(powerupQueue);
+        std::shared_ptr<UI::PowerupQueue> powerupQueue(new UI::PowerupQueue(getTextureManager(), 3, m_hudContainer));
+        player->setPowerupQueueUI(powerupQueue.get());
         m_hudContainer->addWidget(powerupQueue, "PowerupQueue_" + name);
 
         glm::ivec2 pos, powerupQueuePos;

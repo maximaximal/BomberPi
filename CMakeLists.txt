@@ -253,6 +253,12 @@ find_library(pihud_library
 )
 target_link_libraries(Client pihud)
 
+add_custom_command(TARGET Client
+                   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/distributor.py
+                   POST_BUILD
+                   COMMAND python
+                   ARGS ${CMAKE_CURRENT_SOURCE_DIR}/distributor.py ${CMAKE_CURRENT_BINARY_DIR}/dist)
+
 # Activate C++11
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 -lrt ${CMAKE_CXX_FLAGS}")
 

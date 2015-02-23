@@ -26,6 +26,9 @@ namespace Client
                 int getMaxWidth(int tileWidth);
             protected:
                 virtual void updateBoundingBox();
+
+                virtual void focusGained(int playerID) {}
+                virtual void focusLost(int playerID) {}
             private:
                 std::unique_ptr<PiH::QueueDisplayWidget> m_queueDisplayWidget;
                 TextureManager *m_textureManager;
