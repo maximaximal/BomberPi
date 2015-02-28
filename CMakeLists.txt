@@ -37,6 +37,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/Texture.cpp
     ${CLIENT_SRC}/TextureManager.cpp
     ${CLIENT_SRC}/StateBomberman.cpp
+    ${CLIENT_SRC}/StateMainMenu.cpp
     ${CLIENT_SRC}/EntityDropGenerator.cpp
     ${CLIENT_SRC}/BombermanMap.cpp
     ${CLIENT_SRC}/PlayerInputComponent.cpp
@@ -94,6 +95,7 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/Texture.hpp
     ${CLIENT_INCLUDE}/TextureManager.hpp
     ${CLIENT_INCLUDE}/StateBomberman.hpp
+    ${CLIENT_INCLUDE}/StateMainMenu.hpp
     ${CLIENT_INCLUDE}/EntityDropGenerator.hpp
     ${CLIENT_INCLUDE}/BombermanMap.hpp
     ${CLIENT_INCLUDE}/BombermanMapTile.hpp
