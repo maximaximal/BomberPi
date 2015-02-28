@@ -12,7 +12,7 @@ namespace Client
     }
     bool WinChecker::winDetected()
     {
-        if(m_playerManager->getAlivePlayerCount() == 1 && m_playerManager->getPlayerCount() > 1)
+        if(m_playerManager->getAlivePlayerCount() <= 1 && m_playerManager->getPlayerCount() > 1)
         {
             return true;
         }
