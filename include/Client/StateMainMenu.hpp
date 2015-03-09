@@ -5,9 +5,11 @@
 
 #include <pihud/MenuContainer.hpp>
 
+#include <piga/GameEventHandler.hpp>
+
 namespace Client
 {
-    class StateMainMenu : public State
+    class StateMainMenu : public State, piga::GameEventHandler
     {
         public:
             StateMainMenu();
@@ -17,6 +19,9 @@ namespace Client
 
             virtual void render(Client::Window *window);
             virtual void update(float frametime);
+        protected:
+            virtual void onGameEvent(const piga::GameEvent &gameEvent, float frametime);
+
         private:
 			PiH::MenuContainer *m_menuContainer = nullptr;
     };

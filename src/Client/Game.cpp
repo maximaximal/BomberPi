@@ -3,6 +3,7 @@
 #include <easylogging++.h>
 #include <Timer.hpp>
 #include <Client/StateBomberman.hpp>
+#include <Client/StateMainMenu.hpp>
 #include <pihud/pihud.hpp>
 
 _INITIALIZE_EASYLOGGINGPP
@@ -86,10 +87,10 @@ namespace Client
         SDL_Event e;
         float frametime = 0;
 
-        std::shared_ptr<StateBomberman> stateBomberman = std::make_shared<StateBomberman>();
-        m_stateManager->push(stateBomberman);
-        stateBomberman->init();
-		stateBomberman.reset();
+        std::shared_ptr<StateMainMenu> stateMainMenu = std::make_shared<StateMainMenu>();
+        m_stateManager->push(stateMainMenu);
+        stateMainMenu->init();
+        stateMainMenu.reset();
 
         //The parameters are only temporary and will be set when the event is polled.
         piga::GameEvent gameEvent(0);
