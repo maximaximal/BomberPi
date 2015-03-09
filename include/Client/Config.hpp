@@ -16,6 +16,7 @@ namespace Client
                 FULLSCREEN,
                 POWERUP_DROP_CHANCE,
                 BOMB_PLACE_COOLDOWN,
+                STANDARD_FONT,
 
                 _COUNT
             };

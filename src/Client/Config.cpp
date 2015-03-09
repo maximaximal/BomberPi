@@ -25,6 +25,9 @@ namespace Client
 
         //Boolean Values
         setBooleanValue(FULLSCREEN, false);
+
+        //String values
+        setStringValue(STANDARD_FONT, "xolonium-fonts/fonts/Xolonium-Bold.otf");
     }
     int Config::getIntValue(Config::Value id)
     {

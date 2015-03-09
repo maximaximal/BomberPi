@@ -1,8 +1,18 @@
 #include <Client/StateMainMenu.hpp>
 #include <Client/Window.hpp>
+#include <Client/Config.hpp>
+#include <StateManager.hpp>
+
+#include <Client/StateBomberman.hpp>
 
 #include <pihud/Label.hpp>
+#include <pihud/PushButton.hpp>
 #include <pihud/FontManager.hpp>
+#include <pihud/VerticalListLayout.hpp>
+#include <pihud/Layout.hpp>
+#include <pihud/pihud.hpp>
+
+#include <easylogging++.h>
 
 namespace Client
 {
@@ -13,6 +23,7 @@ namespace Client
     StateMainMenu::~StateMainMenu()
     {
 		delete m_menuContainer;
+		LOG(INFO) << "StateMainMenu deleted.";
     }
 
     void StateMainMenu::init()
@@ -24,13 +35,44 @@ namespace Client
         m_menuContainer->setCurrentPage("MainMenu");
 
         std::shared_ptr<PiH::Label> title(new PiH::Label(m_menuContainer));
-        title->setFont(getFontManager()->get("xolonium-fonts/fonts/Xolonium-Bold.otf:128"));
+        title->setFont(getFontManager()->get(getConfig()->getStringValue(Config::STANDARD_FONT) + ":128"));
         title->setText("BomberPi");
-        title->setPosition(getWindow()->getSize().x / 2 - title->getBoundingBox().w / 2,
+        title->setPosition(getWindow()->getSize().x / 2 - title->getTextWidth() / 2,
                            getWindow()->getSize().y / 5);
         title->setColor(120, 120, 120);
-
         mainMenu->addWidget(title, "Title");
+
+        std::shared_ptr<PiH::Layout> buttons = std::make_shared<PiH::Layout>(mainMenu.get());
+		PiH::VerticalListLayout *buttonsLayout = new PiH::VerticalListLayout;
+
+        buttons->setLayouter(buttonsLayout);
+
+        mainMenu->addWidget(buttons, "Buttons");
+
+
+        PiH::IntRect normalRect(6, 175, 250, 11);
+        PiH::IntRect pressedRect(6, 198, 250, 11);
+        PiH::IntRect focusedRect(6, 221, 250, 11);
+
+        std::shared_ptr<PiH::PushButton> startGame = std::make_shared<PiH::PushButton>(m_menuContainer);
+        startGame->setText("Start Game");
+        startGame->setFont(getFontManager()->get(getConfig()->getStringValue(Config::STANDARD_FONT) + ":18"));
+		startGame->getButtonPressedSignal().connect(sigc::mem_fun(this, &StateMainMenu::startGame));
+        startGame->setBackgroundTexture(getTextureManager()->get("hud.png"));
+        startGame->setNormalTextureRect(normalRect);
+        startGame->setFocusedTextureRect(focusedRect);
+        startGame->setPressedTextureRect(pressedRect);
+
+        PiH::getGlobalConfig()->getFocusManager()->setFocused(startGame, 0);
+
+        buttons->addWidget(startGame);
+
+        buttons->setBoundingBox(getWindow()->getSize().x / 4, 0,
+                                getWindow()->getSize().x / 2, getWindow()->getSize().y / 2);
+
+        getSDLEventHandler()->getSignal(SDL_KEYDOWN).connect(sigc::mem_fun(this, &StateMainMenu::onSDLEvent));
+
+		LOG(INFO) << "StateMainMenu initialized";
     }
     void StateMainMenu::update(float frametime)
     {
@@ -39,6 +81,22 @@ namespace Client
     void StateMainMenu::onGameEvent(const piga::GameEvent &gameEvent, float frametime)
     {
         m_menuContainer->onEvent(gameEvent);
+    }
+    void StateMainMenu::onSDLEvent(const SDL_Event &e, float frametime)
+    {
+        if(e.type == SDL_KEYDOWN)
+        {
+            if(e.key.keysym.scancode == SDL_SCANCODE_SPACE)
+            {
+                onGameEvent(piga::GameEvent(0, piga::event::GameInput(piga::ACTION, true)), frametime);
+            }
+        }
+    }
+    void StateMainMenu::startGame(int playerID)
+    {
+        std::shared_ptr<StateBomberman> stateBomberman = std::make_shared<StateBomberman>();
+        getStateManager()->push(stateBomberman);
+        stateBomberman->init();
     }
     void StateMainMenu::render(Client::Window *window)
     {

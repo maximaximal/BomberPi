@@ -75,7 +75,6 @@ namespace Client
         m_stateManager->setConfig(m_config);
         m_stateManager->setPigaInterface(m_pigaInterface);
 
-
         //Initialize PiHUD
         PiH::Config *pihudConfig = new PiH::Config(m_window->getSDLRenderer());
         pihudConfig->setupDefaultConfig();
