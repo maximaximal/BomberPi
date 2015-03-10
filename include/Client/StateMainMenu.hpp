@@ -4,6 +4,7 @@
 #include <State.hpp>
 
 #include <pihud/MenuContainer.hpp>
+#include <pihud/PushButton.hpp>
 
 #include <piga/GameEventHandler.hpp>
 #include <SDLEventHandler.hpp>
@@ -22,7 +23,9 @@ namespace Client
             virtual void update(float frametime);
         protected:
             virtual void onGameEvent(const piga::GameEvent &gameEvent, float frametime);
-			virtual void onSDLEvent(const SDL_Event &e, float frametime);
+            virtual void onSDLEvent(const SDL_Event &e, float frametime);
+
+            void addButton(std::shared_ptr<PiH::PushButton> button);
 
             void startGame(int playerID = 0);
         private:

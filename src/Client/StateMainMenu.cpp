@@ -34,7 +34,7 @@ namespace Client
         m_menuContainer->addPage(mainMenu, "MainMenu");
         m_menuContainer->setCurrentPage("MainMenu");
 
-        std::shared_ptr<PiH::Label> title(new PiH::Label(m_menuContainer));
+        std::shared_ptr<PiH::Label> title(new PiH::Label(nullptr));
         title->setFont(getFontManager()->get(getConfig()->getStringValue(Config::STANDARD_FONT) + ":128"));
         title->setText("BomberPi");
         title->setPosition(getWindow()->getSize().x / 2 - title->getTextWidth() / 2,
@@ -42,32 +42,28 @@ namespace Client
         title->setColor(120, 120, 120);
         mainMenu->addWidget(title, "Title");
 
-        std::shared_ptr<PiH::Layout> buttons = std::make_shared<PiH::Layout>(mainMenu.get());
+        std::shared_ptr<PiH::Layout> buttons = std::make_shared<PiH::Layout>(nullptr);
 		PiH::VerticalListLayout *buttonsLayout = new PiH::VerticalListLayout;
+
+        buttonsLayout->setCentered(true);
 
         buttons->setLayouter(buttonsLayout);
 
         mainMenu->addWidget(buttons, "Buttons");
 
-
-        PiH::IntRect normalRect(6, 175, 250, 11);
-        PiH::IntRect pressedRect(6, 198, 250, 11);
-        PiH::IntRect focusedRect(6, 221, 250, 11);
-
-        std::shared_ptr<PiH::PushButton> startGame = std::make_shared<PiH::PushButton>(m_menuContainer);
+        std::shared_ptr<PiH::PushButton> startGame = std::make_shared<PiH::PushButton>(nullptr);
         startGame->setText("Start Game");
-        startGame->setFont(getFontManager()->get(getConfig()->getStringValue(Config::STANDARD_FONT) + ":18"));
-		startGame->getButtonPressedSignal().connect(sigc::mem_fun(this, &StateMainMenu::startGame));
-        startGame->setBackgroundTexture(getTextureManager()->get("hud.png"));
-        startGame->setNormalTextureRect(normalRect);
-        startGame->setFocusedTextureRect(focusedRect);
-        startGame->setPressedTextureRect(pressedRect);
+        startGame->getButtonPressedSignal().connect(sigc::mem_fun(this, &StateMainMenu::startGame));
 
         PiH::getGlobalConfig()->getFocusManager()->setFocused(startGame, 0);
 
-        buttons->addWidget(startGame);
+        addButton(startGame);
 
-        buttons->setBoundingBox(getWindow()->getSize().x / 4, 0,
+        std::shared_ptr<PiH::PushButton> quitGame = std::make_shared<PiH::PushButton>(nullptr);
+        quitGame->setText("Quit Game");
+        addButton(quitGame);
+
+        buttons->setBoundingBox(getWindow()->getSize().x / 4, getWindow()->getSize().y / 2,
                                 getWindow()->getSize().x / 2, getWindow()->getSize().y / 2);
 
         getSDLEventHandler()->getSignal(SDL_KEYDOWN).connect(sigc::mem_fun(this, &StateMainMenu::onSDLEvent));
@@ -91,6 +87,23 @@ namespace Client
                 onGameEvent(piga::GameEvent(0, piga::event::GameInput(piga::ACTION, true)), frametime);
             }
         }
+    }
+    void StateMainMenu::addButton(std::shared_ptr<PiH::PushButton> button)
+    {
+        PiH::IntRect normalRect(6, 162, 250, 21);
+        PiH::IntRect pressedRect(6, 185, 250, 21);
+        PiH::IntRect focusedRect(6, 209, 250, 21);
+
+        button->setTextColor(170, 170, 170);
+        button->setFont(getFontManager()->get(getConfig()->getStringValue(Config::STANDARD_FONT) + ":18"));
+        button->setBackgroundTexture(getTextureManager()->get("hud.png"));
+        button->setNormalTextureRect(normalRect);
+        button->setFocusedTextureRect(focusedRect);
+        button->setPressedTextureRect(pressedRect);
+
+        std::shared_ptr<PiH::Layout> buttons = std::static_pointer_cast<PiH::Layout>(m_menuContainer->getCurrentPage()->getWidget("Buttons"));
+
+        buttons->addWidget(button);
     }
     void StateMainMenu::startGame(int playerID)
     {
