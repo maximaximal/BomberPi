@@ -29,6 +29,7 @@ namespace Client
     void StateMainMenu::init()
     {
 		m_menuContainer = new PiH::MenuContainer(nullptr);
+        getGameEventHandler()->getGameEventSignal().connect(sigc::mem_fun(this, &StateMainMenu::onGameEvent));
 
         std::shared_ptr<PiH::HudContainer> mainMenu = std::make_shared<PiH::HudContainer>(m_menuContainer);
         m_menuContainer->addPage(mainMenu, "MainMenu");
@@ -76,17 +77,12 @@ namespace Client
     }
     void StateMainMenu::onGameEvent(const piga::GameEvent &gameEvent, float frametime)
     {
-        m_menuContainer->onEvent(gameEvent);
+        m_menuContainer->onEvent(PiH::Event(gameEvent, true));
+        m_menuContainer->onEvent(PiH::Event(gameEvent, false));
     }
     void StateMainMenu::onSDLEvent(const SDL_Event &e, float frametime)
     {
-        if(e.type == SDL_KEYDOWN)
-        {
-            if(e.key.keysym.scancode == SDL_SCANCODE_SPACE)
-            {
-                onGameEvent(piga::GameEvent(0, piga::event::GameInput(piga::ACTION, true)), frametime);
-            }
-        }
+
     }
     void StateMainMenu::addButton(std::shared_ptr<PiH::PushButton> button)
     {
