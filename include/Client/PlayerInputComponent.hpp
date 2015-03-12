@@ -4,7 +4,6 @@
 #include <map>
 #include <anax/Component.hpp>
 #include <PlayerInput.hpp>
-#include <InputMap.hpp>
 
 namespace Client
 {
@@ -15,7 +14,6 @@ namespace Client
             virtual ~PlayerInputComponent();
 
 			std::map<PlayerInputEnum, bool> inputs;
-			InputMap inputMap;
 
             bool isActive(PlayerInputEnum input);
     };

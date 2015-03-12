@@ -47,7 +47,7 @@ namespace Client
 
             void startNewGame();
 
-            void addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name);
+            void addPlayer(glm::ivec2 playerPos, piga::Player *pigaPlayer, int n);
         private:
             BombermanMap *m_map = nullptr;
 			anax::World *m_world = nullptr;
@@ -56,6 +56,17 @@ namespace Client
             WinChecker *m_winChecker = nullptr;
 
             glm::ivec2 m_offset;
+
+            /**
+             * @brief Calculates the position of the specified player on the map (in pixels).
+             *
+             * This function is only defined for the first 4 players. Every other player will spawn
+             * in the middle of the map.
+             *
+             * @param The player to use for the calculation.
+             * @return The position in pixels.
+             */
+            glm::ivec2 getPlayerPos(int playerID);
 
             //Hud Components
 				PiH::HudContainer *m_hudContainer = nullptr;

@@ -34,7 +34,6 @@ namespace Client
     }
 
     anax::Entity EntityFactory::createPlayer(const glm::ivec2 &pos,
-                                             const InputMap &inputMap,
                                              PlayerMovementSystem *playerMovementSystem,
                                              PiH::HealthAndNameDisplay *healthAndNameDisplay,
                                              std::shared_ptr<Player> player,
@@ -49,7 +48,6 @@ namespace Client
 		spriteComponent->srcRect.h = 32;
         entity.addComponent(spriteComponent);
         PlayerInputComponent *inputComponent = new PlayerInputComponent();
-        inputComponent->inputMap = inputMap;
         entity.addComponent(inputComponent);
         entity.addComponent(new BombLayerComponent(cooldown));
         BodyComponent *body = new BodyComponent(10, 10, 10, 10);

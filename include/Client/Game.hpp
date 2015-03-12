@@ -36,6 +36,8 @@ namespace Client
             bool m_getCommandsFromSharedMemory = false;
 
             piga::Interface *m_pigaInterface = nullptr;
+            std::shared_ptr<piga::PlayerManager> m_playerManager;
+            std::shared_ptr<SDLEventHandler> m_sdlEventHandler;
     };
 }
 

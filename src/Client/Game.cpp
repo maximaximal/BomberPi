@@ -4,6 +4,8 @@
 #include <Timer.hpp>
 #include <Client/StateBomberman.hpp>
 #include <Client/StateMainMenu.hpp>
+#include <Client/KeyboardInputMethod.hpp>
+#include <Client/PlayerInputSystem.hpp>
 #include <pihud/pihud.hpp>
 
 _INITIALIZE_EASYLOGGINGPP
@@ -65,8 +67,56 @@ namespace Client
         }
 
         m_textureManager = new TextureManager(m_window);
-
+        m_sdlEventHandler = std::make_shared<SDLEventHandler>();
         m_fontManager = new PiH::FontManager();
+
+        if(!m_getCommandsFromSharedMemory)
+        {
+            //Add 2 players if the game is selfhosted.
+
+            InputMap inputMap;
+            inputMap.set(SDL_SCANCODE_W, PlayerInputEnum::UP);
+            inputMap.set(SDL_SCANCODE_A, PlayerInputEnum::LEFT);
+            inputMap.set(SDL_SCANCODE_S, PlayerInputEnum::DOWN);
+            inputMap.set(SDL_SCANCODE_D, PlayerInputEnum::RIGHT);
+            inputMap.set(SDL_SCANCODE_SPACE, PlayerInputEnum::ACTION);
+
+            std::shared_ptr<piga::PlayerInput> playerInput = std::make_shared<piga::PlayerInput>();
+            playerInput->setPlayerID(0);
+            for(auto &input : inputMap.getMaps())
+            {
+                playerInput->setInputMethod(new piga::KeyboardInputMethod(input.first, m_sdlEventHandler),
+                                            PlayerInputSystem::getPigaGameControlFromPlayerInputEnum(input.second));
+            }
+            m_pigaInterface->addPlayerInput(playerInput);
+
+            inputMap.clear();
+
+            inputMap.set(SDL_SCANCODE_UP, PlayerInputEnum::UP);
+            inputMap.set(SDL_SCANCODE_LEFT, PlayerInputEnum::LEFT);
+            inputMap.set(SDL_SCANCODE_DOWN, PlayerInputEnum::DOWN);
+            inputMap.set(SDL_SCANCODE_RIGHT, PlayerInputEnum::RIGHT);
+            inputMap.set(SDL_SCANCODE_L, PlayerInputEnum::ACTION);
+
+            playerInput = std::make_shared<piga::PlayerInput>();
+            playerInput->setPlayerID(1);
+            for(auto &input : inputMap.getMaps())
+            {
+                playerInput->setInputMethod(new piga::KeyboardInputMethod(input.first, m_sdlEventHandler),
+                                            PlayerInputSystem::getPigaGameControlFromPlayerInputEnum(input.second));
+            }
+            m_pigaInterface->addPlayerInput(playerInput);
+        }
+
+        m_playerManager = m_pigaInterface->getPlayerManager();
+
+        if(!m_getCommandsFromSharedMemory)
+        {
+            m_playerManager->getPlayer(0)->setName("Player 1");
+            m_playerManager->getPlayer(0)->setActive(true);
+            m_playerManager->getPlayer(1)->setName("Player 2");
+            m_playerManager->getPlayer(1)->setActive(true);
+        }
 
         m_stateManager = new StateManager();
         m_stateManager->setTextureManager(m_textureManager);
@@ -130,6 +180,7 @@ namespace Client
     }
     void Game::onEvent(const SDL_Event &e, float frametime)
     {
+        m_sdlEventHandler->sendEvent(e, frametime);
         m_window->onEvent(e);
         m_stateManager->sendEvent(e, frametime);
     }

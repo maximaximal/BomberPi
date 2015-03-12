@@ -152,24 +152,20 @@ namespace Client
 
         getGameEventHandler()->getGameEventSignal().connect(sigc::mem_fun(this, &StateBomberman::onGameEvent));
 
-       	InputMap inputMap;
-        inputMap.set(SDL_SCANCODE_W, PlayerInputEnum::UP);
-       	inputMap.set(SDL_SCANCODE_A, PlayerInputEnum::LEFT);
-        inputMap.set(SDL_SCANCODE_S, PlayerInputEnum::DOWN);
-        inputMap.set(SDL_SCANCODE_D, PlayerInputEnum::RIGHT);
-        inputMap.set(SDL_SCANCODE_SPACE, PlayerInputEnum::ACTION);
         playerPos.x = 32; playerPos.y = 32;
-        this->addPlayer(inputMap, playerPos, "Player 1");
-
-        inputMap.clear();
-
-        inputMap.set(SDL_SCANCODE_UP, PlayerInputEnum::UP);
-       	inputMap.set(SDL_SCANCODE_LEFT, PlayerInputEnum::LEFT);
-        inputMap.set(SDL_SCANCODE_DOWN, PlayerInputEnum::DOWN);
-        inputMap.set(SDL_SCANCODE_RIGHT, PlayerInputEnum::RIGHT);
-        inputMap.set(SDL_SCANCODE_L, PlayerInputEnum::ACTION);
         playerPos.x = 15 * 32; playerPos.y = 13 * 32;
-        this->addPlayer(inputMap, playerPos, "Player 2");
+
+        int n = 0;
+
+        for(int i = 0; i < getInterface()->getPlayerManager()->size(); ++i)
+        {
+            piga::Player *pigaPlayer = getInterface()->getPlayerManager()->getPlayer(i);
+            if(pigaPlayer->isActive())
+            {
+                addPlayer(getPlayerPos(n), pigaPlayer, n);
+                ++n;
+            }
+        }
 
         m_world->refresh();
 
@@ -255,7 +251,7 @@ namespace Client
 
         m_world->refresh();
     }
-    void StateBomberman::addPlayer(InputMap inputs, glm::ivec2 playerPos, const std::string &name)
+    void StateBomberman::addPlayer(glm::ivec2 playerPos, piga::Player *pigaPlayer, int n)
     {
         std::shared_ptr<PiH::HealthAndNameDisplay> healthIndicator(new PiH::HealthAndNameDisplay(m_hudContainer));
         healthIndicator->getHealthIndicator()->setFullIcon(PiH::IntRect(0, 0, 32, 32));
@@ -264,37 +260,23 @@ namespace Client
         healthIndicator->getHealthIndicator()->setCurrentHealth(3);
         healthIndicator->setFont(getFontManager()->get("PressStart2P.ttf:18"));
         healthIndicator->setTexture(getTextureManager()->get("hud.png"));
-        healthIndicator->setName(name);
+        healthIndicator->setName(pigaPlayer->getName());
         healthIndicator->setPosition(playerPos.x, playerPos.y);
 
-        m_hudContainer->addWidget(healthIndicator, "HealthAndName_" + name);
+        m_hudContainer->addWidget(healthIndicator, std::string("HealthAndName_") + pigaPlayer->getName());
 
-        std::shared_ptr<Player> player = std::make_shared<Player>(name, m_playerManager->getPlayerCount());
+        std::shared_ptr<Player> player = std::make_shared<Player>(pigaPlayer->getName(), n);
 
 		anax::Entity playerEntity = m_entityFactory->createPlayer(playerPos,
-                                                                  inputs,
                                                                   m_playerMovementSystem,
                                                                   healthIndicator.get(),
                                                                   player,
                                                                   getConfig()->getFloatValue(Config::BOMB_PLACE_COOLDOWN));
         player->setEntity(playerEntity);
 
-        if(getInterface()->isSelfhosted())
-        {
-            //Only if the piga interface is selfhosted, add a player controller over the keyboard!
-            std::shared_ptr<piga::PlayerInput> playerInput = std::make_shared<piga::PlayerInput>();
-            playerInput->setPlayerID(player->getPlayerID());
-            for(auto &input : inputs.getMaps())
-            {
-                playerInput->setInputMethod(new piga::KeyboardInputMethod(input.first, getSDLEventHandler()),
-                                            PlayerInputSystem::getPigaGameControlFromPlayerInputEnum(input.second));
-            }
-            getInterface()->addPlayerInput(playerInput);
-        }
-
         std::shared_ptr<UI::PowerupQueue> powerupQueue(new UI::PowerupQueue(getTextureManager(), 3, m_hudContainer));
         player->setPowerupQueueUI(powerupQueue.get());
-        m_hudContainer->addWidget(powerupQueue, "PowerupQueue_" + name);
+        m_hudContainer->addWidget(powerupQueue, std::string("PowerupQueue_") + pigaPlayer->getName());
 
         glm::ivec2 pos, powerupQueuePos;
         if(playerPos.x > (m_map->getMapSize().x * 32) / 2)
@@ -322,6 +304,27 @@ namespace Client
         healthIndicator->setPosition(pos.x, pos.y);
         powerupQueue->setPosition(powerupQueuePos.x, powerupQueuePos.y);
 
-        m_playerManager->set(player, name);
+        m_playerManager->set(player, pigaPlayer->getName());
+    }
+    glm::ivec2 StateBomberman::getPlayerPos(int playerID)
+    {
+        switch(playerID)
+        {
+            case 0:
+                return glm::ivec2(32,
+                                  32);
+            case 1:
+                return glm::ivec2((m_map->getMapSize().x - 2) * 32,
+                                  (m_map->getMapSize().y - 2) * 32);
+            case 2:
+                return glm::ivec2((m_map->getMapSize().x - 2) * 32,
+                                  32);
+            case 3:
+                return glm::ivec2(32,
+                                  (m_map->getMapSize().y - 2) * 32);
+            default:
+                return glm::ivec2((m_map->getMapSize().x) * 16,
+                                  (m_map->getMapSize().y) * 16);
+        }
     }
 }

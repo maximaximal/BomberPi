@@ -24,7 +24,7 @@ namespace Client
                           TextureManager *textureManager);
             virtual ~EntityFactory();
 
-            anax::Entity createPlayer(const glm::ivec2 &pos, const InputMap &inputMap,
+            anax::Entity createPlayer(const glm::ivec2 &pos,
                                       Client::PlayerMovementSystem *playerMovementSystem,
                                       PiH::HealthAndNameDisplay *healthAndNameDisplay,
                                       std::shared_ptr<Player> player, float cooldown);

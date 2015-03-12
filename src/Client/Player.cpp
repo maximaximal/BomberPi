@@ -8,7 +8,7 @@
 namespace Client
 {
     Player::Player(const std::string &name, int playerID)
-    	: piga::Player(playerID, name)
+        : piga::Player(name.c_str(), true, playerID)
     {
 
     }
