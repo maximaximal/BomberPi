@@ -8,7 +8,6 @@
 #include <Client/Config.hpp>
 #include <pihud/FontManager.hpp>
 #include <piga/Interface.hpp>
-#include <InterfaceLogger.hpp>
 
 namespace Client 
 {
@@ -31,7 +30,6 @@ namespace Client
             TextureManager *m_textureManager = nullptr;
             PiH::FontManager *m_fontManager = nullptr;
             Config *m_config = nullptr;
-            InterfaceLogger *m_interfaceLogger = nullptr;
 
             bool m_getCommandsFromSharedMemory = false;
 
