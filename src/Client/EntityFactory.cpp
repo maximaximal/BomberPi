@@ -50,7 +50,7 @@ namespace Client
         PlayerInputComponent *inputComponent = new PlayerInputComponent();
         entity.addComponent(inputComponent);
         entity.addComponent(new BombLayerComponent(cooldown));
-        BodyComponent *body = new BodyComponent(10, 10, 10, 10);
+        BodyComponent *body = new BodyComponent(4, 7, 28, 22);
         body->collisionSignal.connect(sigc::mem_fun(playerMovementSystem, &PlayerMovementSystem::onPlayerCollision));
         entity.addComponent(body);
         entity.addComponent(new PlayerComponent(150, pos, player));
