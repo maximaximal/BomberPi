@@ -152,6 +152,9 @@ namespace Client
 
             render();
 
+            if(m_stateManager->hasBeenQuitted())
+                end = true;
+
             int delay = (1000 / 60) - timer.getMilliseconds();
             if(delay > 0)
                 SDL_Delay(delay);

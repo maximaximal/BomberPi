@@ -28,6 +28,7 @@ namespace Client
             void addButton(std::shared_ptr<PiH::PushButton> button);
 
             void startGame(int playerID = 0);
+            void quitGame(int playerID = 0);
         private:
 			PiH::MenuContainer *m_menuContainer = nullptr;
     };

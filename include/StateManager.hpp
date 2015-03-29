@@ -32,8 +32,10 @@ class StateManager : public SDLEventHandler, public piga::GameEventHandler
         void setWindow(Client::Window *window);
         void setConfig(Client::Config *config);
         void setPigaInterface(piga::Interface *interface);
+        void quit();
 
         Client::Window* getWindow();
+        bool hasBeenQuitted();
     protected:
         virtual void onSDLEvent(const SDL_Event &e, float frametime);
         virtual void onGameEvent(const piga::GameEvent &gameEvent, float frametime);
@@ -44,6 +46,7 @@ class StateManager : public SDLEventHandler, public piga::GameEventHandler
         Client::Config *m_config;
         PiH::FontManager *m_fontManager;
         piga::Interface *m_pigaInterface;
+        bool m_quit = false;
 };
 
 #endif

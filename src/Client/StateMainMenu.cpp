@@ -62,6 +62,7 @@ namespace Client
 
         std::shared_ptr<PiH::PushButton> quitGame = std::make_shared<PiH::PushButton>(nullptr);
         quitGame->setText("Quit Game");
+        quitGame->getButtonPressedSignal().connect(sigc::mem_fun(this, &StateMainMenu::quitGame));
         addButton(quitGame);
 
         buttons->setBoundingBox(getWindow()->getSize().x / 4, getWindow()->getSize().y / 2,
@@ -106,6 +107,10 @@ namespace Client
         std::shared_ptr<StateBomberman> stateBomberman = std::make_shared<StateBomberman>();
         getStateManager()->push(stateBomberman);
         stateBomberman->init();
+    }
+    void StateMainMenu::quitGame(int playerID)
+    {
+        getStateManager()->quit();
     }
     void StateMainMenu::render(Client::Window *window)
     {

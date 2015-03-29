@@ -59,7 +59,6 @@ void StateManager::setFontManager(PiH::FontManager *fontManager)
         state->setFontManager(fontManager);
     }
 }
-
 void StateManager::setWindow(Client::Window *window)
 {
     m_window = window;
@@ -84,11 +83,18 @@ void StateManager::setPigaInterface(piga::Interface *interface)
         state->setInterface(interface);
     }
 }
+void StateManager::quit()
+{
+    m_quit = true;
+}
 Client::Window *StateManager::getWindow()
 {
     return m_window;
 }
-
+bool StateManager::hasBeenQuitted()
+{
+    return m_quit;
+}
 void StateManager::onSDLEvent(const SDL_Event &e, float frametime)
 {
     if(m_states.size() > 0)
