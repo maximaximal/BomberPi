@@ -1,7 +1,7 @@
 #include <Client/EntityFactory.hpp>
 
 #include <Client/PowerupCollisionResolver.hpp>
-
+#include <memory>
 #include <Client/PositionComponent.hpp>
 #include <Client/SpriteComponent.hpp>
 #include <Client/PlayerInputComponent.hpp>
@@ -45,7 +45,18 @@ namespace Client
         SpriteComponent *spriteComponent = new SpriteComponent();
         spriteComponent->texture = m_textureManager->get("player_proto.png");
 		spriteComponent->srcRect.w = 32;
-		spriteComponent->srcRect.h = 32;
+        spriteComponent->srcRect.h = 32;
+        spriteComponent->srcRect.x = 0;
+        switch(player->getPlayerID())
+        {
+            case 0:
+                spriteComponent->srcRect.y = 0;
+                break;
+            case 1:
+                spriteComponent->srcRect.y = 32;
+                break;
+        }
+
         entity.addComponent(spriteComponent);
         PlayerInputComponent *inputComponent = new PlayerInputComponent();
         entity.addComponent(inputComponent);
