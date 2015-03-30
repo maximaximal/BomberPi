@@ -13,5 +13,5 @@ KeyboardMappings:
 Description: "A clone of the old Bomberman games."
 Version: "1.0"
 Author: "maximaximal"
-BackgroundImage: "powerups.png"
-Logo: "player_proto.png"
+BackgroundImage: "chooser-background.png"
+Logo: "logo.png"
