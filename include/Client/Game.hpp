@@ -14,7 +14,7 @@ namespace Client
     class Game
     {
 		public:
-            Game(bool getCommandsFromSharedMemory = false);
+            Game(bool getCommandsFromSharedMemory = false, bool quickStart = false);
 			virtual ~Game();
 
 			int init(bool fullscreen = false);
@@ -32,6 +32,7 @@ namespace Client
             Config *m_config = nullptr;
 
             bool m_getCommandsFromSharedMemory = false;
+            bool m_quickStart = false;
 
             piga::Interface *m_pigaInterface = nullptr;
             std::shared_ptr<piga::PlayerManager> m_playerManager;

@@ -12,10 +12,11 @@ _INITIALIZE_EASYLOGGINGPP
 
 namespace Client
 {
-    Game::Game(bool getCommandsFromSharedMemory)
+    Game::Game(bool getCommandsFromSharedMemory, bool quickStart)
     {
         m_getCommandsFromSharedMemory = getCommandsFromSharedMemory;
         m_pigaInterface = new piga::Interface(!getCommandsFromSharedMemory);
+        m_quickStart = quickStart;
     }
     Game::~Game()
     {
@@ -122,10 +123,20 @@ namespace Client
         SDL_Event e;
         float frametime = 0;
 
-        std::shared_ptr<StateMainMenu> stateMainMenu = std::make_shared<StateMainMenu>();
-        m_stateManager->push(stateMainMenu);
-        stateMainMenu->init();
-        stateMainMenu.reset();
+        if(m_quickStart)
+        {
+            std::shared_ptr<StateBomberman> stateBomberman = std::make_shared<StateBomberman>();
+            m_stateManager->push(stateBomberman);
+            stateBomberman->init();
+            stateBomberman.reset();
+        }
+        else
+        {
+            std::shared_ptr<StateMainMenu> stateMainMenu = std::make_shared<StateMainMenu>();
+            m_stateManager->push(stateMainMenu);
+            stateMainMenu->init();
+            stateMainMenu.reset();
+        }
 
         //The parameters are only temporary and will be set when the event is polled.
         piga::GameEvent gameEvent(0);
@@ -191,10 +202,9 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option)
 
 int main(int argc, char* argv[])
 {
-    LOG(INFO) << "Starting BomberPi.";
-
     bool getCommandsFromSharedMemory = false;
     bool fullscreen = false;
+    bool quickStart = false;
 
     if(cmdOptionExists(argv, argv + argc, "-c"))
     {
@@ -206,8 +216,23 @@ int main(int argc, char* argv[])
         fullscreen = true;
         LOG(INFO) << "Launching BomberPi in fullscreen mode!";
     }
+    if(cmdOptionExists(argv, argv + argc, "-quickStart"))
+    {
+        quickStart = true;
+        LOG(INFO) << "BomberPi quick start actvated!";
+    }
+    if(cmdOptionExists(argv, argv + argc, "-help"))
+    {
+        std::cout << "BomberPi - Program Arguments Help" << std::endl;
+        std::cout << "  -c\t\tLaunches BomberPi in shared input mode." << std::endl;
+        std::cout << "  -f\t\tLaunches BomberPi in fullscreen mode." << std::endl;
+        std::cout << "  -quickStart\tLaunches BomberPi directly into the game instead of the main menu." << std::endl;
+        std::cout << "  -help\t\tDisplays this menu." << std::endl;
+        return 0;
+    }
+    LOG(INFO) << "Starting BomberPi.";
 
-    Client::Game *game = new Client::Game(getCommandsFromSharedMemory);
+    Client::Game *game = new Client::Game(getCommandsFromSharedMemory, quickStart);
     
     game->init(fullscreen);
     
