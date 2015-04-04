@@ -20,8 +20,9 @@ namespace Client
             BombermanMap();
             virtual ~BombermanMap();
 
-            void init(const glm::ivec2 &mapSize);
+            void init();
             void clear();
+            void clearTilemap();
             void setEntityFactory(EntityFactory *entityFactory);
 
             void setTexture(std::shared_ptr<Texture> texture);
@@ -41,6 +42,7 @@ namespace Client
             bool isTileBombable(const glm::ivec3 &pos);
             uint8_t getCollisionOf(const glm::ivec2 &pos);
 
+            void setMapSize(const glm::ivec2 &size);
             const glm::ivec2& getMapSize();
 
             uint8_t getTileAtPixel(const glm::ivec3 &pos);

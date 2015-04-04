@@ -40,6 +40,7 @@ namespace Client
     StateBomberman::StateBomberman()
     {
 		m_hudContainer = new PiH::HudContainer(nullptr);
+        m_map = new BombermanMap();
 
         m_offset.x = 50;
         m_offset.y = 50;
@@ -93,7 +94,6 @@ namespace Client
     void StateBomberman::init()
     {
         LOG(INFO) << "Initializing StateBomberman.";
-        m_map = new BombermanMap();
         m_world = new anax::World();
         m_playerManager = new PlayerManager();
         m_winChecker = new WinChecker(m_playerManager);
@@ -145,8 +145,7 @@ namespace Client
         m_world->addSystem(*m_healthSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
-
-        m_map->init(glm::ivec2(17, 15));
+        m_map->init();
 
         glm::ivec2 playerPos(0, 0);
 
@@ -250,6 +249,10 @@ namespace Client
         m_killEntityTypeSystem->killType(Type::Powerup);
 
         m_world->refresh();
+    }
+    void StateBomberman::setMapSize(const glm::ivec2 &size)
+    {
+        m_map->setMapSize(size);
     }
     void StateBomberman::addPlayer(glm::ivec2 playerPos, piga::Player *pigaPlayer, int n)
     {

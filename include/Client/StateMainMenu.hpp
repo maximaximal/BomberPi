@@ -9,6 +9,8 @@
 #include <piga/GameEventHandler.hpp>
 #include <SDLEventHandler.hpp>
 
+#include <Client/BombermanMap.hpp>
+
 namespace Client
 {
     class StateMainMenu : public State, public piga::GameEventHandler, public SDLEventHandler
@@ -29,8 +31,10 @@ namespace Client
 
             void startGame(int playerID = 0);
             void quitGame(int playerID = 0);
+            void customizeMap(int playerID = 0);
         private:
-			PiH::MenuContainer *m_menuContainer = nullptr;
+            PiH::MenuContainer *m_menuContainer = nullptr;
+            BombermanMap *m_mapCustomizer = nullptr;
     };
 }
 

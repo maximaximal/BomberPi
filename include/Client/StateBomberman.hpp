@@ -46,6 +46,7 @@ namespace Client
             void onGameEvent(const piga::GameEvent &gameEvent, float frametime);
 
             void startNewGame();
+            void setMapSize(const glm::ivec2 &size);
 
             void addPlayer(glm::ivec2 playerPos, piga::Player *pigaPlayer, int n);
         private:

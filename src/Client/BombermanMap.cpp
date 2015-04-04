@@ -7,23 +7,28 @@ namespace Client
     BombermanMap::BombermanMap()
     {
         m_embeddedTilemap.reset(new EmbeddedTilemap());
+        m_mapSize.x = 17;
+        m_mapSize.y = 15;
     }
     BombermanMap::~BombermanMap()
     {
 
     }
-    void BombermanMap::init(const glm::ivec2 &mapSize)
+    void BombermanMap::init()
     {
         clear();
         m_entityDropGenerator = new EntityDropGenerator(m_entityFactory);
         m_entityDropGenerator->setChance(1000);
-		m_mapSize = mapSize;
     }
     void BombermanMap::clear()
     {
         if(m_entityDropGenerator != nullptr)
             delete m_entityDropGenerator;
         m_entityDropGenerator = nullptr;
+        m_embeddedTilemap->clear();
+    }
+    void BombermanMap::clearTilemap()
+    {
         m_embeddedTilemap->clear();
     }
     void BombermanMap::setEntityFactory(EntityFactory *entityFactory)
@@ -156,6 +161,10 @@ namespace Client
     uint8_t BombermanMap::getCollisionOf(const glm::ivec2 &pos)
     {
         return m_embeddedTilemap->getCollisionOf(pos.x, pos.y);
+    }
+    void BombermanMap::setMapSize(const glm::ivec2 &size)
+    {
+        m_mapSize = size;
     }
     const glm::ivec2 &BombermanMap::getMapSize()
     {
