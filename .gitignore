@@ -13,3 +13,5 @@ build/
 Session.vim
 .netrwhist
 *~
+
+.ycm*
