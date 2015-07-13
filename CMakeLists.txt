@@ -12,8 +12,6 @@ SET(INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 SET(CLIENT_SRC ${SRC}/Client/)
 SET(CLIENT_INCLUDE ${INCLUDE}/Client/)
 
-SET(PIGA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/piga CACHE STRING "The directory of the piga repository.")
-
 SET(SHARED_SRCS
     ${SRC}/Timer.cpp
     ${SRC}/State.cpp
@@ -236,8 +234,7 @@ if(${Boost_FOUND})
 endif()
 
 # Add piga
-message(STATUS "Piga Dir: " ${PIGA_DIR})
-add_subdirectory(${PIGA_DIR}/libpiga/ ${CMAKE_CURRENT_BINARY_DIR}/piga_dir/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/libpiga/)
 add_dependencies(Client piga)
 include_directories(${LIBPIGA_INCLUDE_DIRECTORIES})
 target_link_libraries(Client piga)
@@ -245,13 +242,9 @@ target_link_libraries(Client piga)
 add_dependencies(Client piga)
 
 #Add pihud
-add_subdirectory(${PIGA_DIR}/pihud/ pihud)
-include_directories(${PIGA_DIR}/pihud/include)
-find_library(pihud_library
-    NAMES pihud libpihud libpihud.a libpihud.so
-    HINTS ${CMAKE_CURRENT_BINARY_DIR}/piga_dir/pihud
-    NO_DEFAULT_PATH
-)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/pihud/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/pihud/include)
+
 target_link_libraries(Client pihud)
 
 add_custom_command(TARGET Client
