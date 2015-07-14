@@ -184,10 +184,10 @@ namespace Client
 		switch(getSide())
         {
             case LEFT:
-                penetrationVec.x = (b.x) - (a.x + a.w);
+                penetrationVec.x = (b.x) - (a.x + a.w) - 0.1;
                 break;
             case TOP:
-                penetrationVec.y = (b.y) - (a.y + a.h);
+                penetrationVec.y = (b.y) - (a.y + a.h) - 0.1;
                 break;
             case RIGHT:
                 penetrationVec.x = (b.x + b.w) - a.x;
@@ -214,10 +214,10 @@ namespace Client
 		switch(getSide())
         {
             case LEFT:
-                obstructed = (b.x) - (a.x + a.w);
+                obstructed = (b.x) - (a.x + a.w) - 0.1;
                 break;
             case TOP:
-                obstructed = (b.y) - (a.y + a.h);
+                obstructed = (b.y) - (a.y + a.h) - 0.1;
                 break;
             case RIGHT:
                 obstructed = (b.x + b.w) - a.x;

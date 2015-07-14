@@ -37,6 +37,8 @@ namespace Client
             PiH::MenuContainer *m_menuContainer = nullptr;
             EmbeddedTilemap *m_embeddedTilemap = nullptr;
             BombermanMap *m_mapCustomizer = nullptr;
+
+            glm::vec2 m_mapOffset;
     };
 }
 

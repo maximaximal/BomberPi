@@ -51,9 +51,9 @@ namespace Client
         std::default_random_engine generator;
         std::uniform_int_distribution<uint8_t> distribution(0, 15);
 
-        for(int x = 0; x < getWindow()->getSize().x / 32 + 1; ++x)
+        for(int x = 0; x < getWindow()->getSize().x / 32 + 5; ++x)
         {
-            for(int y = 0; y < getWindow()->getSize().y / 32 + 1; ++y)
+            for(int y = 0; y < getWindow()->getSize().y / 32 + 5; ++y)
             {
                 m_embeddedTilemap->setTile(x, y, 0, distribution(generator));
             }
@@ -209,7 +209,7 @@ namespace Client
     }
     void StateMainMenu::render(Client::Window *window)
     {
-        m_embeddedTilemap->render(window, glm::ivec2(0, 0));
+        m_embeddedTilemap->render(window, glm::ivec2(m_mapOffset.x, m_mapOffset.y));
         if(m_menuContainer->getCurrentPageName() == "MapMenu")
         {
             m_mapCustomizer->render(window, glm::ivec2(50, 50));
