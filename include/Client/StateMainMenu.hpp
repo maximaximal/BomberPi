@@ -10,6 +10,7 @@
 #include <SDLEventHandler.hpp>
 
 #include <Client/BombermanMap.hpp>
+#include <Client/EmbeddedTilemap.hpp>
 
 namespace Client
 {
@@ -34,6 +35,7 @@ namespace Client
             void customizeMap(int playerID = 0);
         private:
             PiH::MenuContainer *m_menuContainer = nullptr;
+            EmbeddedTilemap *m_embeddedTilemap = nullptr;
             BombermanMap *m_mapCustomizer = nullptr;
     };
 }
