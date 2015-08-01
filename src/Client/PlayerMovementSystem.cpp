@@ -139,15 +139,19 @@ namespace Client
             {
                 case BodyComponent::UP:
                     pos.pos.y -= player.speed * bombLayer.getSpeedMultiplicator() * frameTime;
+                    sprite.rotation = 0;
                     break;
                 case BodyComponent::DOWN:
                     pos.pos.y += player.speed * bombLayer.getSpeedMultiplicator() * frameTime;
+                    sprite.rotation = 180;
                     break;
                 case BodyComponent::LEFT:
                     pos.pos.x -= player.speed * bombLayer.getSpeedMultiplicator() * frameTime;
+                    sprite.rotation = 270;
                     break;
                 case BodyComponent::RIGHT:
                     pos.pos.x += player.speed * bombLayer.getSpeedMultiplicator() * frameTime;
+                    sprite.rotation = 90;
                     break;
                 default:
                     break;
