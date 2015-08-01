@@ -19,6 +19,10 @@ namespace Client
     }
     void BombPlaceSystem::update()
     {
+        if(m_noBombPlacing)
+        {
+            return;
+        }
         for(auto &entity : getEntities())
         {
             auto &input = entity.getComponent<PlayerInputComponent>();
@@ -44,5 +48,9 @@ namespace Client
                 }
             }
         }
+    }
+    void BombPlaceSystem::lockBombPlacing(bool state)
+    {
+        m_noBombPlacing = state;
     }
 }

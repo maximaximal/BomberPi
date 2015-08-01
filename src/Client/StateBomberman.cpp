@@ -180,24 +180,12 @@ namespace Client
         m_explosionManagementSystem->update(frameTime);
         m_animationSystem->update(frameTime);
         m_explosionSystem->update(frameTime);
-
-        m_playerInputSystem->update();
-        m_playerMovementSystem->update(frameTime);
         m_bombExplodeSystem->update();
-
-        m_bombPlacePositionSystem->update(frameTime);
-        m_bombPlaceSystem->update();
-
-        m_collisionSystem->update(frameTime);
-        m_damageSystem->update(frameTime);
-        m_healthSystem->update(frameTime);
-        m_playerManager->update(frameTime);
-
-        m_hudContainer->onUpdate(frameTime);
 
         //Check if anybody has won
         if(m_winChecker->winDetected())
         {
+            m_bombPlaceSystem->lockBombPlacing(true);
             if(m_hudContainer->getWidget("WinnerWidget") == nullptr)
             {
                 std::shared_ptr<PiH::WeHaveAWinnerWidget> winnerWidget(new PiH::WeHaveAWinnerWidget(m_hudContainer));
@@ -219,6 +207,19 @@ namespace Client
                 }
             }
         }
+        else
+        {
+            m_playerInputSystem->update();
+            m_playerMovementSystem->update(frameTime);
+
+            m_bombPlacePositionSystem->update(frameTime);
+            m_bombPlaceSystem->update();
+            m_collisionSystem->update(frameTime);
+            m_damageSystem->update(frameTime);
+            m_healthSystem->update(frameTime);
+            m_playerManager->update(frameTime);
+        }
+        m_hudContainer->onUpdate(frameTime);
     }
     void StateBomberman::render(Window *window)
     {
@@ -249,6 +250,10 @@ namespace Client
         m_killEntityTypeSystem->killType(Type::Powerup);
 
         m_world->refresh();
+
+        m_bombPlaceSystem->update();
+
+        m_bombPlaceSystem->lockBombPlacing(false);
     }
     void StateBomberman::setMapSize(const glm::ivec2 &size)
     {

@@ -14,8 +14,11 @@ namespace Client
             virtual ~BombPlaceSystem();
 
             void update();
+
+            void lockBombPlacing(bool state);
         private:
             EntityFactory *m_entityFactory;
+            bool m_noBombPlacing = false;
     };
 }
 

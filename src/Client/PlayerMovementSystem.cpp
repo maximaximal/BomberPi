@@ -48,8 +48,8 @@ namespace Client
             auto &bombLayer = entity.getComponent<BombLayerComponent>();
 
             //Check if the target has been reached.
-            if(std::abs(pos.pos.x - body.targetPos.x) <= player.speed * frameTime * 2
-                    && std::abs(pos.pos.y - body.targetPos.y) <= player.speed * frameTime * 2)
+            if(std::abs(pos.pos.x - body.targetPos.x) <= player.speed * bombLayer.getSpeedMultiplicator() * frameTime * 2
+                    && std::abs(pos.pos.y - body.targetPos.y) <= player.speed * bombLayer.getSpeedMultiplicator() * frameTime * 2)
             {
                 pos.pos.x = body.targetPos.x;
                 pos.pos.y = body.targetPos.y;
@@ -138,16 +138,16 @@ namespace Client
             switch(body.movementDirection)
             {
                 case BodyComponent::UP:
-                    pos.pos.y -= player.speed * frameTime;
+                    pos.pos.y -= player.speed * bombLayer.getSpeedMultiplicator() * frameTime;
                     break;
                 case BodyComponent::DOWN:
-                    pos.pos.y += player.speed * frameTime;
+                    pos.pos.y += player.speed * bombLayer.getSpeedMultiplicator() * frameTime;
                     break;
                 case BodyComponent::LEFT:
-                    pos.pos.x -= player.speed * frameTime;
+                    pos.pos.x -= player.speed * bombLayer.getSpeedMultiplicator() * frameTime;
                     break;
                 case BodyComponent::RIGHT:
-                    pos.pos.x += player.speed * frameTime;
+                    pos.pos.x += player.speed * bombLayer.getSpeedMultiplicator() * frameTime;
                     break;
                 default:
                     break;
