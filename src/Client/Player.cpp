@@ -2,6 +2,7 @@
 #include <Client/HealthComponent.hpp>
 #include <Client/PositionComponent.hpp>
 #include <Client/PlayerComponent.hpp>
+#include <Client/BodyComponent.hpp>
 #include <Client/BombLayerComponent.hpp>
 #include <easylogging++.h>
 
@@ -134,6 +135,10 @@ namespace Client
         setPosition(getStartingPosition());
         setHealth(3);
         resetBombLayerComponent();
+
+        auto &body = m_entity.getComponent<BodyComponent>();
+        body.movementDirection = BodyComponent::NOT_MOVING;
+
         if(m_entity.isValid())
         {
 			m_entity.activate();

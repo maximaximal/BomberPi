@@ -41,6 +41,9 @@ namespace Client
             {
                 m_inputComponents[gameEvent.playerID()]->inputs[getPlayerInputEnumFromPigaGameControl(gameEvent.gameInput.control())]
                         = gameEvent.gameInput.state();
+
+                if(gameEvent.gameInput.state())
+                    m_inputComponents[gameEvent.playerID()]->lastInput = getPlayerInputEnumFromPigaGameControl(gameEvent.gameInput.control());
             }
         }
     }

@@ -10,6 +10,8 @@
 
 namespace Client
 {
+    class PositionComponent;
+
     class PlayerMovementSystem : public anax::System<PlayerMovementSystem>
     {
         public:
@@ -23,6 +25,7 @@ namespace Client
             void onPlayerCollision(std::shared_ptr<Collision> collision);
         protected:
             virtual void onEntityRemoved(anax::Entity &e);
+            void calculateTarget(PlayerInputEnum dir, BodyComponent &body, Client::PositionComponent &pos);
         private:
             BombermanMap *m_bombermanMap;
 			std::map<anax::Entity::Id, sigc::connection> m_collisionConnections;

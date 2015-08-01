@@ -13,7 +13,8 @@ namespace Client
 			PlayerInputComponent();
             virtual ~PlayerInputComponent();
 
-			std::map<PlayerInputEnum, bool> inputs;
+            std::map<PlayerInputEnum, bool> inputs;
+            PlayerInputEnum lastInput;
 
             bool isActive(PlayerInputEnum input);
     };

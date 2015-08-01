@@ -7,6 +7,7 @@
 #include <Client/BodyComponent.hpp>
 #include <Client/EntityTypeComponent.hpp>
 #include <Client/BombLayerComponent.hpp>
+#include <Client/EmbeddedChunk.hpp>
 
 #include <easylogging++.h>
 
@@ -36,11 +37,8 @@ namespace Client
 
     void PlayerMovementSystem::update(float frameTime)
     {
-        glm::dvec2 dir(0, 0);
 		for(auto &entity : getEntities())
         {
-            dir.x = 0;
-            dir.y = 0;
             auto &pos = entity.getComponent<PositionComponent>();
             auto &player = entity.getComponent<PlayerComponent>();
             auto &input = entity.getComponent<PlayerInputComponent>();
@@ -48,54 +46,71 @@ namespace Client
             auto &body = entity.getComponent<BodyComponent>();
             auto &bombLayer = entity.getComponent<BombLayerComponent>();
 
-            bool wasValidInput = false;
-
-            float speed = player.speed
-                    * (bombLayer.speedMultiplicator + bombLayer.powerupQueue.getCombinedPowerup().getSpeedMultiplicatorBonus())
-                    * frameTime;
-
-            if(input.isActive(PlayerInputEnum::UP))
+            //Check if the target has been reached.
+            if(std::abs(pos.pos.x - body.targetPos.x) <= player.speed * frameTime * 2
+                    && std::abs(pos.pos.y - body.targetPos.y) <= player.speed * frameTime * 2)
             {
-                dir.y -= speed;
-                wasValidInput = true;
-            }
-            if(input.isActive(PlayerInputEnum::DOWN))
-            {
-                dir.y += speed;
-                wasValidInput = true;
-            }
-            if(input.isActive(PlayerInputEnum::LEFT))
-            {
-                dir.x -= speed;
-                wasValidInput = true;
-            }
-            if(input.isActive(PlayerInputEnum::RIGHT))
-            {
-                dir.x += speed;
-                wasValidInput = true;
+                pos.pos.x = body.targetPos.x;
+                pos.pos.y = body.targetPos.y;
+                body.movementDirection = BodyComponent::NOT_MOVING;
             }
 
-            if(wasValidInput && (dir.x != 0 || dir.y != 0))
+            //Assign new movement
+            if(!body.currentlyMoving())
             {
-                glm::dvec2 normal(0, -1);
-				float alpha = glm::acos((glm::dot(normal, dir)) / (glm::length(normal) * glm::length(dir)));
+                BodyComponent::MovementDirection dir = BodyComponent::NOT_MOVING;
+                glm::ivec2 target;
 
-                if(dir.x >= 0)
+                for(auto &in : input.inputs)
                 {
-                    alpha = (M_PI - alpha) * (-1);
+                    if(in.second)
+                    {
+                        if(in.first == PlayerInputEnum::UP
+                                || in.first == PlayerInputEnum::DOWN
+                                || in.first == PlayerInputEnum::LEFT
+                                || in.first == PlayerInputEnum::RIGHT)
+                        {
+                            target = body.targetPos;
+                            dir = body.movementDirection;
+                            calculateTarget(in.first, body, pos);
+
+                            if(m_bombermanMap->getCollisionOf(glm::ivec2(body.targetPos.x / EmbeddedChunk::tileWidth,
+                                                                         body.targetPos.y / EmbeddedChunk::tileWidth))
+                                                              == static_cast<uint8_t>(EmbeddedTilemap::CollideFully))
+                            {
+                                //If the new target is not a valid one (obstructed), set the old one instead.
+                                body.movementDirection = dir;
+                                body.targetPos = target;
+                            }
+                        }
+                    }
                 }
-                else
+
+                if(m_bombermanMap->getCollisionOf(glm::ivec2(body.targetPos.x / EmbeddedChunk::tileWidth,
+                                                             body.targetPos.y / EmbeddedChunk::tileWidth))
+                                                  == static_cast<uint8_t>(EmbeddedTilemap::CollideFully))
                 {
-                    alpha = M_PI - alpha;
+                    body.movementDirection = BodyComponent::NOT_MOVING;
                 }
+            }
 
-				sprite.rotation = alpha * (180 / M_PI);
-
-				pos.orientation = glm::normalize(dir);
-
-                body.lastMove = dir;
-
-				pos.pos += dir;
+            //Move the character
+            switch(body.movementDirection)
+            {
+                case BodyComponent::UP:
+                    pos.pos.y -= player.speed * frameTime;
+                    break;
+                case BodyComponent::DOWN:
+                    pos.pos.y += player.speed * frameTime;
+                    break;
+                case BodyComponent::LEFT:
+                    pos.pos.x -= player.speed * frameTime;
+                    break;
+                case BodyComponent::RIGHT:
+                    pos.pos.x += player.speed * frameTime;
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -105,8 +120,6 @@ namespace Client
         {
 			auto &playerPos = collision->getA().getComponent<PositionComponent>();
 			auto &playerBody = collision->getA().getComponent<BodyComponent>();
-
-			playerPos.pos = playerPos.pos + collision->getPenetrationVec();
 
             collision->getSide();
         }
@@ -120,8 +133,8 @@ namespace Client
                 {
 					auto &playerPos = collision->getA().getComponent<PositionComponent>();
 					auto &playerBody = collision->getA().getComponent<BodyComponent>();
-                    if(!collision->isObstructed(5))
-						playerPos.pos = playerPos.pos + collision->getPenetrationVec();
+                    //if(!collision->isObstructed(5))
+                    //	playerPos.pos = playerPos.pos + collision->getPenetrationVec();
                 }
             }
 
@@ -132,6 +145,34 @@ namespace Client
         if(m_collisionConnections.count(e.getId()) > 0)
         {
             m_collisionConnections.erase(e.getId());
+        }
+    }
+    void PlayerMovementSystem::calculateTarget(PlayerInputEnum dir, BodyComponent &body, PositionComponent &pos)
+    {
+        switch(dir)
+        {
+            case PlayerInputEnum::UP:
+                body.targetPos.x = pos.pos.x;
+                body.targetPos.y = pos.pos.y - EmbeddedChunk::tileWidth;
+                body.movementDirection = BodyComponent::UP;
+                break;
+            case PlayerInputEnum::DOWN:
+                body.movementDirection = BodyComponent::DOWN;
+                body.targetPos.x = pos.pos.x;
+                body.targetPos.y = pos.pos.y + EmbeddedChunk::tileWidth;
+                break;
+            case PlayerInputEnum::LEFT:
+                body.movementDirection = BodyComponent::LEFT;
+                body.targetPos.x = pos.pos.x - EmbeddedChunk::tileWidth;
+                body.targetPos.y = pos.pos.y;
+                break;
+            case PlayerInputEnum::RIGHT:
+                body.movementDirection = BodyComponent::RIGHT;
+                body.targetPos.x = pos.pos.x + EmbeddedChunk::tileWidth;
+                body.targetPos.y = pos.pos.y;
+                break;
+            default:
+                break;
         }
     }
 }

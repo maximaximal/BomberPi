@@ -17,4 +17,10 @@ namespace Client
     {
 
     }
+    bool BodyComponent::currentlyMoving()
+    {
+        if(movementDirection == NOT_MOVING)
+            return false;
+        return true;
+    }
 }

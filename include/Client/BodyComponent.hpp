@@ -11,6 +11,17 @@ namespace Client
     class BodyComponent : public anax::Component<BodyComponent>
     {
         public:
+            enum MovementDirection
+            {
+                UP,
+                DOWN,
+                LEFT,
+                RIGHT,
+                NOT_MOVING,
+
+                _COUNT
+            };
+
             typedef sigc::signal<void, std::shared_ptr<Collision> > CollisionSignal;
 
             BodyComponent();
@@ -26,6 +37,10 @@ namespace Client
             float h = 0;
 
             float drag = 0;
+
+            BodyComponent::MovementDirection movementDirection = MovementDirection::NOT_MOVING;
+            bool currentlyMoving();
+            glm::ivec2 targetPos;
 
             glm::dvec2 lastMove;
 
