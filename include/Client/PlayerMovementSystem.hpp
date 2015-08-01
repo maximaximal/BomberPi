@@ -15,7 +15,7 @@ namespace Client
     class PlayerMovementSystem : public anax::System<PlayerMovementSystem>
     {
         public:
-            PlayerMovementSystem(BombermanMap *bombermanMap);
+            PlayerMovementSystem(BombermanMap *bombermanMap, CollisionSystem *collisionSystem);
             virtual ~PlayerMovementSystem();
 
             void setMap(BombermanMap *map);
@@ -28,6 +28,7 @@ namespace Client
             void calculateTarget(PlayerInputEnum dir, BodyComponent &body, Client::PositionComponent &pos);
         private:
             BombermanMap *m_bombermanMap;
+            CollisionSystem *m_collisionSystem;
 			std::map<anax::Entity::Id, sigc::connection> m_collisionConnections;
     };
 }

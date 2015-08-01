@@ -108,7 +108,10 @@ namespace Client
         m_playerInputSystem->setGameEventHandler(getGameEventHandler());
         m_world->addSystem(*m_playerInputSystem);
 
-        m_playerMovementSystem = new PlayerMovementSystem(m_map);
+        m_collisionSystem = new CollisionSystem(m_map);
+        m_world->addSystem(*m_collisionSystem);
+
+        m_playerMovementSystem = new PlayerMovementSystem(m_map, m_collisionSystem);
         m_world->addSystem(*m_playerMovementSystem);
 
         m_animationSystem = new AnimationSystem();
@@ -122,9 +125,6 @@ namespace Client
 
         m_bombExplodeSystem = new BombExplodeSystem(m_entityFactory);
         m_world->addSystem(*m_bombExplodeSystem);
-
-        m_collisionSystem = new CollisionSystem(m_map);
-        m_world->addSystem(*m_collisionSystem);
 
         m_bombPlacePositionSystem = new BombPlacePositionSystem(m_map, m_collisionSystem);
         m_world->addSystem(*m_bombPlacePositionSystem);

@@ -14,7 +14,7 @@
 namespace Client
 {
 
-    PlayerMovementSystem::PlayerMovementSystem(BombermanMap *bombermanMap)
+    PlayerMovementSystem::PlayerMovementSystem(BombermanMap *bombermanMap, CollisionSystem *collisionSystem)
     	: Base(anax::ComponentFilter().requires<PlayerComponent,
                PositionComponent,
                PlayerInputComponent,
@@ -23,6 +23,7 @@ namespace Client
                BombLayerComponent>())
     {
 		m_bombermanMap = bombermanMap;
+        m_collisionSystem = collisionSystem;
     }
 
     PlayerMovementSystem::~PlayerMovementSystem()
@@ -74,9 +75,28 @@ namespace Client
                             dir = body.movementDirection;
                             calculateTarget(in.first, body, pos);
 
+                            //Direction-Detection level entity detection.
+                            bool found = false;
+                            bool blockedByEntity = false;
+
+                            anax::Entity e = m_collisionSystem->getEntityAt(glm::ivec2(body.targetPos.x, body.targetPos.y), found);
+
+                            if(found)
+                            {
+                                if(e.hasComponent<EntityTypeComponent>())
+                                {
+                                    auto &type = e.getComponent<EntityTypeComponent>();
+                                    if(type.type == Type::Bomb)
+                                    {
+                                        blockedByEntity = true;
+                                    }
+                                }
+                            }
+
                             if(m_bombermanMap->getCollisionOf(glm::ivec2(body.targetPos.x / EmbeddedChunk::tileWidth,
                                                                          body.targetPos.y / EmbeddedChunk::tileWidth))
-                                                              == static_cast<uint8_t>(EmbeddedTilemap::CollideFully))
+                                                              == static_cast<uint8_t>(EmbeddedTilemap::CollideFully)
+                                    || blockedByEntity)
                             {
                                 //If the new target is not a valid one (obstructed), set the old one instead.
                                 body.movementDirection = dir;
@@ -86,9 +106,29 @@ namespace Client
                     }
                 }
 
+                //Final entity detection
+
+                bool found = false;
+                bool blockedByEntity = false;
+
+                anax::Entity e = m_collisionSystem->getEntityAt(glm::ivec2(body.targetPos.x, body.targetPos.y), found);
+
+                if(found)
+                {
+                    if(e.hasComponent<EntityTypeComponent>())
+                    {
+                        auto &type = e.getComponent<EntityTypeComponent>();
+                        if(type.type == Type::Bomb)
+                        {
+                            blockedByEntity = true;
+                        }
+                    }
+                }
+
                 if(m_bombermanMap->getCollisionOf(glm::ivec2(body.targetPos.x / EmbeddedChunk::tileWidth,
                                                              body.targetPos.y / EmbeddedChunk::tileWidth))
-                                                  == static_cast<uint8_t>(EmbeddedTilemap::CollideFully))
+                                                  == static_cast<uint8_t>(EmbeddedTilemap::CollideFully)
+                        || blockedByEntity)
                 {
                     body.movementDirection = BodyComponent::NOT_MOVING;
                 }
@@ -120,8 +160,6 @@ namespace Client
         {
 			auto &playerPos = collision->getA().getComponent<PositionComponent>();
 			auto &playerBody = collision->getA().getComponent<BodyComponent>();
-
-            collision->getSide();
         }
         if(collision->getType() == Collision::EntityWithEntity)
         {
@@ -133,8 +171,6 @@ namespace Client
                 {
 					auto &playerPos = collision->getA().getComponent<PositionComponent>();
 					auto &playerBody = collision->getA().getComponent<BodyComponent>();
-                    //if(!collision->isObstructed(5))
-                    //	playerPos.pos = playerPos.pos + collision->getPenetrationVec();
                 }
             }
 
