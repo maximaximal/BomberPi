@@ -67,6 +67,9 @@ namespace Client
             {
                 auto &posComp = m_entity.getComponent<PositionComponent>();
                 posComp.pos = pos;
+                auto &body = m_entity.getComponent<BodyComponent>();
+                body.targetPos.x = pos.x;
+                body.targetPos.y = pos.y;
             }
         }
     }
