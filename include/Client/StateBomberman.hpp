@@ -30,6 +30,7 @@ namespace Client
     class DamageSystem;
     class HealthSystem;
     class KillEntityTypeSystem;
+    class AIControlSystem;
 
    	class StateBomberman : public State
     {
@@ -87,6 +88,7 @@ namespace Client
                 DamageSystem *m_damageSystem = nullptr;
                 HealthSystem *m_healthSystem = nullptr;
                 KillEntityTypeSystem *m_killEntityTypeSystem = nullptr;
+                AIControlSystem *m_AIControlSystem = nullptr;
 
     };
 }

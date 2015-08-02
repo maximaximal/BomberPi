@@ -23,6 +23,7 @@
 #include <Client/BodyComponent.hpp>
 #include <Client/DamageSystem.hpp>
 #include <Client/HealthSystem.hpp>
+#include <Client/AIControlSystem.hpp>
 #include <Client/Config.hpp>
 #include <Client/KeyboardInputMethod.hpp>
 
@@ -51,6 +52,8 @@ namespace Client
 
         if(m_world != nullptr)
             delete m_world;
+        if(m_AIControlSystem != nullptr)
+            delete m_AIControlSystem;
         if(m_spriteRenderingSystem != nullptr)
         	delete m_spriteRenderingSystem;
         if(m_animationSystem != nullptr)
@@ -143,6 +146,9 @@ namespace Client
 
         m_healthSystem = new HealthSystem();
         m_world->addSystem(*m_healthSystem);
+
+        m_AIControlSystem = new AIControlSystem(m_map, m_collisionSystem);
+        m_world->addSystem(*m_AIControlSystem);
 
         m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
         m_map->init();
