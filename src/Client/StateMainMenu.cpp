@@ -71,7 +71,7 @@ namespace Client
         title->setText("BomberPi");
         title->setPosition(getWindow()->getSize().x / 2 - title->getTextWidth() / 2,
                            getWindow()->getSize().y / 5);
-        title->setColor(120, 120, 120);
+        title->setColor(80, 80, 80);
         mainMenu->addWidget(title, "Title");
 
         std::shared_ptr<PiH::Layout> buttons = std::make_shared<PiH::Layout>(nullptr);
