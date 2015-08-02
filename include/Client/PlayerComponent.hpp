@@ -13,11 +13,10 @@ namespace Client
     {
         public:
             PlayerComponent();
-            PlayerComponent(float speed, const glm::ivec2 &startingPos);
-            PlayerComponent(float speed, const glm::ivec2 &startingPos, std::shared_ptr<Player> player);
+            PlayerComponent(const glm::ivec2 &startingPos);
+            PlayerComponent(const glm::ivec2 &startingPos, std::shared_ptr<Player> player);
             virtual ~PlayerComponent();
 
-            float speed = 150;
             glm::ivec2 startingPos;
             std::shared_ptr<Player> player;
     };

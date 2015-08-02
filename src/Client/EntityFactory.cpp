@@ -16,6 +16,7 @@
 #include <Client/DamageDealerComponent.hpp>
 #include <Client/HealthComponent.hpp>
 #include <Client/PowerupComponent.hpp>
+#include <Client/SpeedComponent.hpp>
 #include <Client/EntityTypeComponent.hpp>
 #include <easylogging++.h>
 
@@ -64,10 +65,11 @@ namespace Client
         BodyComponent *body = new BodyComponent(4, 7, 28, 22);
         body->collisionSignal.connect(sigc::mem_fun(playerMovementSystem, &PlayerMovementSystem::onPlayerCollision));
         entity.addComponent(body);
-        entity.addComponent(new PlayerComponent(150, pos, player));
+        entity.addComponent(new PlayerComponent(pos, player));
         HealthComponent *healthComponent = new HealthComponent(3, healthAndNameDisplay);
         healthComponent->damageOccured.connect(sigc::mem_fun(player.get(), &Player::damageReceived));
         entity.addComponent(healthComponent);
+        entity.addComponent(new SpeedComponent());
         entity.addComponent(new EntityTypeComponent(Type::Player));
         entity.activate();
 

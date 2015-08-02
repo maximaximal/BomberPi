@@ -7,14 +7,12 @@ namespace Client
 
     }
 
-    PlayerComponent::PlayerComponent(float speed, const glm::ivec2 &startingPos)
+    PlayerComponent::PlayerComponent(const glm::ivec2 &startingPos)
     {
-        this->speed = speed;
         this->startingPos = startingPos;
     }
-    PlayerComponent::PlayerComponent(float speed, const glm::ivec2 &startingPos, std::shared_ptr<Player> player)
+    PlayerComponent::PlayerComponent(const glm::ivec2 &startingPos, std::shared_ptr<Player> player)
     {
-        this->speed = speed;
         this->startingPos = startingPos;
         this->player = player;
     }

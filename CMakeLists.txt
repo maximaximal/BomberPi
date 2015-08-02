@@ -53,6 +53,7 @@ SET(CLIENT_SRCS
     ${CLIENT_SRC}/HealthComponent.cpp
     ${CLIENT_SRC}/EntityTypeComponent.cpp
     ${CLIENT_SRC}/PowerupComponent.cpp
+    ${CLIENT_SRC}/KIComponent.cpp
     ${CLIENT_SRC}/BombPlaceSystem.cpp
     ${CLIENT_SRC}/BombPlacePositionSystem.cpp
     ${CLIENT_SRC}/SpriteRenderingSystem.cpp
@@ -112,6 +113,8 @@ SET(CLIENT_HDRS
     ${CLIENT_INCLUDE}/HealthComponent.hpp
     ${CLIENT_INCLUDE}/EntityTypeComponent.hpp
     ${CLIENT_INCLUDE}/PowerupComponent.hpp
+    ${CLIENT_INCLUDE}/SpeedComponent.hpp
+    ${CLIENT_INCLUDE}/KIComponent.hpp
     ${CLIENT_INCLUDE}/SpriteRenderingSystem.hpp
     ${CLIENT_INCLUDE}/PlayerInputSystem.hpp
     ${CLIENT_INCLUDE}/PlayerMovementSystem.hpp
