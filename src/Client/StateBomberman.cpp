@@ -26,6 +26,7 @@
 #include <Client/AIControlSystem.hpp>
 #include <Client/Config.hpp>
 #include <Client/KeyboardInputMethod.hpp>
+#include <piga/PlayerManager.hpp>
 
 #include <Client/UI/PowerupQueue.hpp>
 

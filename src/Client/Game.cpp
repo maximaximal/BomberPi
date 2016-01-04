@@ -7,6 +7,7 @@
 #include <Client/KeyboardInputMethod.hpp>
 #include <Client/PlayerInputSystem.hpp>
 #include <pihud/pihud.hpp>
+#include <piga/PlayerManager.hpp>
 
 _INITIALIZE_EASYLOGGINGPP
 
@@ -154,7 +155,7 @@ namespace Client
 				onEvent(e, frametime);
             }
             m_pigaInterface->update();
-            while(m_pigaInterface->pollEvent(gameEvent))
+            while(m_pigaInterface->pollEvent(&gameEvent))
             {
                 m_stateManager->sendGameEvent(gameEvent, frametime);
             }
