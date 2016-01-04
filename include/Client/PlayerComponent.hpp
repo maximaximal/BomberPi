@@ -9,7 +9,7 @@ namespace Client
 {
     class Player;
 
-    class PlayerComponent : public anax::Component<PlayerComponent>
+    class PlayerComponent : public anax::Component
     {
         public:
             PlayerComponent();

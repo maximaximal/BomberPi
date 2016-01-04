@@ -4,11 +4,14 @@
 #include <anax/System.hpp>
 #include <Client/BombermanMap.hpp>
 
+#include <Client/BombLayerComponent.hpp>
+#include <Client/PositionComponent.hpp>
+
 namespace Client
 {
     class CollisionSystem;
 
-    class BombPlacePositionSystem : public anax::System<BombPlacePositionSystem>
+    class BombPlacePositionSystem : public anax::System<anax::Requires<BombLayerComponent, PositionComponent>>
     {
         public:
             BombPlacePositionSystem(BombermanMap *bombermanMap, Client::CollisionSystem *collisionSystem);

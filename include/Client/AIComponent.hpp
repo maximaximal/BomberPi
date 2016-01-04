@@ -5,7 +5,7 @@
 
 namespace Client
 {
-class AIComponent : public anax::Component<AIComponent>
+class AIComponent : public anax::Component
 {
     AIComponent();
     virtual ~AIComponent();

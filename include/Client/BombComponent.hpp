@@ -6,7 +6,7 @@
 
 namespace Client
 {
-    class BombComponent : public anax::Component<BombComponent>
+    class BombComponent : public anax::Component
     {
         public:
             BombComponent(anax::Entity bombThrower, int tiles = 1, int turns = 0);

@@ -5,7 +5,7 @@
 
 namespace Client
 {
-    class TimerComponent : public anax::Component<TimerComponent>
+    class TimerComponent : public anax::Component
     {
         public:
             TimerComponent();

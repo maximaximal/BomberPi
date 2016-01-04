@@ -6,7 +6,7 @@
 
 namespace Client
 {
-   	class PositionComponent : public anax::Component<PositionComponent>
+    class PositionComponent : public anax::Component
     {
         public:
 			PositionComponent();

@@ -6,8 +6,6 @@
 namespace Client
 {
     AnimationSystem::AnimationSystem()
-    	: Base(anax::ComponentFilter().requires<AnimationComponent,
-               SpriteComponent>())
     {
 
     }

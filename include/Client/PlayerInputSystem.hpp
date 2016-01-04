@@ -5,11 +5,12 @@
 #include <sigc++/connection.h>
 #include <anax/System.hpp>
 #include <Client/PlayerInputComponent.hpp>
+#include <Client/PlayerComponent.hpp>
 #include <piga/GameEventHandler.hpp>
 
 namespace Client
 {
-    class PlayerInputSystem : public anax::System<PlayerInputSystem>
+    class PlayerInputSystem : public anax::System<anax::Requires<PlayerComponent, PlayerInputComponent>>
     {
       	public:
       		PlayerInputSystem();

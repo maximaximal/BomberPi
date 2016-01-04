@@ -1,11 +1,8 @@
 #include <Client/TimerSystem.hpp>
 
-#include <Client/TimerComponent.hpp>
-
 namespace Client
 {
     TimerSystem::TimerSystem()
-    	: Base(anax::ComponentFilter().requires<TimerComponent>())
     {
 
     }

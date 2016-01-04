@@ -23,8 +23,7 @@ namespace Client
             unsigned int randomItem = abs(rand() % Powerup::_COUNT);
             Powerup::Predefined def = static_cast<Powerup::Predefined>(randomItem);
 
-            PowerupComponent *powerup = new PowerupComponent(def);
-            m_entityFactory->createPowerup(glm::ivec2(tilePos.x * 32, tilePos.y * 32), powerup, "powerups.png");
+            m_entityFactory->createPowerup(glm::ivec2(tilePos.x * 32, tilePos.y * 32), def, "powerups.png");
         }
     }
     void EntityDropGenerator::setChance(unsigned int chance)

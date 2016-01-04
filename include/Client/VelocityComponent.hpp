@@ -6,7 +6,7 @@
 
 namespace Client
 {
-    class VelocityComponent : public anax::Component<VelocityComponent>
+    class VelocityComponent : public anax::Component
     {
         public:
             VelocityComponent();

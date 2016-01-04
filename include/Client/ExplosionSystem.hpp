@@ -5,11 +5,12 @@
 #include <Client/BombermanMap.hpp>
 #include <Client/EntityFactory.hpp>
 #include <Client/SpreadingComponent.hpp>
+#include <Client/PositionComponent.hpp>
 #include <Client/CollisionSystem.hpp>
 
 namespace Client
 {
-    class ExplosionSystem : public anax::System<ExplosionSystem>
+    class ExplosionSystem : public anax::System<anax::Requires<PositionComponent, SpreadingComponent>>
     {
         public:
             ExplosionSystem(BombermanMap *map, EntityFactory *entityFactory, CollisionSystem *collisionSystem);

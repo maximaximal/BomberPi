@@ -2,6 +2,7 @@
 #define CLIENT_POWERUPCOLLISIONRESOLVER_HPP_INCLUDED
 
 #include <Client/Collision.hpp>
+#include <memory>
 
 namespace Client
 {

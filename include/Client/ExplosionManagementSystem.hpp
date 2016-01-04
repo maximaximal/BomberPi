@@ -4,9 +4,12 @@
 #include <anax/System.hpp>
 #include <Client/TextureManager.hpp>
 
+#include <Client/AnimationComponent.hpp>
+#include <Client/PositionComponent.hpp>
+
 namespace Client
 {
-    class ExplosionManagementSystem : public anax::System<ExplosionManagementSystem>
+    class ExplosionManagementSystem : public anax::System<anax::Requires<AnimationComponent, PositionComponent>>
     {
     	public:
             ExplosionManagementSystem(TextureManager *textureManager);

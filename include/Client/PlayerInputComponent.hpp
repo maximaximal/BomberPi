@@ -7,7 +7,7 @@
 
 namespace Client
 {
-    class PlayerInputComponent : public anax::Component<PlayerInputComponent>
+    class PlayerInputComponent : public anax::Component
     {
         public:
 			PlayerInputComponent();

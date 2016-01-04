@@ -1,13 +1,9 @@
 #include <Client/CollisionSystem.hpp>
-#include <Client/BodyComponent.hpp>
-#include <Client/PositionComponent.hpp>
 #include <easylogging++.h>
 
 namespace Client
 {
     CollisionSystem::CollisionSystem(BombermanMap *bombermanMap)
-    	: Base(anax::ComponentFilter().requires<PositionComponent,
-               BodyComponent>())
     {
         m_map = bombermanMap;
     }

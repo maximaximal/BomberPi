@@ -5,7 +5,7 @@
 
 namespace Client
 {
-    class SpreadingComponent : public anax::Component<SpreadingComponent>
+    class SpreadingComponent : public anax::Component
     {
         public:
             enum SpreadingFrom {

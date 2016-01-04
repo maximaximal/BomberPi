@@ -9,8 +9,6 @@
 namespace Client
 {
     PlayerInputSystem::PlayerInputSystem()
-        : Base(anax::ComponentFilter().requires<PlayerInputComponent,
-               PlayerComponent>())
     {
 
     }

@@ -4,9 +4,12 @@
 #include <anax/System.hpp>
 #include <Client/Window.hpp>
 
+#include <Client/SpriteComponent.hpp>
+#include <Client/PositionComponent.hpp>
+
 namespace Client
 {
-    class SpriteRenderingSystem : public anax::System<SpriteRenderingSystem>
+    class SpriteRenderingSystem : public anax::System<anax::Requires<SpriteComponent, PositionComponent>>
     {
         public:
             SpriteRenderingSystem();

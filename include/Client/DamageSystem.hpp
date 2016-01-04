@@ -4,9 +4,13 @@
 #include <anax/System.hpp>
 #include <Client/Collision.hpp>
 
+#include <Client/BodyComponent.hpp>
+#include <Client/DamageDealerComponent.hpp>
+#include <Client/PositionComponent.hpp>
+
 namespace Client 
 {
-    class DamageSystem : public anax::System<DamageSystem>
+    class DamageSystem : public anax::System<anax::Requires<BodyComponent, PositionComponent, DamageDealerComponent>>
     {
         public:
             DamageSystem();

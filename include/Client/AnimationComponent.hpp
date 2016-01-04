@@ -7,7 +7,7 @@
 
 namespace Client
 {
-    class AnimationComponent : public anax::Component<AnimationComponent>
+    class AnimationComponent : public anax::Component
     {
         public:
             AnimationComponent();

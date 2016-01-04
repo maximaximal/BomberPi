@@ -1,12 +1,6 @@
 #include <Client/PlayerMovementSystem.hpp>
 #include <glm/glm.hpp>
-#include <Client/PositionComponent.hpp>
-#include <Client/PlayerInputComponent.hpp>
-#include <Client/SpriteComponent.hpp>
-#include <Client/BodyComponent.hpp>
 #include <Client/EntityTypeComponent.hpp>
-#include <Client/BombLayerComponent.hpp>
-#include <Client/SpeedComponent.hpp>
 #include <Client/EmbeddedChunk.hpp>
 
 #include <easylogging++.h>
@@ -15,13 +9,6 @@ namespace Client
 {
 
     PlayerMovementSystem::PlayerMovementSystem(BombermanMap *bombermanMap, CollisionSystem *collisionSystem)
-        : Base(anax::ComponentFilter().requires<
-               PositionComponent,
-               PlayerInputComponent,
-               SpriteComponent,
-               BodyComponent,
-               BombLayerComponent,
-               SpeedComponent>())
     {
 		m_bombermanMap = bombermanMap;
         m_collisionSystem = collisionSystem;

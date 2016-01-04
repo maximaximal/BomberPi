@@ -7,7 +7,7 @@
 
 namespace Client
 {
-    class SpriteComponent : public anax::Component<SpriteComponent>
+    class SpriteComponent : public anax::Component
     {
         public:
 			SpriteComponent();

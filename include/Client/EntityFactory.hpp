@@ -9,7 +9,7 @@
 #include <Client/TextureManager.hpp>
 #include <Client/SpreadingComponent.hpp>
 #include <Client/Player.hpp>
-
+#include <Client/Powerup.hpp>
 #include <pihud/HealthAndNameDisplay.hpp>
 
 namespace Client
@@ -33,7 +33,7 @@ namespace Client
 
             anax::Entity createExplosion(const glm::ivec2 &pos, int powerLeft, int turnsLeft, Client::SpreadingComponent::SpreadingFrom from);
 
-            anax::Entity createPowerup(const glm::ivec2 &pos, PowerupComponent *powerupComponent,
+            anax::Entity createPowerup(const glm::ivec2 &pos, Client::Powerup::Predefined powerupDef,
                                        const std::string &texture);
         private:
             TextureManager *m_textureManager;

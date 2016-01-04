@@ -1,20 +1,15 @@
 #include <Client/BombExplodeSystem.hpp>
 #include <glm/vec3.hpp>
 #include <Client/BombComponent.hpp>
-#include <Client/PositionComponent.hpp>
 #include <Client/BombLayerComponent.hpp>
-#include <Client/TimerComponent.hpp>
-
 #include <easylogging++.h>
 
 namespace Client
 {
-    BombExplodeSystem::BombExplodeSystem(EntityFactory *entityFactory)
-    	: Base(anax::ComponentFilter().requires<PositionComponent,
-               BombComponent,
-               TimerComponent>())
+    BombExplodeSystem::BombExplodeSystem(EntityFactory *entityFactory, anax::World *anaxWorld)
     {
         m_entityFactory = entityFactory;
+        m_world = anaxWorld;
     }
     BombExplodeSystem::~BombExplodeSystem()
     {
@@ -41,7 +36,7 @@ namespace Client
 						layer.bombsRemaining += 1;
 				}
                 m_entityFactory->createExplosion(pos.pos, bomb.tiles, bomb.turns, SpreadingComponent::NOWHERE);
-				entity.kill();
+                m_world->killEntity(entity);
             }
         }
     }

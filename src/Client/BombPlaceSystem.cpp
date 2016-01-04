@@ -8,8 +8,6 @@
 namespace Client
 {
     BombPlaceSystem::BombPlaceSystem(EntityFactory *entityFactory)
-    	: Base(anax::ComponentFilter().requires<PlayerInputComponent,
-               BombLayerComponent>())
     {
         m_entityFactory = entityFactory;
     }

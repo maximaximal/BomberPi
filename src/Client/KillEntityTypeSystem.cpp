@@ -3,7 +3,6 @@
 namespace Client
 {
     KillEntityTypeSystem::KillEntityTypeSystem()
-        : Base(anax::ComponentFilter().requires<EntityTypeComponent>())
     {
 
     }

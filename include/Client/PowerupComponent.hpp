@@ -7,7 +7,7 @@
 
 namespace Client
 {
-    class PowerupComponent : public anax::Component<PowerupComponent>
+    class PowerupComponent : public anax::Component
     {
     	public:
             PowerupComponent(Powerup::Predefined definition = Powerup::NOT_DEFINED);

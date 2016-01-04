@@ -8,7 +8,7 @@
 
 namespace Client
 {
-    class BodyComponent : public anax::Component<BodyComponent>
+    class BodyComponent : public anax::Component
     {
         public:
             enum MovementDirection

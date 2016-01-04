@@ -126,7 +126,7 @@ namespace Client
         m_bombPlaceSystem = new BombPlaceSystem(m_entityFactory);
         m_world->addSystem(*m_bombPlaceSystem);
 
-        m_bombExplodeSystem = new BombExplodeSystem(m_entityFactory);
+        m_bombExplodeSystem = new BombExplodeSystem(m_entityFactory, m_world);
         m_world->addSystem(*m_bombExplodeSystem);
 
         m_bombPlacePositionSystem = new BombPlacePositionSystem(m_map, m_collisionSystem);
@@ -181,12 +181,12 @@ namespace Client
 
     void StateBomberman::update(float frameTime)
     {
-        m_world->refresh();
         m_timerSystem->update(frameTime);
         m_explosionManagementSystem->update(frameTime);
         m_animationSystem->update(frameTime);
         m_explosionSystem->update(frameTime);
         m_bombExplodeSystem->update();
+        m_world->refresh();
 
         //Check if anybody has won
         if(m_winChecker->winDetected())

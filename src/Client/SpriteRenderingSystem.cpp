@@ -2,13 +2,9 @@
 #include <easylogging++.h>
 #include <SDL2/SDL.h>
 
-#include <Client/SpriteComponent.hpp>
-#include <Client/PositionComponent.hpp>
-
 namespace Client
 {
     SpriteRenderingSystem::SpriteRenderingSystem()
-    	: Base(anax::ComponentFilter().requires<SpriteComponent, PositionComponent>())
     {
 
     }
@@ -19,7 +15,7 @@ namespace Client
         dstRect.y = 0;
         dstRect.w = 0;
         dstRect.h = 0;
-		for(anax::Entity &entity : getEntities())
+        for(const anax::Entity &entity : getEntities())
         {
            	auto pos = entity.getComponent<PositionComponent>();
             auto sprite = entity.getComponent<SpriteComponent>();

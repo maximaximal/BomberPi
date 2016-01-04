@@ -5,7 +5,7 @@
 
 namespace Client
 {
-    class DestructableComponent : anax::Component<DestructableComponent>
+    class DestructableComponent : anax::Component
     {
         public:
             DestructableComponent();

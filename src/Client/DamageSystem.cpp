@@ -1,8 +1,5 @@
 #include <Client/DamageSystem.hpp>
 
-#include <Client/BodyComponent.hpp>
-#include <Client/PositionComponent.hpp>
-#include <Client/DamageDealerComponent.hpp>
 #include <Client/HealthComponent.hpp>
 #include <Client/Collision.hpp>
 #include <easylogging++.h>
@@ -10,9 +7,6 @@
 namespace Client 
 {
     DamageSystem::DamageSystem()
-        : Base(anax::ComponentFilter().requires<BodyComponent,
-               DamageDealerComponent,
-               PositionComponent>())
     {
 
     }

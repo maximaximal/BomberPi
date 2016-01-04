@@ -12,7 +12,7 @@ namespace PiH
 
 namespace Client
 {
-    class HealthComponent : public anax::Component<HealthComponent>
+    class HealthComponent : public anax::Component
     {
         public:
             HealthComponent();

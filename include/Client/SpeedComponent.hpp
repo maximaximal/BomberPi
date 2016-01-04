@@ -5,7 +5,7 @@
 
 namespace Client
 {
-class SpeedComponent : public anax::Component<SpeedComponent>
+class SpeedComponent : public anax::Component
 {
     public:
         SpeedComponent(float speed = 150) : speed(speed) {}

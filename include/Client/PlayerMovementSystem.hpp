@@ -4,15 +4,21 @@
 #include <anax/System.hpp>
 #include <map>
 #include <Client/BombermanMap.hpp>
-#include <Client/BombermanMap.hpp>
 #include <Client/BodyComponent.hpp>
 #include <Client/CollisionSystem.hpp>
+
+#include <Client/PositionComponent.hpp>
+#include <Client/PlayerInputComponent.hpp>
+#include <Client/SpriteComponent.hpp>
+#include <Client/BodyComponent.hpp>
+#include <Client/BombLayerComponent.hpp>
+#include <Client/SpeedComponent.hpp>
 
 namespace Client
 {
     class PositionComponent;
 
-    class PlayerMovementSystem : public anax::System<PlayerMovementSystem>
+    class PlayerMovementSystem : public anax::System<anax::Requires<PositionComponent, PlayerInputComponent, SpriteComponent, BodyComponent, BombLayerComponent, SpeedComponent>>
     {
         public:
             PlayerMovementSystem(BombermanMap *bombermanMap, CollisionSystem *collisionSystem);

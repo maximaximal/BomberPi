@@ -4,10 +4,12 @@
 #include <anax/System.hpp>
 
 #include <Client/EntityFactory.hpp>
+#include <Client/PlayerInputComponent.hpp>
+#include <Client/BombLayerComponent.hpp>
 
 namespace Client
 {
-    class BombPlaceSystem : public anax::System<BombPlaceSystem>
+    class BombPlaceSystem : public anax::System<anax::Requires<PlayerInputComponent, BombLayerComponent>>
     {
         public:
             BombPlaceSystem(EntityFactory *entityFactory);

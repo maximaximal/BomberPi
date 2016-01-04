@@ -6,7 +6,7 @@
 
 namespace Client
 {
-    class KillEntityTypeSystem : public anax::System<KillEntityTypeSystem>
+    class KillEntityTypeSystem : public anax::System<anax::Requires<EntityTypeComponent>>
     {
         public:
             KillEntityTypeSystem();

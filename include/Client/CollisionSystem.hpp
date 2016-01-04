@@ -5,9 +5,12 @@
 #include <Client/BombermanMap.hpp>
 #include <Client/Collision.hpp>
 
+#include <Client/PositionComponent.hpp>
+#include <Client/BodyComponent.hpp>
+
 namespace Client
 {
-    class CollisionSystem : public anax::System<CollisionSystem>
+    class CollisionSystem : public anax::System<anax::Requires<PositionComponent, BodyComponent>>
     {
         public:
             CollisionSystem(BombermanMap *bombermanMap);

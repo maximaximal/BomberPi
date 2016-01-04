@@ -5,7 +5,6 @@
 namespace Client
 {
     HealthSystem::HealthSystem()
-    	: Base(anax::ComponentFilter().requires<HealthComponent>())
     {
 
     }

@@ -9,7 +9,6 @@
 namespace Client
 {
     ExplosionSystem::ExplosionSystem(BombermanMap *map, EntityFactory *entityFactory, CollisionSystem *collisionSystem)
-    	: Base(anax::ComponentFilter().requires<PositionComponent, SpreadingComponent>())
     {
 		m_entityFactory = entityFactory;
         m_map = map;

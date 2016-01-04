@@ -5,7 +5,7 @@
 
 namespace Client
 {
-    class DamageDealerComponent : public anax::Component<DamageDealerComponent>
+    class DamageDealerComponent : public anax::Component
     {
         public:
             DamageDealerComponent();

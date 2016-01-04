@@ -16,7 +16,7 @@ namespace Client
         _COUNT
     };
 
-    class EntityTypeComponent : public anax::Component<EntityTypeComponent>
+    class EntityTypeComponent : public anax::Component
     {
     	public:
             EntityTypeComponent(Client::Type type = Type::NOT_SET);

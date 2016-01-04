@@ -7,7 +7,7 @@
 
 namespace Client
 {
-    class BombLayerComponent : public anax::Component<BombLayerComponent>
+    class BombLayerComponent : public anax::Component
     {
         public:
             BombLayerComponent();

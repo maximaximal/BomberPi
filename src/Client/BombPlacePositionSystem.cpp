@@ -2,8 +2,6 @@
 
 #include <easylogging++.h>
 
-#include <Client/PositionComponent.hpp>
-#include <Client/BombLayerComponent.hpp>
 #include <Client/CollisionSystem.hpp>
 #include <Client/EntityTypeComponent.hpp>
 #include <Client/EmbeddedChunk.hpp>
@@ -11,8 +9,6 @@
 namespace Client
 {
     BombPlacePositionSystem::BombPlacePositionSystem(BombermanMap *bombermanMap, CollisionSystem *collisionSystem)
-    	: Base(anax::ComponentFilter().requires<BombLayerComponent,
-               PositionComponent>())
     {
         m_bombermanMap = bombermanMap;
         m_collisionSystem = collisionSystem;

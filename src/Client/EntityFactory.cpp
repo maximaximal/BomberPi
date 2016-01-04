@@ -42,8 +42,8 @@ namespace Client
     {
         anax::Entity entity = m_world->createEntity();
         m_world->refresh();
-        entity.addComponent(new PositionComponent(pos.x, pos.y));
-        SpriteComponent *spriteComponent = new SpriteComponent();
+        entity.addComponent<PositionComponent>(pos.x, pos.y);
+        SpriteComponent *spriteComponent = &entity.addComponent<SpriteComponent>();
         spriteComponent->texture = m_textureManager->get("player_proto.png");
 		spriteComponent->srcRect.w = 32;
         spriteComponent->srcRect.h = 32;
@@ -58,19 +58,15 @@ namespace Client
                 break;
         }
 
-        entity.addComponent(spriteComponent);
-        PlayerInputComponent *inputComponent = new PlayerInputComponent();
-        entity.addComponent(inputComponent);
-        entity.addComponent(new BombLayerComponent(cooldown));
-        BodyComponent *body = new BodyComponent(4, 7, 28, 22);
+        entity.addComponent<PlayerInputComponent>();
+        entity.addComponent<BombLayerComponent>(cooldown);
+        BodyComponent *body = &entity.addComponent<BodyComponent>(4, 7, 28, 22);
         body->collisionSignal.connect(sigc::mem_fun(playerMovementSystem, &PlayerMovementSystem::onPlayerCollision));
-        entity.addComponent(body);
-        entity.addComponent(new PlayerComponent(pos, player));
-        HealthComponent *healthComponent = new HealthComponent(3, healthAndNameDisplay);
+        entity.addComponent<PlayerComponent>(pos, player);
+        HealthComponent *healthComponent = &entity.addComponent<HealthComponent>(3, healthAndNameDisplay);
         healthComponent->damageOccured.connect(sigc::mem_fun(player.get(), &Player::damageReceived));
-        entity.addComponent(healthComponent);
-        entity.addComponent(new SpeedComponent());
-        entity.addComponent(new EntityTypeComponent(Type::Player));
+        entity.addComponent<SpeedComponent>();
+        entity.addComponent<EntityTypeComponent>(Type::Player);
         entity.activate();
 
         return entity;
@@ -80,22 +76,20 @@ namespace Client
     {
         auto entity = m_world->createEntity();
         m_world->refresh();
-        entity.addComponent(new PositionComponent(pos.x, pos.y));
-        SpriteComponent *spriteComponent = new SpriteComponent();
+        entity.addComponent<PositionComponent>(pos.x, pos.y);
+        SpriteComponent *spriteComponent = &entity.addComponent<SpriteComponent>();
         spriteComponent->texture = m_textureManager->get("bomb_proto.png");
         spriteComponent->srcRect.y = 160;
 		spriteComponent->srcRect.w = 32;
 		spriteComponent->srcRect.h = 32;
-        entity.addComponent(spriteComponent);
-        entity.addComponent(new BodyComponent(0, 0, 32, 32));
-        TimerComponent *timer = new TimerComponent();
+        entity.addComponent<BodyComponent>(0, 0, 32, 32);
+        TimerComponent *timer = &entity.addComponent<TimerComponent>();
         timer->timeToPass = 1.3;
-        entity.addComponent(timer);
-        entity.addComponent(new BombComponent(thrower, tiles, turns));
+        entity.addComponent<BombComponent>(thrower, tiles, turns);
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
         anim->loadDefinition("bombAnimation.yml");
-        entity.addComponent(new AnimationComponent(anim));
-        entity.addComponent(new EntityTypeComponent(Type::Bomb));
+        entity.addComponent<AnimationComponent>(anim);
+        entity.addComponent<EntityTypeComponent>(Type::Bomb);
         entity.activate();
 
         return entity;
@@ -106,38 +100,36 @@ namespace Client
     {
         auto entity = m_world->createEntity();
         m_world->refresh();
-        entity.addComponent(new PositionComponent(pos.x, pos.y));
-        SpriteComponent *spriteComponent = new SpriteComponent();
+        entity.addComponent<PositionComponent>(pos.x, pos.y);
+        SpriteComponent *spriteComponent = &entity.addComponent<SpriteComponent>();
         spriteComponent->texture = m_textureManager->get("bomb_proto.png");
         spriteComponent->srcRect.y = 0;
 		spriteComponent->srcRect.w = 32;
 		spriteComponent->srcRect.h = 32;
-        entity.addComponent(spriteComponent);
-        entity.addComponent(new BodyComponent(0, 0, 32, 32));
-        entity.addComponent(new SpreadingComponent(powerLeft, turnsLeft, from));
+        entity.addComponent<BodyComponent>(0, 0, 32, 32);
+        entity.addComponent<SpreadingComponent>(powerLeft, turnsLeft, from);
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
         anim->loadDefinition("explosionAnimation.yml");
         anim->setRoot(0, 0);
-        entity.addComponent(new AnimationComponent(anim, true));
-        entity.addComponent(new DamageDealerComponent(1));
-        entity.addComponent(new EntityTypeComponent(Type::Explosion));
+        entity.addComponent<AnimationComponent>(anim, true);
+        entity.addComponent<DamageDealerComponent>(1);
+        entity.addComponent<EntityTypeComponent>(Type::Explosion);
         entity.activate();
 
         return entity;
     }
 
-    anax::Entity EntityFactory::createPowerup(const glm::ivec2 &pos, PowerupComponent *powerupComponent, const std::string &texture)
+    anax::Entity EntityFactory::createPowerup(const glm::ivec2 &pos, Powerup::Predefined powerupDef, const std::string &texture)
     {
         auto entity = m_world->createEntity();
         m_world->refresh();
-        entity.addComponent(new PositionComponent(pos.x, pos.y));
-        SpriteComponent *spriteComponent = new SpriteComponent();
+        entity.addComponent<PositionComponent>(pos.x, pos.y);
+        SpriteComponent *spriteComponent = &entity.addComponent<SpriteComponent>();
+        PowerupComponent *powerupComponent = &entity.addComponent<PowerupComponent>(powerupDef);
         spriteComponent->texture = m_textureManager->get(texture);
         spriteComponent->srcRect = powerupComponent->powerup->getRect();
-        entity.addComponent(spriteComponent);
-        BodyComponent *body = new BodyComponent(0, 0, 32, 32);
+        BodyComponent *body = &entity.addComponent<BodyComponent>(0, 0, 32, 32);
         body->collisionSignal.connect(sigc::ptr_fun(&Resolver::OnPowerupCollison));
-        entity.addComponent(body);
 
         //Generate animation.
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
@@ -145,9 +137,8 @@ namespace Client
         anim->addStep(animRect);
         anim->setStepDuration(2);
 
-        entity.addComponent(new AnimationComponent(anim, true));
-        entity.addComponent(new EntityTypeComponent(Type::Powerup));
-        entity.addComponent(powerupComponent);
+        entity.addComponent<AnimationComponent>(anim, true);
+        entity.addComponent<EntityTypeComponent>(Type::Powerup);
         entity.activate();
 
         return entity;
