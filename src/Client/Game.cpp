@@ -250,6 +250,8 @@ int main(int argc, char* argv[])
     if(localDir)
     {
         game->getConfig()->setStringValue(Client::Config::DATA_DIRECTORY, ".");
+        game->getConfig()->setStringValue(Client::Config::STANDARD_FONT,
+                                          game->getConfig()->getStringValue(Client::Config::DATA_DIRECTORY) + "/xolonium-fonts/fonts/Xolonium-Bold.otf");
     }
 
     game->init(fullscreen);
