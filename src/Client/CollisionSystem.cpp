@@ -20,8 +20,9 @@ namespace Client
         SDL_Rect rectB;
         glm::ivec2 point;
 		std::shared_ptr<Collision> collision;
-        for(auto &entityA : getEntities())
+        for(auto &entityAConst : getEntities())
         {
+            anax::Entity entityA = const_cast<anax::Entity&>(entityAConst);
             auto &posA = entityA.getComponent<PositionComponent>();
             auto &bodyA = entityA.getComponent<BodyComponent>();
 
@@ -48,8 +49,9 @@ namespace Client
             point.x = (int) rectA.x / 32; point.y = (int) rectA.h / 32;
             collideWithMapTile(m_map->getCollisionOf(point), point, entityA);
 
-            for(auto &entityB : getEntities())
+            for(auto &entityBConst : getEntities())
             {
+                anax::Entity entityB = const_cast<anax::Entity&>(entityBConst);
                 if(entityA.getId() != entityB.getId())
                 {
                     //Only check for collision if the IDs are not equal.

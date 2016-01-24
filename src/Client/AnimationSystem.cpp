@@ -33,7 +33,8 @@ namespace Client
                     {
                         if(animation.killAfterFinish)
                         {
-                            entity.kill();
+                            anax::Entity e = const_cast<anax::Entity&>(entity);
+                            e.kill();
                         }
                         else
                         {

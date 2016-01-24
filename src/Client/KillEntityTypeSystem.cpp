@@ -18,7 +18,8 @@ namespace Client
 
             if(entityType.type == type)
             {
-                entity.kill();
+                anax::Entity e = entity;
+                e.kill();
             }
         }
     }

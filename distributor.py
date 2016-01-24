@@ -28,7 +28,7 @@ def setupDist(path):
     shutil.copy(currentPath + "/README.md", path + "/README.md")
 
 def copyBinaries(path):
-    shutil.copy(currentPath + "/build/Client", path + "/Client")
+    shutil.copy(currentPath + "/build/BomberPiClient", path + "/BomberPiClient")
     
 def copyData(path):
     copytree(currentPath + "/Data", path + "/")

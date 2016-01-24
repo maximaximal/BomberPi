@@ -20,7 +20,6 @@ namespace Client
             {
                 if(animation.finished)
                 {
-
                 }
             }
         }

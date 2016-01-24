@@ -36,7 +36,9 @@ namespace Client
 						layer.bombsRemaining += 1;
 				}
                 m_entityFactory->createExplosion(pos.pos, bomb.tiles, bomb.turns, SpreadingComponent::NOWHERE);
-                m_world->killEntity(entity);
+
+                anax::Entity e = const_cast<anax::Entity&>(entity);
+                e.kill();
             }
         }
     }
