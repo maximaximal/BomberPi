@@ -285,7 +285,7 @@ set(CPACK_PACKAGE_VERSION_TWEAK ${BOMBERPI_VERSION_TWEAK})
 set(CPACK_DEBIAN_PACKAGE_NAME "bomberpi")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAHE "https://github.com/maximaximal/bomberpi")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS
-"libboost-filesystem1.55.0 (>= 1.55.0), libboost-thread1.55.0 (>= 1.55.0), libboost-system1.55.0 (>= 1.55.0), libyaml-cpp0.5 (>= 0.5.1-1), libstdc++6 (>= 4.9.2-10), piga-libpiga (>= 0.6.0), libquazip-qt5-1 (>= 0.7), libcrypto++9 (>= 5.6.1), libwt38 (>= 3.3.3), libsigc++-2.0-0c2a (>= 2.4.0-1)")
+"libstdc++6 (>= 4.9.2-10), piga-libpiga (>= 0.6.0), libsigc++-2.0-0c2a (>= 2.4.0-1), libsdl2-2.0-0 (>= 2.0.2), libsdl2-image-2.0-0 (>= 2.0.0), libsdl2-ttf-2.0-0 (>= 2.0.12), piga-libpihud (>= 0.6)")
 set(CPACK_PACKAGE_NAME "bomberpi")
 set(CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Max Heisinger <mail@maximaximal.com>")
