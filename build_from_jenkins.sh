@@ -6,7 +6,7 @@
 echo "Build BomberPi"
 sudo chroot /opt/chroots/debian_jessie_x32 /bin/bash -c "mkdir -p /root/jenkins/workspace/bomberpi_x32/build"
 sudo chroot /opt/chroots/debian_jessie_x32 /bin/bash -c "rm -f /root/jenkins/workspace/bomberpi_x32/build/bomberpi*"
-sudo chroot /opt/chroots/debian_jessie_x32 /bin/bash -c "cd /root/jenkins/workspace/bomberpi_x32/build && cmake .. -DCMAKE_PREFIX_PATH=/usr/local/lib/cmake -DPIHUD_VERSION_PATCH="\""$(cat /var/lib/jenkins/jobs/bomberpi_x32/nextBuildNumber)"\"
+sudo chroot /opt/chroots/debian_jessie_x32 /bin/bash -c "cd /root/jenkins/workspace/bomberpi_x32/build && cmake .. -DCMAKE_PREFIX_PATH=/usr/local/lib/cmake -BOMBERPI_VERSION_PATCH="\""$(cat /var/lib/jenkins/jobs/bomberpi_x32/nextBuildNumber)"\"
 sudo chroot /opt/chroots/debian_jessie_x32 /bin/bash -c "cd /root/jenkins/workspace/bomberpi_x32/build && make"
 sudo chroot /opt/chroots/debian_jessie_x32 /bin/bash -c "cd /root/jenkins/workspace/bomberpi_x32/build && make package"
 
