@@ -128,7 +128,7 @@ namespace Client
         entity.addComponent<PositionComponent>(pos.x, pos.y);
         SpriteComponent *spriteComponent = &entity.addComponent<SpriteComponent>();
         PowerupComponent *powerupComponent = &entity.addComponent<PowerupComponent>(powerupDef);
-        spriteComponent->texture = m_textureManager->get(texture);
+        spriteComponent->texture = m_textureManager->get(m_config->getStringValue(Config::DATA_DIRECTORY) + "/" + texture);
         spriteComponent->srcRect = powerupComponent->powerup->getRect();
         BodyComponent *body = &entity.addComponent<BodyComponent>(0, 0, 32, 32);
         body->collisionSignal.connect(sigc::ptr_fun(&Resolver::OnPowerupCollison));
