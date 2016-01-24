@@ -111,7 +111,7 @@ namespace Client
         entity.addComponent<BodyComponent>(0, 0, 32, 32);
         entity.addComponent<SpreadingComponent>(powerLeft, turnsLeft, from);
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
-        anim->loadDefinition("explosionAnimation.yml");
+        anim->loadDefinition(m_config->getStringValue(Config::DATA_DIRECTORY) + "/explosionAnimation.yml");
         anim->setRoot(0, 0);
         entity.addComponent<AnimationComponent>(anim, true);
         entity.addComponent<DamageDealerComponent>(1);
