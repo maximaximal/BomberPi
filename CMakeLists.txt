@@ -218,7 +218,7 @@ ExternalProject_Add(anax_project
     GIT_REPOSITORY https://github.com/miguelmartin75/anax.git 
     UPDATE_COMMAND git pull origin master
     INSTALL_COMMAND ""
-    CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+    CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} -DBUILD_SHARED_LIBS=false
 )
 
 add_dependencies(BomberPiClient anax_project)
