@@ -89,7 +89,7 @@ namespace Client
         timer->timeToPass = 1.3;
         entity.addComponent<BombComponent>(thrower, tiles, turns);
         std::shared_ptr<Animation> anim = std::make_shared<Animation>();
-        anim->loadDefinition("bombAnimation.yml");
+        anim->loadDefinition(m_config->getStringValue(Config::DATA_DIRECTORY) + "/bombAnimation.yml");
         entity.addComponent<AnimationComponent>(anim);
         entity.addComponent<EntityTypeComponent>(Type::Bomb);
         entity.activate();
