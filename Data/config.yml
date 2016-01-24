@@ -1,7 +1,9 @@
 ---
 Name: "BomberPi"
-ProgramPath: "Client"
+ProgramPath: "BomberPiClient"
+AbsolutePath: "1"
 Parameters: "-f"
+Directory: "/var/piga/Games/BomberPi"
 
 KeyboardMappings:
   - "0:UP->W"

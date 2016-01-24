@@ -5,7 +5,7 @@ include(ExternalProject)
 include(FindPkgConfig)
 
 set(BOMBERPI_VERSION_MAJOR "0" CACHE STRING "Major-Version")
-set(BOMBERPI_VERSION_MINOR "6" CACHE STRING "Minor-Version")
+set(BOMBERPI_VERSION_MINOR "7" CACHE STRING "Minor-Version")
 set(BOMBERPI_VERSION_PATCH "0" CACHE STRING "Patch-Version")
 set(BOMBERPI_VERSION_TWEAK "0" CACHE STRING "Tweak-Version")
 set(BOMBERPI_VERSION ${BOMBERPI_VERSION_MAJOR}.${BOMBERPI_VERSION_MINOR}.${BOMBERPI_VERSION_PATCH}.${BOMBERPI_VERSION_TWEAK})
@@ -275,6 +275,15 @@ install(
     DIRECTORY
         ${CMAKE_CURRENT_SOURCE_DIR}/Data
     DESTINATION ../var/bomberpi)
+
+# Game package
+install(
+    FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/config.yml
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/logo.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/chooser-background.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/LICENSE.txt
+    DESTINATION ../var/piga/Games/BomberPi/)
 
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A bomberman clone.")
 set(CPACK_PACKAGE_VENDOR "Pigaco")
