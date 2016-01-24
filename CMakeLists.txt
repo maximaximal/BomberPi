@@ -224,8 +224,8 @@ ExternalProject_Add(anax_project
 add_dependencies(BomberPiClient anax_project)
 
 find_library(anax_library
-    NAMES anax libanax libanax_d libanax_d.so
-    HINTS ${CMAKE_CURRENT_BINARY_DIR}/anax/src/anax_project-build/lib
+    NAMES anax libanax libanax.a
+    HINTS ${CMAKE_CURRENT_BINARY_DIR}/anax/src/anax_project-build/
     NO_DEFAULT_PATH
 )
 
