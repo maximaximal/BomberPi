@@ -289,7 +289,7 @@ namespace Client
                                                                   getConfig()->getFloatValue(Config::BOMB_PLACE_COOLDOWN));
         player->setEntity(playerEntity);
 
-        std::shared_ptr<UI::PowerupQueue> powerupQueue(new UI::PowerupQueue(getTextureManager(), 3, m_hudContainer));
+        std::shared_ptr<UI::PowerupQueue> powerupQueue(new UI::PowerupQueue(getTextureManager(), 3, m_hudContainer, getConfig()));
         player->setPowerupQueueUI(powerupQueue.get());
         m_hudContainer->addWidget(powerupQueue, std::string("PowerupQueue_") + pigaPlayer->getName());
 

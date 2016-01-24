@@ -5,6 +5,7 @@
 #include <pihud/QueueDisplayWidget.hpp>
 #include <Client/Powerup.hpp>
 #include <Client/TextureManager.hpp>
+#include <Client/Config.hpp>
 
 namespace Client
 {
@@ -13,7 +14,7 @@ namespace Client
         class PowerupQueue : public PiH::Widget
         {
             public:
-                PowerupQueue(TextureManager *textureManager, std::size_t queueSize = 3, PiH::Widget *parent = nullptr);
+                PowerupQueue(TextureManager *textureManager, std::size_t queueSize = 3, PiH::Widget *parent = nullptr, Config *config = nullptr);
                 virtual ~PowerupQueue();
                 void clearPowerups();
 
@@ -32,6 +33,7 @@ namespace Client
             private:
                 std::unique_ptr<PiH::QueueDisplayWidget> m_queueDisplayWidget;
                 TextureManager *m_textureManager;
+                Config *m_config;
         };
     }
 }

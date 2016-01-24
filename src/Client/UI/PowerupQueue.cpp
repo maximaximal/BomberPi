@@ -4,14 +4,15 @@ namespace Client
 {
     namespace UI
     {
-        PowerupQueue::PowerupQueue(TextureManager *textureManager, std::size_t queueSize, Widget *parent)
+        PowerupQueue::PowerupQueue(TextureManager *textureManager, std::size_t queueSize, Widget *parent, Config *config)
             : Widget(parent)
         {
             m_textureManager = textureManager;
             m_queueDisplayWidget.reset(new PiH::QueueDisplayWidget(queueSize, this));
+            m_config = config;
 
             std::unique_ptr<PiH::Image> backgroundImage(new PiH::Image(m_queueDisplayWidget.get()));
-            backgroundImage->setTexture(textureManager->get("hud.png"));
+            backgroundImage->setTexture(textureManager->get(config->getStringValue(Config::DATA_DIRECTORY) + "/hud.png"));
             backgroundImage->setTextureRect(PiH::IntRect(0, 32, 32, 32));
             m_queueDisplayWidget->setBackgroundImage(std::move(backgroundImage));
         }

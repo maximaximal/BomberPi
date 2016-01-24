@@ -183,7 +183,7 @@ namespace Client
 
         button->setTextColor(170, 170, 170);
         button->setFont(getFontManager()->get(getConfig()->getStringValue(Config::STANDARD_FONT) + ":18"));
-        button->setBackgroundTexture(getTextureManager()->get("hud.png"));
+        button->setBackgroundTexture(getTextureManager()->get(getConfig()->getStringValue(Config::DATA_DIRECTORY) + "/hud.png"));
         button->setNormalTextureRect(normalRect);
         button->setFocusedTextureRect(focusedRect);
         button->setPressedTextureRect(pressedRect);
