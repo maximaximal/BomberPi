@@ -121,7 +121,7 @@ namespace Client
         m_animationSystem = new AnimationSystem();
         m_world->addSystem(*m_animationSystem);
 
-        m_entityFactory = new EntityFactory(m_world, getTextureManager());
+        m_entityFactory = new EntityFactory(m_world, getTextureManager(), getConfig());
         m_map->setEntityFactory(m_entityFactory);
 
         m_bombPlaceSystem = new BombPlaceSystem(m_entityFactory);
@@ -151,7 +151,7 @@ namespace Client
         m_AIControlSystem = new AIControlSystem(m_map, m_collisionSystem);
         m_world->addSystem(*m_AIControlSystem);
 
-        m_map->setTexture(getTextureManager()->get("tilemap_proto.png"));
+        m_map->setTexture(getTextureManager()->get(getConfig()->getStringValue(Config::DATA_DIRECTORY) + "/tilemap_proto.png"));
         m_map->init();
 
         glm::ivec2 playerPos(0, 0);
@@ -196,11 +196,11 @@ namespace Client
             if(m_hudContainer->getWidget("WinnerWidget") == nullptr)
             {
                 std::shared_ptr<PiH::WeHaveAWinnerWidget> winnerWidget(new PiH::WeHaveAWinnerWidget(m_hudContainer));
-                winnerWidget->setFont(getFontManager()->get("PressStart2P.ttf:28"));
+                winnerWidget->setFont(getFontManager()->get(getConfig()->getStringValue(Config::DATA_DIRECTORY) + "/PressStart2P.ttf:28"));
                 winnerWidget->setWinnerName(m_winChecker->getWinner()->getName());
-                winnerWidget->setVictoryImageTexture(getTextureManager()->get("hud.png"), PiH::IntRect(224, 0, 500, 152));
+                winnerWidget->setVictoryImageTexture(getTextureManager()->get(getConfig()->getStringValue(Config::DATA_DIRECTORY) + "/hud.png"), PiH::IntRect(224, 0, 500, 152));
                 std::vector<PiH::IntRect> particles = {PiH::IntRect(0, 64, 96, 96)};
-                winnerWidget->setParticleTexture(getTextureManager()->get("hud.png"), particles);
+                winnerWidget->setParticleTexture(getTextureManager()->get(getConfig()->getStringValue(Config::DATA_DIRECTORY) + "/hud.png"), particles);
                 winnerWidget->setBoundingBox(PiH::FloatRect(0, 0, getWindow()->getSize().x, getWindow()->getSize().y));
                 m_hudContainer->addWidget(winnerWidget, "WinnerWidget");
             }
@@ -273,8 +273,8 @@ namespace Client
         healthIndicator->getHealthIndicator()->setDepletedIcon(PiH::IntRect(64, 0, 32, 32));
         healthIndicator->getHealthIndicator()->setMaximumHealth(3);
         healthIndicator->getHealthIndicator()->setCurrentHealth(3);
-        healthIndicator->setFont(getFontManager()->get("PressStart2P.ttf:18"));
-        healthIndicator->setTexture(getTextureManager()->get("hud.png"));
+        healthIndicator->setFont(getFontManager()->get(getConfig()->getStringValue(Config::DATA_DIRECTORY) + "/PressStart2P.ttf:18"));
+        healthIndicator->setTexture(getTextureManager()->get(getConfig()->getStringValue(Config::DATA_DIRECTORY) + "/hud.png"));
         healthIndicator->setName(pigaPlayer->getName());
         healthIndicator->setPosition(playerPos.x, playerPos.y);
 

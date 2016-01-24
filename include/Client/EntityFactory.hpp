@@ -11,6 +11,7 @@
 #include <Client/Player.hpp>
 #include <Client/Powerup.hpp>
 #include <pihud/HealthAndNameDisplay.hpp>
+#include <Client/Config.hpp>
 
 namespace Client
 {
@@ -21,7 +22,8 @@ namespace Client
     {
         public:
             EntityFactory(anax::World *world,
-                          TextureManager *textureManager);
+                          TextureManager *textureManager,
+                          Config *config);
             virtual ~EntityFactory();
 
             anax::Entity createPlayer(const glm::ivec2 &pos,
@@ -38,6 +40,7 @@ namespace Client
         private:
             TextureManager *m_textureManager;
             anax::World *m_world;
+            Config *m_config;
     };
 }
 

@@ -28,6 +28,7 @@ namespace Client
 
         //String values
         setStringValue(STANDARD_FONT, "xolonium-fonts/fonts/Xolonium-Bold.otf");
+        setStringValue(DATA_DIRECTORY, "/var/bomberpi/Data");
     }
     int Config::getIntValue(Config::Value id)
     {

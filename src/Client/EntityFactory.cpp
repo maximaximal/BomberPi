@@ -24,10 +24,12 @@ namespace Client
 {
 
     EntityFactory::EntityFactory(anax::World *world,
-                                 TextureManager *textureManager)
+                                 TextureManager *textureManager,
+                                 Config *config)
     {
         m_world = world;
         m_textureManager = textureManager;
+        m_config = config;
     }
     EntityFactory::~EntityFactory()
     {
@@ -44,7 +46,7 @@ namespace Client
         m_world->refresh();
         entity.addComponent<PositionComponent>(pos.x, pos.y);
         SpriteComponent *spriteComponent = &entity.addComponent<SpriteComponent>();
-        spriteComponent->texture = m_textureManager->get("player_proto.png");
+        spriteComponent->texture = m_textureManager->get(m_config->getStringValue(Config::DATA_DIRECTORY) + "/player_proto.png");
 		spriteComponent->srcRect.w = 32;
         spriteComponent->srcRect.h = 32;
         spriteComponent->srcRect.x = 0;
@@ -78,7 +80,7 @@ namespace Client
         m_world->refresh();
         entity.addComponent<PositionComponent>(pos.x, pos.y);
         SpriteComponent *spriteComponent = &entity.addComponent<SpriteComponent>();
-        spriteComponent->texture = m_textureManager->get("bomb_proto.png");
+        spriteComponent->texture = m_textureManager->get(m_config->getStringValue(Config::DATA_DIRECTORY) + "/bomb_proto.png");
         spriteComponent->srcRect.y = 160;
 		spriteComponent->srcRect.w = 32;
 		spriteComponent->srcRect.h = 32;
@@ -102,7 +104,7 @@ namespace Client
         m_world->refresh();
         entity.addComponent<PositionComponent>(pos.x, pos.y);
         SpriteComponent *spriteComponent = &entity.addComponent<SpriteComponent>();
-        spriteComponent->texture = m_textureManager->get("bomb_proto.png");
+        spriteComponent->texture = m_textureManager->get(m_config->getStringValue(Config::DATA_DIRECTORY) + "/bomb_proto.png");
         spriteComponent->srcRect.y = 0;
 		spriteComponent->srcRect.w = 32;
 		spriteComponent->srcRect.h = 32;

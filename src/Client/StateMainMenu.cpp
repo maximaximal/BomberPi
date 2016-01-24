@@ -36,7 +36,7 @@ namespace Client
     {
 		m_menuContainer = new PiH::MenuContainer(nullptr);
         m_mapCustomizer = new BombermanMap();
-        m_mapCustomizer->setTexture(getTextureManager()->get("tilemap_proto.png"));
+        m_mapCustomizer->setTexture(getTextureManager()->get(getConfig()->getStringValue(Config::DATA_DIRECTORY) + "/tilemap_proto.png"));
         m_mapCustomizer->init();
         m_mapCustomizer->createOuterWall();
         m_mapCustomizer->createInnerStamps();
@@ -46,7 +46,7 @@ namespace Client
         
         // Initialize the background decoration.
         m_embeddedTilemap = new EmbeddedTilemap();
-        m_embeddedTilemap->setTextureForLayer(getTextureManager()->get("MainMenuBackgroundMap.png"), 0);
+        m_embeddedTilemap->setTextureForLayer(getTextureManager()->get(getConfig()->getStringValue(Config::DATA_DIRECTORY) + "/MainMenuBackgroundMap.png"), 0);
 
         std::default_random_engine generator;
         std::uniform_int_distribution<uint8_t> distribution(0, 15);

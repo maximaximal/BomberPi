@@ -18,6 +18,9 @@ namespace Client
         m_getCommandsFromSharedMemory = getCommandsFromSharedMemory;
         m_pigaInterface = new piga::Interface(!getCommandsFromSharedMemory);
         m_quickStart = quickStart;
+
+        m_config = new Config();
+        m_config->setDefaultValues();
     }
     Game::~Game()
     {
@@ -39,9 +42,6 @@ namespace Client
     int Game::init(bool fullscreen)
     {
 		LOG(INFO) << "Initializing Game!";
-
-        m_config = new Config();
-        m_config->setDefaultValues();
 
         m_config->setBooleanValue(Config::FULLSCREEN, fullscreen);
 
@@ -194,6 +194,11 @@ namespace Client
         SDL_RenderPresent(m_window->getSDLRenderer());
         SDL_GL_SwapWindow(m_window->getSDLWindow());
     }
+
+    Config *Game::getConfig()
+    {
+        return m_config;
+    }
 }
 
 bool cmdOptionExists(char** begin, char** end, const std::string& option)
@@ -206,6 +211,7 @@ int main(int argc, char* argv[])
     bool getCommandsFromSharedMemory = false;
     bool fullscreen = false;
     bool quickStart = false;
+    bool localDir = false;
 
     if(cmdOptionExists(argv, argv + argc, "-c"))
     {
@@ -222,6 +228,11 @@ int main(int argc, char* argv[])
         quickStart = true;
         LOG(INFO) << "BomberPi quick start actvated!";
     }
+    if(cmdOptionExists(argv, argv + argc, "-local"))
+    {
+        localDir = true;
+        LOG(INFO) << "Using a local (.) data directory!";
+    }
     if(cmdOptionExists(argv, argv + argc, "-help"))
     {
         std::cout << "BomberPi - Program Arguments Help" << std::endl;
@@ -229,12 +240,18 @@ int main(int argc, char* argv[])
         std::cout << "  -f\t\tLaunches BomberPi in fullscreen mode." << std::endl;
         std::cout << "  -quickStart\tLaunches BomberPi directly into the game instead of the main menu." << std::endl;
         std::cout << "  -help\t\tDisplays this menu." << std::endl;
+        std::cout << "  -local\tRuns bomberpi with a local (.) data directory." << std::endl;
         return 0;
     }
     LOG(INFO) << "Starting BomberPi.";
 
     Client::Game *game = new Client::Game(getCommandsFromSharedMemory, quickStart);
-    
+
+    if(localDir)
+    {
+        game->getConfig()->setStringValue(Client::Config::DATA_DIRECTORY, ".");
+    }
+
     game->init(fullscreen);
     
     delete game;

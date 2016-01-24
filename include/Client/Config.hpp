@@ -17,6 +17,7 @@ namespace Client
                 POWERUP_DROP_CHANCE,
                 BOMB_PLACE_COOLDOWN,
                 STANDARD_FONT,
+                DATA_DIRECTORY,
 
                 _COUNT
             };

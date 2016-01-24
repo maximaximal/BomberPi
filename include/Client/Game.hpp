@@ -23,7 +23,9 @@ namespace Client
 
             void onEvent(const SDL_Event &e, float frametime);
 
-			void render();
+            void render();
+
+            Config* getConfig();
 		private:
 			Window *m_window = nullptr;
             StateManager *m_stateManager = nullptr;
