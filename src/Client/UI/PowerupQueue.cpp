@@ -39,7 +39,7 @@ namespace Client
         void PowerupQueue::pushPowerup(std::shared_ptr<Powerup> powerup)
         {
             std::unique_ptr<PiH::Image> image(new PiH::Image(m_queueDisplayWidget.get()));
-            image->setTexture(m_textureManager->get("powerups.png"));
+            image->setTexture(m_textureManager->get(m_config->getStringValue(Config::DATA_DIRECTORY) + "/powerups.png"));
             image->setTextureRect(powerup->getRect());
             m_queueDisplayWidget->pushImage(std::move(image));
         }
