@@ -280,6 +280,7 @@ install(
 install(
     FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/config.yml
+        ${CMAKE_CURRENT_SOURCE_DIR}/Data/PackageSpecs.yml
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/logo.png
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/chooser-background.png
         ${CMAKE_CURRENT_SOURCE_DIR}/Data/LICENSE.txt
