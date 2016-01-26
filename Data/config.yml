@@ -2,15 +2,8 @@
 Name: "BomberPi"
 ProgramPath: "BomberPiClient"
 AbsolutePath: "1"
-Parameters: "-f"
+Parameters: "-f -c"
 Directory: "/var/piga/Games/BomberPi"
-
-KeyboardMappings:
-  - "0:UP->W"
-  - "0:DOWN->S"
-  - "0:LEFT->A"
-  - "0:RIGHT->D"
-  - "0:ACTION->space"
 
 Description: "A clone of the old Bomberman games."
 Version: "1.0"
